@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Trámite | Mi Billetera</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap">
+
+  <style>
+    body {
+      font-family: 'Encode Sans', sans-serif;
+      margin: 0;
+      background-color: #fff;
+    }
+
+    .navbar {
+      background: #fff;
+      border-bottom: 3px solid #ffd100;
+      padding: 10px 20px;
+    }
+
+    .navbar img {
+      height: 70px;
+    }
+
+    .header {
+      background: #0072bb;
+      color: white;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    /* Estilos del Formulario */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Encode Sans', sans-serif;
+      box-sizing: border-box;
+    }
+
+    .radio-group {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+
+    .radio-option {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .radio-option:last-child {
+      border-bottom: none;
+    }
+
+    .price-tag {
+      font-weight: 700;
+      color: #0072bb;
+    }
+
+    .btn-enviar {
+      background-color: #25d366;
+      color: white;
+      border-radius: 25px;
+      padding: 15px 40px;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 30px;
+      transition: background 0.3s;
+    }
+
+    .btn-enviar:hover {
+      background-color: #128c7e;
+    }
+
+    footer {
+      background: #f5f5f5;
+      padding: 30px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="navbar">
+    <img src="https://i.postimg.cc/638qB6NY/1776094869296.png" alt="Mi Billetera">
+  </div>
+
+  <div class="header">
+    <h1>Solicitud de Trámite</h1>
+    <p>Completá tus datos para iniciar la gestión de tu licencia.</p>
+  </div>
+
+  <div class="container">
+    <form id="tramiteForm">
+      
+      <div class="form-group">
+        <label for="nombre">Nombre y Apellido Completo</label>
+        <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+      </div>
+
+      <div class="form-group">
+        <label for="dni">Número de DNI</label>
+        <input type="text" id="dni" placeholder="Sin puntos" required>
+      </div>
+
+      <div class="form-group">
+        <label for="telefono">Teléfono de Contacto</label>
+        <input type="tel" id="telefono" placeholder="Ej: 1122334455" required>
+      </div>
+
+      <div class="form-group">
+        <label>Tipo de Trámite</label>
+        <div class="radio-group">
+          <div class="radio-option">
+            <label><input type="radio" name="tipo_tramite" value="Mi primer licencia" checked> Mi primer licencia</label>
+            <span class="price-tag">$15.000</span>
+          </div>
+          <div class="radio-option">
+            <label><input type="radio" name="tipo_tramite" value="Renovación (por vencimiento)"> Renovación (Vencimiento)</label>
+            <span class="price-tag">$12.000</span>
+          </div>
+          <div class="radio-option">
+            <label><input type="radio" name="tipo_tramite" value="Renovación por extravío/robo"> Renovación (Extravío/Robo)</label>
+            <span class="price-tag">$13.500</span>
+          </div>
+          <div class="radio-option">
+            <label><input type="radio" name="tipo_tramite" value="Recategorización"> Recategorización</label>
+            <span class="price-tag">$10.000</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="btn-enviar" onclick="enviarWhatsApp()">ENVIAR A WHATSAPP</button>
+    </form>
+  </div>
+
+  <footer>
+    <div class="container" style="text-align:center;">
+      <p><strong>Mi Billetera | Documentación Digital</strong></p>
+      <p>Gestión y visualización de documentación digital de forma rápida y segura.</p>
+      <p style="margin-top:20px; font-size:12px; color:#666;">
+        © 2026 Mi Billetera | mi Argentina. Todos los derechos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function enviarWhatsApp() {
+      const nombre = document.getElementById('nombre').value;
+      const dni = document.getElementById('dni').value;
+      const telefono = document.getElementById('telefono').value;
+      const tramite = document.querySelector('input[name="tipo_tramite"]:checked').value;
+      
+      // Número de teléfono de destino (el mismo del código original)
+      const numeroVentas = "5491131602393";
+
+      if(!nombre || !dni || !telefono) {
+        alert("Por favor, completá todos los campos.");
+        return;
+      }
+
+      const mensaje = `Hola! Quiero iniciar un trámite:%0A%0A` +
+                      `*Nombre:* ${nombre}%0A` +
+                      `*DNI:* ${dni}%0A` +
+                      `*Teléfono:* ${telefono}%0A` +
+                      `*Trámite:* ${tramite}`;
+
+      const url = `https://wa.me/${numeroVentas}?text=${mensaje}`;
+      
+      window.open(url, '_blank');
+    }
+  </script>
+
+</body>
+</html>
