@@ -36,6 +36,17 @@ body {
   padding:20px;
   text-align:center;
   font-weight:600;
+  position:relative;
+}
+
+.back-btn{
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:28px;
+  cursor:pointer;
+  display:none;
 }
 
 /* CONTENIDO */
@@ -152,7 +163,42 @@ button {
 @keyframes spin {to{transform:rotate(360deg);}}
 
 /* LICENCIA */
-#seccionDocumentos {display:none;}
+#seccionDocumentos,
+#verLicencia,
+#verDni{
+  display:none;
+}
+
+.doc-card{
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+  cursor:pointer;
+}
+
+.doc-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  font-weight:700;
+  font-size:20px;
+}
+
+.doc-icon{
+  font-size:26px;
+  color:#4433cc;
+}
+
+.doc-arrow{
+  font-size:28px;
+  color:#777;
+}
+
 .card-container {
  perspective:1000px;
  width:100%;
@@ -182,6 +228,15 @@ button {
  width:100%;
  height:100%;
  object-fit:cover;
+}
+
+#dniImg{
+ width:100%;
+ max-width:380px;
+ display:block;
+ margin:20px auto;
+ border-radius:15px;
+ box-shadow:0 2px 6px rgba(0,0,0,0.15);
 }
 
 </style>
@@ -217,7 +272,10 @@ button {
 <!-- APP -->
 <div id="app" style="display:none">
 
-<div class="header">Mi Billetera</div>
+<div class="header">
+  <span class="back-btn" id="backBtn" onclick="volverHome()">←</span>
+  Mi Billetera
+</div>
 
 <div class="container" id="home">
 
@@ -261,6 +319,33 @@ button {
 
 <!-- DOCUMENTOS -->
 <div class="container" id="seccionDocumentos">
+
+  <div class="doc-card" onclick="mostrarDni()">
+    <div class="doc-left">
+      <div class="doc-icon">🪪</div>
+      <div>Documento Nacional de Identidad (DNI)</div>
+    </div>
+    <div class="doc-arrow">⌄</div>
+  </div>
+
+  <div class="doc-card" onclick="mostrarLicencia()">
+    <div class="doc-left">
+      <div class="doc-icon">🚗</div>
+      <div>Licencia Nacional de Conducir</div>
+    </div>
+    <div class="doc-arrow">⌄</div>
+  </div>
+
+</div>
+
+<!-- VER DNI -->
+<div class="container" id="verDni">
+  <h2>DNI Digital</h2>
+  <img id="dniImg" src="https://i.postimg.cc/hv0Zm3RS/carnet-(1).jpg">
+</div>
+
+<!-- VER LICENCIA -->
+<div class="container" id="verLicencia">
   <h2>Licencia de conducir digital</h2>
 
   <div class="card-container" id="licencia">
@@ -325,10 +410,31 @@ function login(){
 function abrirDocumentos(){
  document.getElementById("home").style.display="none";
  document.getElementById("seccionDocumentos").style.display="block";
+ document.getElementById("backBtn").style.display="block";
+}
+
+function volverHome(){
+ document.getElementById("home").style.display="block";
+ document.getElementById("seccionDocumentos").style.display="none";
+ document.getElementById("verLicencia").style.display="none";
+ document.getElementById("verDni").style.display="none";
+ document.getElementById("backBtn").style.display="none";
+}
+
+function mostrarLicencia(){
+ document.getElementById("seccionDocumentos").style.display="none";
+ document.getElementById("verDni").style.display="none";
+ document.getElementById("verLicencia").style.display="block";
 
  document.getElementById("licencia").style.display="block";
  document.getElementById("frente").src=usuarioActual.frente;
  document.getElementById("dorso").src=usuarioActual.dorso;
+}
+
+function mostrarDni(){
+ document.getElementById("seccionDocumentos").style.display="none";
+ document.getElementById("verLicencia").style.display="none";
+ document.getElementById("verDni").style.display="block";
 }
 
 function flipCard(){
