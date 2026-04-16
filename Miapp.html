@@ -298,15 +298,21 @@ color:#333;
 border-bottom:1px solid #eee;
 }
 
+.licencia-alerta{
+padding:18px;
+font-size:15px;
+line-height:1.4;
+color:#444;
+border-bottom:1px solid #eee;
+background:#fafafa;
+}
+
 .qr-box{
 height:220px;
 display:flex;
 align-items:center;
 justify-content:center;
 border-bottom:1px solid #eee;
-font-size:20px;
-color:#999;
-font-weight:700;
 }
 
 .qr-box img{
@@ -343,6 +349,25 @@ grid-column:1/3;
 margin:18px;
 width:calc(100% - 36px);
 background:#3b33cc;
+}
+
+.info-extra{
+padding:20px;
+border-top:1px solid #eee;
+font-size:14px;
+line-height:1.5;
+color:#444;
+}
+
+.info-extra strong{
+display:block;
+margin-bottom:6px;
+color:#333;
+}
+
+.info-extra span{
+color:#78a6d7;
+font-weight:700;
 }
 
 /* VER LICENCIA FULL */
@@ -511,6 +536,10 @@ Documentos
 <div class="licencia-box">
 <div class="licencia-top">Licencia Nacional de Conducir</div>
 
+<div class="licencia-alerta">
+Si te retuvieron o inhabilitaron la licencia física, no podés circular con la licencia digital. Hacerlo constituye un delito.
+</div>
+
 <div class="qr-box">
 <img id="qrImg">
 </div>
@@ -543,6 +572,12 @@ Documentos
 </div>
 
 <button class="btn-licencia" onclick="abrirModoLicencia()">Ver mi licencia</button>
+
+<div class="info-extra">
+<strong>Datos suministrados por</strong>
+<span>Ministerio de Transporte de la Nación.</span>
+</div>
+
 </div>
 </div>
 
