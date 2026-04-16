@@ -125,7 +125,13 @@ margin-left:auto;
 margin-right:auto;
 }
 
-#login{padding:30px;}
+#login{
+padding:30px;
+min-height:calc(100vh - 90px);
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
 
 input{
 width:100%;
@@ -345,15 +351,18 @@ background:#3b33cc;
 </div>
 
 <div id="login" style="display:none;">
+<div>
 <div class="header">Ingresar</div>
 
 <input id="email" placeholder="Correo">
 <input id="dni" placeholder="DNI">
 
 <button onclick="login()">Entrar</button>
+</div>
 
 <div class="footer">
 <p><strong>Mi Billetera</strong></p>
+<p>Gestión segura y rápida de documentos digitales.</p>
 <p style="font-size:12px;">© 2026 Todos los derechos reservados</p>
 </div>
 </div>
