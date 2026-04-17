@@ -104,7 +104,9 @@ body {
     justify-content:center;    
     align-items:center;    
     box-sizing:border-box;  
-    transform: translate(8px, 14px);  
+    position:relative;
+    left:8px;
+    top:14px;
 }    
 
 .photo-placeholder img {    
@@ -363,7 +365,8 @@ async function generarPDF(){
     const canvas = await html2canvas(document.getElementById("carnet"), {  
         scale:5,  
         useCORS:true,
-        backgroundColor:null
+        backgroundColor:null,
+        foreignObjectRendering:true
     });    
     const img = canvas.toDataURL("image/png");    
     const pdf = new jsPDF({ orientation:"landscape", unit:"mm", format:[85.6,54] });    
@@ -375,7 +378,8 @@ async function generarImagen(){
     const canvas = await html2canvas(document.getElementById("carnet"), {  
         scale:5,  
         useCORS:true,
-        backgroundColor:null
+        backgroundColor:null,
+        foreignObjectRendering:true
     });
     const link = document.createElement('a');
     link.download = 'carnet.png';
@@ -386,4 +390,4 @@ async function generarImagen(){
 </script>    
 
 </body>    
-                    </html>
+                </html>
