@@ -145,24 +145,22 @@ function mostrarCampos(){
   if(tipo === "particular"){
     categoria.style.display = "block";
     categoria.innerHTML += `
-      <option>A.1 - Motocicletas hasta 50 cc</option>
-      <option>A.2.1 - Motocicletas hasta 150 cc</option>
-      <option>A.2.2 - Motocicletas hasta 300 cc</option>
-      <option>A.3 - Motocicletas más de 300 cc</option>
-      <option>B.1 - Automóviles particulares hasta 3.500 kg</option>
-      <option>B.2 - Automóviles con acoplado</option>
-      <option>F - Personas con discapacidad</option>
-      <option>G - Maquinaria especial no agrícola</option>
+      <option>A - Motos</option>
+      <option>B1 - Autos particulares</option>
+      <option>B2 - Camionetas / utilitarios</option>
+      <option>G - Maquinaria agrícola</option>
     `;
   }
 
   if(tipo === "profesional"){
     categoria.style.display = "block";
     categoria.innerHTML += `
-      <option>C - Camiones sin acoplado</option>
-      <option>D.1 - Transporte de pasajeros hasta 8 plazas</option>
-      <option>D.2 - Transporte de pasajeros más de 8 plazas</option>
-      <option>E.1 - Vehículos con remolque</option>
+      <option>D1 - Transporte de pasajeros hasta 8 plazas</option>
+      <option>D2 - Transporte de pasajeros de más de 8 plazas</option>
+      <option>D3 - Emergencia / seguridad / maquinaria especial</option>
+      <option>E1 - Camiones con acoplado / semirremolque</option>
+      <option>E2 - Maquinaria especial no agrícola</option>
+      <option>C - Camiones sin acoplado de gran porte</option>
     `;
   }
 }
@@ -248,4 +246,4 @@ function enviarWhatsApp(e){
 </script>
 
 </body>
-      </html>
+</html>
