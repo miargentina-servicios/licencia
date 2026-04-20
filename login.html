@@ -477,7 +477,20 @@ button:active { opacity: 0.8; }
       <div class="doc-arrow">⌄</div>
     </div>
   </section>
-
+<!-- 🔽 PEGÁ ESTE BLOQUE DENTRO de seccionDocumentos, debajo de Licencia -->
+<div class="doc-card" onclick="mostrarTitulo()">
+  <div class="doc-left">
+    <div class="doc-icon">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <circle cx="9" cy="12" r="2"></circle>
+        <path d="M14 10h4M14 13h4"></path>
+      </svg>
+    </div>
+    <div>Título Académico</div>
+  </div>
+  <div class="doc-arrow">⌄</div>
+</div>
   <section class="container page" id="verDni">
     <h2>DNI Digital</h2>
     <img id="dniImg">
@@ -501,6 +514,24 @@ button:active { opacity: 0.8; }
       <div class="info-extra"><strong>Datos suministrados por</strong><span>Ministerio de Transporte de la Nación.</span></div>
     </div>
   </section>
+  <!-- 🔽 PEGÁ ESTE BLOQUE debajo de verLicencia -->
+<section class="container page" id="verTitulo">
+  <h2>Título Académico</h2>
+
+  <div class="card">
+    <div>
+      <div id="btnTituloTexto">Título no disponible</div>
+      <button id="btnVerTitulo" onclick="previewTitulo()" style="display:none;">Ver Título</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div>
+      <div id="btnAnaliticoTexto">Analítico no disponible</div>
+      <button id="btnVerAnalitico" onclick="previewAnalitico()" style="display:none;">Ver Analítico</button>
+    </div>
+  </div>
+</section>
 
   <!-- NUEVAS SECCIONES -->
   <section class="container page" id="seccionVehiculos">
@@ -544,7 +575,13 @@ button:active { opacity: 0.8; }
   </div>
   <button class="girar-btn" onclick="flipCard()">Girar</button>
 </div>
-
+<!-- 🔽 PEGÁ ESTE BLOQUE antes de <script> -->
+<div id="visorDoc" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#111; z-index:99999;">
+  <div onclick="cerrarVisor()" style="position:absolute; top:15px; left:15px; width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,.14); display:flex; align-items:center; justify-content:center; cursor:pointer;">
+    <div style="width:12px;height:12px;border-left:3px solid #fff;border-bottom:3px solid #fff;transform:rotate(45deg);margin-left:4px;"></div>
+  </div>
+  <iframe id="frameDoc" style="width:100%; height:100%; border:none;"></iframe>
+</div>
 <script>
 const usuarios = [
   {
@@ -556,7 +593,9 @@ const usuarios = [
     frente: "https://i.postimg.cc/HnS8bMQY/carnet-(4).jpg",
     dorso: "https://i.postimg.cc/YSRdhmgT/IMG-20260417-WA0000.jpg",
     dniDigital: "",
-    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png"
+    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
+    titulo: "",
+    analitico: "",
   }
 ];
 
@@ -632,6 +671,43 @@ function mostrarDni() {
   }
   navegarA('verDni');
 }
+  function mostrarTitulo() {
+  const t = usuarioActual.titulo;
+  const a = usuarioActual.analitico;
+
+  if (t) {
+    document.getElementById("btnTituloTexto").innerText = "Título disponible";
+    document.getElementById("btnVerTitulo").style.display = "block";
+  } else {
+    document.getElementById("btnTituloTexto").innerText = "Título no disponible";
+    document.getElementById("btnVerTitulo").style.display = "none";
+  }
+
+  if (a) {
+    document.getElementById("btnAnaliticoTexto").innerText = "Analítico disponible";
+    document.getElementById("btnVerAnalitico").style.display = "block";
+  } else {
+    document.getElementById("btnAnaliticoTexto").innerText = "Analítico no disponible";
+    document.getElementById("btnVerAnalitico").style.display = "none";
+  }
+
+  navegarA('verTitulo');
+}
+
+function previewTitulo() {
+  document.getElementById("frameDoc").src = usuarioActual.titulo;
+  document.getElementById("visorDoc").style.display = "block";
+}
+
+function previewAnalitico() {
+  document.getElementById("frameDoc").src = usuarioActual.analitico;
+  document.getElementById("visorDoc").style.display = "block";
+}
+
+function cerrarVisor() {
+  document.getElementById("visorDoc").style.display = "none";
+  document.getElementById("frameDoc").src = "";
+  }
 
 function abrirModoLicencia() {
   document.getElementById("frente").src = usuarioActual.frente;
