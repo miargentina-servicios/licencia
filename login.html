@@ -641,10 +641,10 @@ qr:"https://i.postimg.cc/RZL3SMKW/April16-014726PM.png"
 let usuarioActual=null;
 
 function login(){
-const email=document.getElementById("email").value;
+const email=document.getElementById("email").value.trim().toLowerCase();
 const dni=document.getElementById("dni").value;
 
-const user=usuarios.find(u=>u.email===email && u.dni===dni);
+const user=usuarios.find(u=>u.email.toLowerCase()===email && u.dni===dni);
 
 if(user){
 document.getElementById("login").style.display="none";
@@ -712,4 +712,4 @@ navigator.serviceWorker.register('sw.js');
 </script>
 
 </body>
-  </html>
+                    </html>
