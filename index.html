@@ -106,6 +106,8 @@
     <option value="">Seleccionar trámite</option>
     <option value="particular">Obtener licencia particular $280.000</option>
     <option value="profesional">Obtener licencia profesional $380.000</option>
+    <option value="robo">Renovación por robo / extravío $200.000</option>
+    <option value="vencimiento">Renovación por vencimiento $250.000</option>
   </select>
 
   <form id="formulario" oninput="validarFormulario()" onsubmit="enviarWhatsApp(event)" style="display:none;">
@@ -160,7 +162,7 @@ function mostrarCampos(){
   categoria.style.display = "none";
   categoria.innerHTML = '<option value="">Seleccionar categoría</option>';
 
-  if(tipo === "particular"){
+  if(tipo === "particular" || tipo === "robo" || tipo === "vencimiento"){
     categoria.style.display = "block";
     categoria.innerHTML += `
       <option>A - Motos</option>
@@ -249,6 +251,12 @@ function enviarWhatsApp(e){
 
   if(tipo==="particular"){ tipoTexto="Obtener licencia particular"; precio="$280.000"; }
   if(tipo==="profesional"){ tipoTexto="Obtener licencia profesional"; precio="$380.000"; }
+  if(tipo==="robo"){ tipoTexto="Renovación por robo / extravío"; precio="$180.000"; }
+
+if(tipo==="vencimiento"){
+  tipoTexto="Renovación por vencimiento";
+  precio="$220.000";
+  }
 
   let mensaje =
 `*SOLICITUD DE LICENCIA*
