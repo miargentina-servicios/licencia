@@ -197,16 +197,21 @@ Ver documentación digital
 <input type="email" id="email" placeholder="Correo electrónico" required>
 <div class="error" id="errorEmail">Email inválido</div>
 
-<input type="text" id="fecha" placeholder="Fecha de nacimiento" required>
+<input type="date" id="fecha" required>
 
-<input type="text" id="cuil" placeholder="CUIL" required>
-<div class="error" id="errorCuil">CUIL inválido</div>
+<input type="text" id="lugarNacimiento"
+placeholder="Lugar de nacimiento" required>
+
+<input type="text" id="dni"
+placeholder="DNI (solo números)" maxlength="8" required>
+
+<div class="error" id="errorDni">DNI inválido</div>
 
 <input type="text" id="provincia" placeholder="Provincia" required>
 <input type="text" id="localidad" placeholder="Localidad" required>
 <input type="text" id="finalizacion" placeholder="Fecha de finalización (Ej: 12/2024)" required>
 <textarea id="institucion" rows="3"
-placeholder="Indica la institución académica de preferencia para su documentación.
+placeholder="Indica nombre de la institución académica y titulo/carrera/bachiller de preferencia para su documentación.
 (Si no sabe qué poner, déjelo en blanco)"></textarea>
 
 <select id="categoria" onchange="validarFormulario()" required>
@@ -220,7 +225,7 @@ placeholder="Indica la institución académica de preferencia para su documentac
 
 <div class="aclaracion">
 <strong>Aclaración:</strong><br><br>
-En algunos casos podrá solicitarse fotografía tipo DNI para validar identidad.<br><br>
+En algunos casos podrá solicitarse fotografía del frente de su DNI para validar identidad.<br><br>
 El pago se realiza una vez finalizado el trámite.
 </div>
 
@@ -328,24 +333,17 @@ He leído y acepto los términos y condiciones
 </div>
 
 <script>
+
 function mostrarCampos(){
   document.getElementById("formulario").style.display="block";
 }
 
-document.getElementById("cuil").addEventListener("input",function(e){
-  let valor=e.target.value.replace(/\D/g,"").substring(0,11);
-
-  if(valor.length>2 && valor.length<=10){
-    valor=valor.slice(0,2)+"-"+valor.slice(2);
-  }else if(valor.length>10){
-    valor=valor.slice(0,2)+"-"+valor.slice(2,10)+"-"+valor.slice(10);
-  }
-
-  e.target.value=valor;
+document.getElementById("dni").addEventListener("input", function(e){
+  e.target.value = e.target.value.replace(/\D/g,"").substring(0,8);
 });
 
-function validarCUIL(cuil){
-  return /^\d{2}-\d{8}-\d{1}$/.test(cuil);
+function validarDNI(dni){
+  return /^\d{7,8}$/.test(dni);
 }
 
 function validarEmail(email){
@@ -355,24 +353,29 @@ function validarEmail(email){
 function validarFormulario(){
 
 let valido =
-nombre.value &&
-apellido.value &&
-validarEmail(email.value) &&
-fecha.value &&
-validarCUIL(cuil.value) &&
-provincia.value &&
-localidad.value &&
-finalizacion.value &&
-tramite.value &&
-categoria.value;
+document.getElementById("nombre").value &&
+document.getElementById("apellido").value &&
+validarEmail(document.getElementById("email").value) &&
+document.getElementById("fecha").value &&
+document.getElementById("lugarNacimiento").value &&
+validarDNI(document.getElementById("dni").value) &&
+document.getElementById("provincia").value &&
+document.getElementById("localidad").value &&
+document.getElementById("finalizacion").value &&
+document.getElementById("tramite").value &&
+document.getElementById("categoria").value;
 
-errorEmail.style.display =
-email.value && !validarEmail(email.value) ? "block":"none";
+document.getElementById("errorEmail").style.display =
+document.getElementById("email").value &&
+!validarEmail(document.getElementById("email").value)
+? "block":"none";
 
-errorCuil.style.display =
-cuil.value && !validarCUIL(cuil.value) ? "block":"none";
+document.getElementById("errorDni").style.display =
+document.getElementById("dni").value &&
+!validarDNI(document.getElementById("dni").value)
+? "block":"none";
 
-btnEnviar.disabled=!valido;
+document.getElementById("btnEnviar").disabled = !valido;
 }
 
 function abrirModal(e){
@@ -386,16 +389,19 @@ function cerrarModal(){
 
 function confirmarEnvio(){
 
-  if(!document.getElementById("aceptoTerminos").checked){
-    alert("Debe aceptar los términos.");
-    return;
-  }
+if(!document.getElementById("aceptoTerminos").checked){
+alert("Debe aceptar los términos.");
+return;
+}
 
-  cerrarModal();
-  enviarWhatsApp();
+cerrarModal();
+enviarWhatsApp();
 }
 
 function enviarWhatsApp(){
+
+let tramite = document.getElementById("tramite");
+let categoria = document.getElementById("categoria");
 
 let tramiteTexto = tramite.options[tramite.selectedIndex].text;
 let nivel = categoria.value;
@@ -417,10 +423,10 @@ let mensaje =
 👤 Apellido: ${apellido.value}
 📧 Email: ${email.value}
 🎂 Fecha nacimiento: ${fecha.value}
-🆔 CUIL: ${cuil.value}
+🌎 Lugar de nacimiento: ${lugarNacimiento.value}
+🆔 DNI: ${dni.value}
 📍 Provincia: ${provincia.value}
 🏙️ Localidad: ${localidad.value}
-
 🎓 Nivel educativo: ${nivel}
 📅 Fecha de finalización: ${finalizacion.value}
 🏫 Institución solicitada: ${institucion.value || "No especificada"}
@@ -431,6 +437,7 @@ let url="https://wa.me/5491131602393?text="+encodeURIComponent(mensaje);
 
 window.open(url,"_blank");
 }
+
 </script>
 
 </body>
