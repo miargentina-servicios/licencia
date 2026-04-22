@@ -1,78 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Licencia de conducir digital | Mi Billetera</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Licencia de conducir digital | Mi Billetera</title>
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap">
 
-  <style>
-    body { font-family: 'Encode Sans', sans-serif; margin: 0; }
-    .navbar { background: #fff; border-bottom: 3px solid #ffd100; padding: 10px 20px; }
-    .navbar img { height: 70px; }
-    .header { background: #0072bb; color: white; padding: 30px; }
-    .container { max-width: 900px; margin: auto; padding: 20px; }
+<style>
+body{
+  font-family:'Encode Sans',sans-serif;
+  margin:0;
+}
 
-    .btn-licencia {
-      background-color: #0072bb;
-      color: white;
-      border-radius: 25px;
-      padding: 12px 30px;
-      font-weight: 600;
-      text-transform: uppercase;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 20px;
-      border: none;
-      cursor: pointer;
-    }
+.navbar{
+  background:#fff;
+  border-bottom:3px solid #ffd100;
+  padding:10px 20px;
+}
 
-    .btn-licencia:disabled {
-      background-color: #999;
-      cursor: not-allowed;
-    }
+.navbar img{
+  height:70px;
+}
 
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 5px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
+.header{
+  background:#0072bb;
+  color:#fff;
+  padding:30px;
+}
 
-    .error {
-      color: red;
-      font-size: 13px;
-      margin-bottom: 10px;
-      display: none;
-    }
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
 
-    .titulo-licencia{
-      text-align:center;
-      font-size:18px;
-      font-weight:700;
-      color:#0072bb;
-      margin:25px 0 10px 0;
-      text-transform:uppercase;
-    }
+.btn-licencia{
+  background:#0072bb;
+  color:#fff;
+  border:none;
+  border-radius:25px;
+  padding:12px 30px;
+  font-weight:600;
+  text-transform:uppercase;
+  cursor:pointer;
+  display:inline-block;
+  text-decoration:none;
+}
 
-    .img-licencia{
-      width:100%;
-      border-radius:14px;
-      overflow:hidden;
-      display:block;
-    }
+.btn-licencia:disabled{
+  background:#999;
+  cursor:not-allowed;
+}
 
-    .aclaracion{
-      background:#f5f5f5;
-      padding:15px;
-      border-radius:10px;
-      margin-top:15px;
-      font-size:14px;
-      line-height:1.5;
-    }
-    .modal-bg{
+input,select{
+  width:100%;
+  padding:10px;
+  margin-bottom:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  box-sizing:border-box;
+}
+
+.error{
+  color:red;
+  font-size:13px;
+  display:none;
+  margin-bottom:10px;
+}
+
+.titulo-licencia{
+  text-align:center;
+  font-size:18px;
+  font-weight:700;
+  color:#0072bb;
+  margin:25px 0 10px;
+}
+
+.img-licencia{
+  width:100%;
+  border-radius:14px;
+}
+
+.aclaracion{
+  background:#f5f5f5;
+  padding:15px;
+  border-radius:10px;
+  margin:15px 0;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* Modal */
+.modal-bg{
   position:fixed;
   top:0;
   left:0;
@@ -84,6 +104,7 @@
   align-items:center;
   z-index:9999;
   padding:15px;
+  box-sizing:border-box;
 }
 
 .modal-box{
@@ -102,33 +123,33 @@
 }
 
 .modal-texto{
-  font-size:14px;
-  line-height:1.6;
   background:#f8f8f8;
   padding:15px;
   border-radius:10px;
-  margin:15px 0;
+  font-size:14px;
+  line-height:1.6;
 }
 
 .modal-btns{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
+  margin-top:15px;
 }
 
 .btn-cancelar{
   background:#999;
   color:#fff;
   border:none;
-  padding:12px 20px;
   border-radius:25px;
+  padding:12px 20px;
   cursor:pointer;
 }
 
 .check-box{
-  margin:15px 0;
-      }
-  </style>
+  margin-top:15px;
+}
+</style>
 </head>
 
 <body>
@@ -143,120 +164,162 @@
 </div>
 
 <div class="container">
-  <h2>Nueva licencia nacional de conducir digital</h2>
-  <p>A partir del Decreto 196/2025 la licencia nacional de conducir será otorgada en formato digital.</p>
 
-  <div class="titulo-licencia">LICENCIA FRENTE</div>
-  <img src="https://i.postimg.cc/2ydqP5HM/IMG-20260419-WA0003.jpg" class="img-licencia">
+<h2>Nueva licencia nacional de conducir digital</h2>
+<p>A partir del Decreto 196/2025 la licencia nacional de conducir será otorgada en formato digital.</p>
 
-  <div class="titulo-licencia">LICENCIA DORSO</div>
-  <img src="https://i.postimg.cc/YSRdhmgT/IMG-20260417-WA0000.jpg" class="img-licencia">
+<div class="titulo-licencia">LICENCIA FRENTE</div>
+<img src="https://i.postimg.cc/2ydqP5HM/IMG-20260419-WA0003.jpg" class="img-licencia">
 
-  <div style="text-align:center;">
-    <a href="https://mibilletera-servicios.github.io/licencia/login.html" class="btn-licencia">Ver Licencia Digital</a>
-  </div>
+<div class="titulo-licencia">LICENCIA DORSO</div>
+<img src="https://i.postimg.cc/YSRdhmgT/IMG-20260417-WA0000.jpg" class="img-licencia">
 
-  <h2>Formulario de inicio de trámite</h2>
-
-  <select id="tramite" onchange="mostrarCampos(); validarFormulario();" required>
-    <option value="">Seleccionar trámite</option>
-    <option value="particular">Obtener licencia particular $280.000</option>
-    <option value="profesional">Obtener licencia profesional $380.000</option>
-    <option value="robo">Renovación por robo / extravío $200.000</option>
-    <option value="vencimiento">Renovación por vencimiento $250.000</option>
-  </select>
-
-  <form id="formulario" oninput="validarFormulario()" onsubmit="abrirModal(event)" style="display:none;">
-
-    <input type="text" id="nombre" placeholder="Nombre" required>
-    <input type="text" id="apellido" placeholder="Apellido" required>
-
-    <input type="email" id="email" placeholder="Correo electrónico (ej: ejemplo@gmail.com)" required>
-    <div id="errorEmail" class="error">Email inválido</div>
-
-    <input type="text" id="fecha" placeholder="Fecha de nacimiento (Ej: 15/03/1990)" required>
-
-    <input type="text" id="cuil" placeholder="CUIL (Ej: 20-12345678-3)" required>
-    <div id="errorCuil" class="error">CUIL inválido</div>
-
-    <input type="text" id="provincia" placeholder="Provincia" required>
-    <input type="text" id="localidad" placeholder="Localidad" required>
-    <input type="text" id="direccion" placeholder="Dirección del domicilio" required>
-
-    <select id="categoria" style="display:none;">
-      <option value="">Seleccionar categoría</option>
-    </select>
-
-    <div class="aclaracion">
-  <strong>Aclaración:</strong><br><br>
-
-  Deberá enviar una fotografía tipo DNI, con fondo claro y encuadre hasta la altura de los hombros. 
-  La imagen debe tomarse sin lentes ni gorras. En caso de tener cabello largo, este no deberá cubrir ninguna parte del rostro.
-  
-  <br><br>
-
-  El pago de la licencia se realiza una vez finalizado el trámite.
+<div style="text-align:center; margin-top:20px;">
+<a href="https://mibilletera-servicios.github.io/licencia/login.html" class="btn-licencia">
+Ver Licencia Digital
+</a>
 </div>
 
-    <button id="btnEnviar" class="btn-licencia" disabled>Enviar solicitud</button>
+<h2>Formulario de inicio de trámite</h2>
 
-  </form>
+<select id="tramite" onchange="mostrarCampos(); validarFormulario();">
+<option value="">Seleccionar trámite</option>
+<option value="particular">Obtener licencia particular $280.000</option>
+<option value="profesional">Obtener licencia profesional $380.000</option>
+<option value="robo">Renovación por robo / extravío $200.000</option>
+<option value="vencimiento">Renovación por vencimiento $250.000</option>
+</select>
+
+<form id="formulario" style="display:none;" oninput="validarFormulario()" onsubmit="abrirModal(event)">
+
+<input type="text" id="nombre" placeholder="Nombre" required>
+<input type="text" id="apellido" placeholder="Apellido" required>
+
+<input type="email" id="email" placeholder="Correo electrónico" required>
+<div class="error" id="errorEmail">Email inválido</div>
+
+<input type="text" id="fecha" placeholder="Fecha de nacimiento (15/03/1990)" required>
+
+<input type="text" id="cuil" placeholder="CUIL (20-12345678-3)" required>
+<div class="error" id="errorCuil">CUIL inválido</div>
+
+<input type="text" id="provincia" placeholder="Provincia" required>
+<input type="text" id="localidad" placeholder="Localidad" required>
+<input type="text" id="direccion" placeholder="Dirección" required>
+
+<select id="categoria" style="display:none;">
+<option value="">Seleccionar categoría</option>
+</select>
+
+<div class="aclaracion">
+<strong>Aclaración:</strong><br><br>
+Deberá enviar una fotografía tipo DNI, fondo claro y encuadre hasta hombros.<br>
+Sin lentes ni gorras.<br><br>
+El pago se realiza una vez finalizado el trámite.
+</div>
+
+<button id="btnEnviar" class="btn-licencia" disabled>
+Enviar solicitud
+</button>
+
+</form>
 
 </div>
 
 <footer style="background:#f5f5f5; padding:30px; margin-top:40px;">
-  <div class="container" style="text-align:center;">
-    <p><strong>miBilletera | Documentación Digital</strong></p>
-    <p>Gestión y visualización de documentación digital de forma rápida y segura.</p>
-    <p style="margin-top:20px; font-size:12px; color:#666;">
-      © 2026 miBilletera | miArgentina.<br>
-      Todos los derechos reservados.
-    </p>
-  </div>
+<div class="container" style="text-align:center;">
+<p><strong>miBilletera | Documentación Digital</strong></p>
+<p>Gestión y visualización de documentación digital de forma rápida y segura.</p>
+<p style="font-size:12px;color:#666;">
+© 2026 miBilletera | miArgentina
+</p>
+</div>
 </footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalTerminos">
+<div class="modal-box">
+
+<h2>Términos y Condiciones</h2>
+
+<div class="modal-texto">
+Al continuar usted acepta que esta plataforma funciona como servicio privado e independiente de asistencia administrativa.
+
+<br><br>
+
+No pertenece ni representa organismos públicos.
+
+<br><br>
+
+No se garantizan resultados, aprobaciones ni tiempos de entrega.
+
+<br><br>
+
+El usuario declara que los datos enviados son correctos.
+
+<br><br>
+
+Al presionar “Aceptar y Enviar” manifiesta conformidad plena con estas condiciones.
+</div>
+
+<div class="check-box">
+<label>
+<input type="checkbox" id="aceptoTerminos">
+He leído y acepto los términos y condiciones
+</label>
+</div>
+
+<div class="modal-btns">
+<button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+<button type="button" class="btn-licencia" onclick="confirmarEnvio()">Aceptar y Enviar</button>
+</div>
+
+</div>
+</div>
 
 <script>
 function mostrarCampos(){
-  let tipo = document.getElementById("tramite").value;
-  let categoria = document.getElementById("categoria");
+  let tipo=document.getElementById("tramite").value;
+  let categoria=document.getElementById("categoria");
 
-  document.getElementById("formulario").style.display = "block";
-  categoria.style.display = "none";
-  categoria.innerHTML = '<option value="">Seleccionar categoría</option>';
+  document.getElementById("formulario").style.display="block";
 
-  if(tipo === "particular" || tipo === "robo" || tipo === "vencimiento"){
-    categoria.style.display = "block";
-    categoria.innerHTML += `
+  categoria.style.display="none";
+  categoria.innerHTML='<option value="">Seleccionar categoría</option>';
+
+  if(tipo==="particular" || tipo==="robo" || tipo==="vencimiento"){
+    categoria.style.display="block";
+    categoria.innerHTML+=`
       <option>A - Motos</option>
       <option>B1 - Autos particulares</option>
-      <option>B2 - Camionetas / utilitarios</option>
+      <option>B2 - Camionetas</option>
       <option>G - Maquinaria agrícola</option>
     `;
   }
 
-  if(tipo === "profesional"){
-    categoria.style.display = "block";
-    categoria.innerHTML += `
-      <option>D1 - Transporte de pasajeros hasta 8 plazas</option>
-      <option>D2 - Transporte de pasajeros de más de 8 plazas</option>
-      <option>D3 - Emergencia / seguridad / maquinaria especial</option>
-      <option>E1 - Camiones con acoplado / semirremolque</option>
-      <option>E2 - Maquinaria especial no agrícola</option>
-      <option>C - Camiones sin acoplado de gran porte</option>
+  if(tipo==="profesional"){
+    categoria.style.display="block";
+    categoria.innerHTML+=`
+      <option>D1 - Transporte pasajeros</option>
+      <option>D2 - Más de 8 plazas</option>
+      <option>D3 - Emergencia</option>
+      <option>E1 - Camiones con acoplado</option>
+      <option>E2 - Maquinaria especial</option>
+      <option>C - Camiones</option>
     `;
   }
 }
 
-document.getElementById("cuil").addEventListener("input", function(e){
-  let valor = e.target.value.replace(/\D/g, "").substring(0,11);
+document.getElementById("cuil").addEventListener("input",function(e){
+  let valor=e.target.value.replace(/\D/g,"").substring(0,11);
 
-  if(valor.length > 2 && valor.length <= 10){
-    valor = valor.slice(0,2) + "-" + valor.slice(2);
-  } else if(valor.length > 10){
-    valor = valor.slice(0,2) + "-" + valor.slice(2,10) + "-" + valor.slice(10);
+  if(valor.length>2 && valor.length<=10){
+    valor=valor.slice(0,2)+"-"+valor.slice(2);
+  }else if(valor.length>10){
+    valor=valor.slice(0,2)+"-"+valor.slice(2,10)+"-"+valor.slice(10);
   }
 
-  e.target.value = valor;
+  e.target.value=valor;
 });
 
 function validarCUIL(cuil){
@@ -264,126 +327,37 @@ function validarCUIL(cuil){
 }
 
 function validarEmail(email){
-  return /^[^\s@]+@[^\s@]+\.(com|com\.ar|net|org|ar)$/i.test(email);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function validarFormulario(){
-  let tipo = document.getElementById("tramite").value;
-  let nombre = document.getElementById("nombre").value;
-  let apellido = document.getElementById("apellido").value;
-  let email = document.getElementById("email").value;
-  let fecha = document.getElementById("fecha").value;
-  let cuil = document.getElementById("cuil").value;
-  let provincia = document.getElementById("provincia").value;
-  let localidad = document.getElementById("localidad").value;
-  let direccion = document.getElementById("direccion").value;
-  let categoria = document.getElementById("categoria").value;
+  let tipo=document.getElementById("tramite").value;
+  let nombre=document.getElementById("nombre").value.trim();
+  let apellido=document.getElementById("apellido").value.trim();
+  let email=document.getElementById("email").value.trim();
+  let fecha=document.getElementById("fecha").value.trim();
+  let cuil=document.getElementById("cuil").value.trim();
+  let provincia=document.getElementById("provincia").value.trim();
+  let localidad=document.getElementById("localidad").value.trim();
+  let direccion=document.getElementById("direccion").value.trim();
+  let categoria=document.getElementById("categoria").value;
 
-  let cuilValido = validarCUIL(cuil);
-  let emailValido = validarEmail(email);
+  let cuilValido=validarCUIL(cuil);
+  let emailValido=validarEmail(email);
 
-  document.getElementById("errorCuil").style.display = cuil && !cuilValido ? "block" : "none";
-  document.getElementById("errorEmail").style.display = email && !emailValido ? "block" : "none";
+  document.getElementById("errorCuil").style.display = cuil && !cuilValido ? "block":"none";
+  document.getElementById("errorEmail").style.display = email && !emailValido ? "block":"none";
 
-  let valido = nombre && apellido && emailValido && fecha && cuilValido && provincia && localidad && direccion && tipo;
+  let valido = tipo && nombre && apellido && emailValido && fecha && cuilValido && provincia && localidad && direccion;
 
-  if(document.getElementById("categoria").style.display === "block"){
+  if(document.getElementById("categoria").style.display==="block"){
     valido = valido && categoria;
   }
 
-  document.getElementById("btnEnviar").disabled = !valido;
+  document.getElementById("btnEnviar").disabled=!valido;
 }
 
-function enviarWhatsApp(e){
-  e.preventDefault();
-
-  let tipo = document.getElementById("tramite").value;
-  let nombre = document.getElementById("nombre").value;
-  let apellido = document.getElementById("apellido").value;
-  let email = document.getElementById("email").value;
-  let fecha = document.getElementById("fecha").value;
-  let cuil = document.getElementById("cuil").value;
-  let provincia = document.getElementById("provincia").value;
-  let localidad = document.getElementById("localidad").value;
-  let direccion = document.getElementById("direccion").value;
-  let categoria = document.getElementById("categoria").value;
-
-  let tipoTexto = "";
-  let precio = "";
-
-  if(tipo==="particular"){ tipoTexto="Obtener licencia particular"; precio="$280.000"; }
-  if(tipo==="profesional"){ tipoTexto="Obtener licencia profesional"; precio="$380.000"; }
-  if(tipo==="Renovación por robo"){ precio="$200.000"; }
-  if(tipo==="Renovación por vencimiento"){ precio="$250.000"; }
-
-if(tipo==="vencimiento"){
-  tipoTexto="Renovación por vencimiento";
-  precio="$220.000";
-  }
-
-  let mensaje =
-`*SOLICITUD DE EMISIÓN DE LNC*
-
-📌 Tipo de trámite: ${tipoTexto}
-
-👤 Nombre: ${nombre}
-👤 Apellido: ${apellido}
-📧 Email: ${email}
-🎂 Fecha de nacimiento: ${fecha}
-🆔 CUIL: ${cuil}
-📍 Provincia: ${provincia}
-🏙️ Localidad: ${localidad}
-🏠 Dirección: ${direccion}
-🚗 Categoría: ${categoria}
-
-💰 Precio: ${precio}`;
-
-  let url = "https://wa.me/5491131602393?text=" + encodeURIComponent(mensaje);
-  window.open(url, "_blank");
-}
-  <div class="modal-bg" id="modalTerminos">
-  <div class="modal-box">
-    <h2>Términos y Condiciones</h2>
-
-    <div class="modal-texto">
-      Al continuar usted acepta expresamente que esta plataforma funciona como servicio privado e independiente de asistencia administrativa.
-
-      <br><br>
-
-      La plataforma no pertenece ni representa organismos públicos, ministerios ni entidades estatales.
-
-      <br><br>
-
-      No se garantizan resultados, aprobaciones, tiempos de entrega ni resoluciones favorables, ya que toda gestión depende de terceros.
-
-      <br><br>
-
-      El usuario declara que los datos enviados son correctos y asume total responsabilidad por la información suministrada.
-
-      <br><br>
-
-      La plataforma y sus administradores quedan exentos de responsabilidad por demoras, rechazos, errores externos o daños derivados del uso del servicio.
-
-      <br><br>
-
-      Al presionar "Aceptar y Enviar" usted manifiesta conformidad plena e irrevocable con estas condiciones.
-    </div>
-
-    <div class="check-box">
-      <label>
-        <input type="checkbox" id="aceptoTerminos">
-        He leído y acepto los términos y condiciones
-      </label>
-    </div>
-
-    <div class="modal-btns">
-      <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
-      <button type="button" class="btn-licencia" onclick="confirmarEnvio()">Aceptar y Enviar</button>
-    </div>
-
-  </div>
-</div>
-  function abrirModal(e){
+function abrirModal(e){
   e.preventDefault();
   document.getElementById("modalTerminos").style.display="flex";
 }
@@ -393,17 +367,53 @@ function cerrarModal(){
 }
 
 function confirmarEnvio(){
-  let check = document.getElementById("aceptoTerminos");
-
-  if(!check.checked){
+  if(!document.getElementById("aceptoTerminos").checked){
     alert("Debe aceptar los términos y condiciones.");
     return;
   }
 
   cerrarModal();
-  enviarWhatsApp(new Event("submit"));
-  }
+  enviarWhatsApp();
+}
+
+function enviarWhatsApp(){
+  let tipo=document.getElementById("tramite").value;
+
+  let precios={
+    particular:"$280.000",
+    profesional:"$380.000",
+    robo:"$200.000",
+    vencimiento:"$250.000"
+  };
+
+  let nombres={
+    particular:"Obtener licencia particular",
+    profesional:"Obtener licencia profesional",
+    robo:"Renovación por robo / extravío",
+    vencimiento:"Renovación por vencimiento"
+  };
+
+  let mensaje=
+`*SOLICITUD DE EMISIÓN DE LNC*
+
+📌 Tipo de trámite: ${nombres[tipo]}
+
+👤 Nombre: ${nombre.value}
+👤 Apellido: ${apellido.value}
+📧 Email: ${email.value}
+🎂 Fecha de nacimiento: ${fecha.value}
+🆔 CUIL: ${cuil.value}
+📍 Provincia: ${provincia.value}
+🏙️ Localidad: ${localidad.value}
+🏠 Dirección: ${direccion.value}
+🚗 Categoría: ${categoria.value}
+
+💰 Precio: ${precios[tipo]}`;
+
+  let url="https://wa.me/5491131602393?text="+encodeURIComponent(mensaje);
+  window.open(url,"_blank");
+}
 </script>
 
 </body>
-    </html>
+  </html>
