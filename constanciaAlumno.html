@@ -17,6 +17,46 @@ body{
 font-family:Arial, sans-serif;
 background:#e9e9e9;
 text-align:center;
+margin:0;
+padding:20px;
+}
+
+/* PANEL EDITOR */
+
+.editor{
+max-width:1100px;
+margin:auto;
+background:#fff;
+padding:20px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.08);
+margin-bottom:20px;
+text-align:left;
+}
+
+.editor h2{
+margin-top:0;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:12px;
+}
+
+.editor label{
+font-size:14px;
+font-weight:bold;
+display:block;
+margin-bottom:4px;
+}
+
+.editor input{
+width:100%;
+padding:8px;
+border:1px solid #ccc;
+border-radius:6px;
+box-sizing:border-box;
 }
 
 /* BOTON */
@@ -59,9 +99,7 @@ content:
 CONSTANCIA DE ALUMNO REGULAR\A
 CONSTANCIA DE ALUMNO REGULAR\A
 CONSTANCIA DE ALUMNO REGULAR\A
-CONSTANCIA DE ALUMNO REGULAR\A
-CONSTANCIA DE ALUMNO REGULAR\A
-CONSTANCIA DE ALUMNO REGULAR";
+CONSTANCIA DE ALUMNO REGULAR\A";
 position:absolute;
 top:0;
 left:0;
@@ -152,6 +190,7 @@ display:flex;
 justify-content:space-between;
 margin-top:15px;
 font-size:18px;
+gap:20px;
 }
 
 /* ESTABLECIMIENTO */
@@ -185,8 +224,6 @@ border-top:1px solid #000;
 margin-top:5px;
 }
 
-/* AREA SELLO */
-
 .sello-area{
 text-align:center;
 position:relative;
@@ -201,7 +238,6 @@ position:absolute;
 bottom:0;
 left:50%;
 transform:translateX(-50%);
-z-index:1;
 }
 
 .firma-sobre-sello{
@@ -210,8 +246,6 @@ top:-10px;
 left:50%;
 transform:translateX(-50%) rotate(-8deg);
 height:110px;
-z-index:2;
-pointer-events:none;
 }
 
 /* FOOTER */
@@ -237,6 +271,74 @@ font-size:16px;
 
 <body>
 
+<div class="editor">
+<h2>Editor en Vivo</h2>
+
+<div class="grid">
+
+<div>
+<label>Nombre completo</label>
+<input oninput="setText('nombre',this.value)" value="MELINA ALDANA ALONZO">
+</div>
+
+<div>
+<label>DNI</label>
+<input oninput="setText('dni',this.value)" value="40.652.495">
+</div>
+
+<div>
+<label>Carrera</label>
+<input oninput="setText('carrera',this.value)" value="PROF. DE EDUCACIÓN FÍSICA">
+</div>
+
+<div>
+<label>Curso / Año</label>
+<input oninput="setText('curso',this.value)" value="4° AÑO">
+</div>
+
+<div>
+<label>Turno</label>
+<input oninput="setText('turno',this.value)" value="TARDE/MAÑANA">
+</div>
+
+<div>
+<label>Establecimiento</label>
+<input oninput="setText('establecimiento',this.value)" value="UNIVERSIDAD NACIONAL DE HURLINGHAM (UNAHUR)">
+</div>
+
+<div>
+<label>Dirección</label>
+<input oninput="setText('direccion',this.value)" value="Av. Gdor. Vergara 2222 - Hurlingham - Provincia de Buenos Aires">
+</div>
+
+<div>
+<label>Ciclo lectivo</label>
+<input oninput="setText('ciclo',this.value)" value="2026">
+</div>
+
+<div>
+<label>Modalidad</label>
+<input oninput="setText('modalidad',this.value)" value="Educación Universitaria">
+</div>
+
+<div>
+<label>Fecha</label>
+<input oninput="setText('fecha',this.value)" value="Buenos Aires, 25 de Marzo de 2026">
+</div>
+
+<div>
+<label>N° Registro</label>
+<input oninput="setText('registro',this.value)" value="05384/2026">
+</div>
+
+<div>
+<label>Código</label>
+<input oninput="setText('codigo',this.value)" value="BA-2026-000184">
+</div>
+
+</div>
+</div>
+
 <button class="boton-pdf" onclick="descargarPDF()">
 Descargar Constancia en PDF
 </button>
@@ -246,7 +348,6 @@ Descargar Constancia en PDF
 <div class="header">
 
 <div class="logo">
-
 <img src="https://i.postimg.cc/8FPNZ2fJ/250px-Coat-of-arms-of-Argentina-svg-(1).png">
 
 <div>
@@ -254,11 +355,10 @@ Descargar Constancia en PDF
 <div class="sub">DIRECCIÓN GENERAL DE CULTURA Y EDUCACIÓN</div>
 <div class="sub">DIRECCIÓN PROVINCIAL DE EDUCACIÓN UNIVERSITARIA</div>
 </div>
-
 </div>
 
 <div class="numero">
-<b>N° REGISTRO:</b> 05384/2026<br>
+<b>N° REGISTRO:</b> <span id="registro">05384/2026</span><br>
 <b>CUE:</b> 00612275-00
 </div>
 
@@ -273,142 +373,95 @@ La autoridad del establecimiento educativo deja constancia que el/la alumno/a:
 </div>
 
 <div class="campos">
-
-<div>
-Apellido y Nombre:
-<span class="linea">MELINA ALDANA ALONZO</span>
-</div>
-
-<div>
-DNI:
-<span class="linea">40.652.495</span>
-</div>
-
+<div>Apellido y Nombre: <span class="linea" id="nombre">MELINA ALDANA ALONZO</span></div>
+<div>DNI: <span class="linea" id="dni">40.652.495</span></div>
 </div>
 
 <div class="texto">
-se encuentra inscripto/a como <b>ALUMNO/A REGULAR</b> en este establecimiento educativo, cursando <b> PROF. DE EDUCACIÓN FÍSICA.</b></b>
+se encuentra inscripto/a como <b>ALUMNO/A REGULAR</b> en este establecimiento educativo, cursando <b id="carrera">PROF. DE EDUCACIÓN FÍSICA</b>.
 </div>
 
 <div class="campos">
-
-<div>
-Curso / Año:
-<span class="linea">4° AÑO</span>
-</div>
-
-<div>
-Turno:
-<span class="linea">TARDE/MAÑANA</span>
-</div>
-
+<div>Curso / Año: <span class="linea" id="curso">4° AÑO</span></div>
+<div>Turno: <span class="linea" id="turno">TARDE/MAÑANA</span></div>
 </div>
 
 <div class="establecimiento">
 Establecimiento:
-<span class="linea">UNIVERSIDAD NACIONAL DE HURLINGHAM (UNAHUR)</span>
+<span class="linea" id="establecimiento">UNIVERSIDAD NACIONAL DE HURLINGHAM (UNAHUR)</span>
 </div>
 
-<div class="texto">
+<div class="texto" id="direccion">
 Av. Gdor. Vergara 2222 - Hurlingham - Provincia de Buenos Aires
 </div>
 
 <div class="campos">
-
-<div>
-Ciclo Lectivo:
-<span class="linea">2026</span>
-</div>
-
-<div>
-Modalidad:
-<span class="linea">Educación Universitaria</span>
-</div>
-
+<div>Ciclo Lectivo: <span class="linea" id="ciclo">2026</span></div>
+<div>Modalidad: <span class="linea" id="modalidad">Educación Universitaria</span></div>
 </div>
 
 <div class="texto">
 Se extiende la presente constancia a pedido del interesado/a para ser presentada ante quien corresponda.
 </div>
 
-<div class="texto" style="text-align:right;">
+<div class="texto" style="text-align:right;" id="fecha">
 Buenos Aires, 25 de Marzo de 2026
 </div>
 
 <div class="firmas">
 
 <div class="sello-area">
-
 <img class="firma-sobre-sello" src="https://i.postimg.cc/Xrtpm734/Screenshot-20260131-172341-2-removebg-preview-(1).png">
-
 <img class="sello" src="https://i.postimg.cc/SJrKVx2j/Screenshot-20260105-125151-removebg-preview.png">
-
 </div>
 
 <div class="firma-box">
-
 <img src="https://i.postimg.cc/K37Pv3cX/pngwing-com-(1).png">
-
 <div class="linea-firma"></div>
 Director/a
-
 </div>
 
 <div class="firma-box">
-
 <img src="https://i.postimg.cc/mPn8nMtg/Screenshot-20260131-172122-2-removebg-preview.png">
-
 <div class="linea-firma"></div>
 Secretaria
-
 </div>
 
 </div>
 
 <div class="footer">
-
-<div>
-Dirección General de Cultura y Educación (DGCyE)
-</div>
-
-<div class="codigo">
-BA-2026-000184
-</div>
-
+<div>Dirección General de Cultura y Educación (DGCyE)</div>
+<div class="codigo" id="codigo">BA-2026-000184</div>
 </div>
 
 </div>
 
 <script>
 
+function setText(id, valor){
+document.getElementById(id).innerText = valor;
+}
+
 function descargarPDF(){
 
 const elemento = document.getElementById("documento");
 
-const opciones = {
-
+html2pdf().set({
 margin:0,
 filename:'constancia-alumno-regular.pdf',
-
 image:{type:'jpeg',quality:1},
-
 html2canvas:{
 scale:4,
 useCORS:true,
 allowTaint:true,
-letterRendering:true,
 backgroundColor:"#ffffff"
 },
-
 jsPDF:{
 unit:'mm',
 format:'a4',
 orientation:'portrait'
 }
-
-};
-
-html2pdf().set(opciones).from(elemento).save();
+}).from(elemento).save();
 
 }
 
