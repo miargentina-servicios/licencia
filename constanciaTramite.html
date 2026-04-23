@@ -7,7 +7,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
-
 @page{
 size:A4;
 margin:20mm;
@@ -17,9 +16,37 @@ body{
 font-family:Arial, sans-serif;
 background:#e9e9e9;
 text-align:center;
+margin:0;
+padding:0;
 }
 
-/* BOTON */
+/* PANEL EDITOR */
+
+.panel-editor{
+background:#1f1f1f;
+padding:15px;
+color:white;
+text-align:left;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+}
+
+.panel-editor input{
+padding:8px;
+font-size:14px;
+width:220px;
+border:none;
+border-radius:5px;
+}
+
+.panel-editor label{
+font-size:13px;
+display:flex;
+flex-direction:column;
+gap:4px;
+}
 
 .boton-pdf{
 margin:20px;
@@ -51,19 +78,9 @@ overflow:hidden;
 text-align:left;
 }
 
-/* MARCA DE AGUA */
-
-/* MARCA DE AGUA REPETIDA */
-
-/* MARCA DE AGUA REPETIDA */
-
 .documento::before{
 content:
 "CONSTANCIA DE DOCUMENTACION EN TRAMITE\A
-CONSTANCIA DE DOCUMENTACION EN TRAMITE\A
-CONSTANCIA DE DOCUMENTACION EN TRAMITE\A
-CONSTANCIA DE DOCUMENTACION EN TRAMITE\A
-CONSTANCIA DE DOCUMENTACION EN TRAMITE\A
 CONSTANCIA DE DOCUMENTACION EN TRAMITE\A
 CONSTANCIA DE DOCUMENTACION EN TRAMITE\A
 CONSTANCIA DE DOCUMENTACION EN TRAMITE\A
@@ -86,8 +103,6 @@ line-height:120px;
 pointer-events:none;
 white-space:pre;
 }
-
-/* HEADER */
 
 .header{
 display:flex;
@@ -125,8 +140,6 @@ border-radius:6px;
 font-size:14px;
 }
 
-/* TITULO */
-
 .titulo{
 text-align:center;
 font-size:26px;
@@ -137,9 +150,7 @@ border-bottom:3px solid #2c9ec4;
 padding-bottom:10px;
 }
 
-/* TEXTO */
-
-.texto{
+.texto,.establecimiento,.campos{
 font-size:18px;
 line-height:1.7;
 margin-top:15px;
@@ -151,16 +162,11 @@ padding:2px 6px;
 font-weight:bold;
 }
 
-/* CAMPOS */
-
 .campos{
 display:flex;
 justify-content:space-between;
-margin-top:15px;
-font-size:18px;
+gap:20px;
 }
-
-/* CHECK */
 
 .check{
 border:1px solid #cfcfcf;
@@ -174,15 +180,6 @@ margin-right:10px;
 background:#efefef;
 }
 
-/* ESTABLECIMIENTO */
-
-.establecimiento{
-margin-top:20px;
-font-size:18px;
-}
-
-/* FIRMAS */
-
 .firmas{
 margin-top:80px;
 display:flex;
@@ -193,7 +190,6 @@ align-items:flex-end;
 .firma-box{
 text-align:center;
 width:230px;
-position:relative;
 }
 
 .firma-box img{
@@ -205,28 +201,19 @@ border-top:1px solid #000;
 margin-top:5px;
 }
 
-/* AREA SELLO */
-
 .sello-area{
-text-align:center;
 position:relative;
 width:180px;
 height:140px;
 }
 
-/* SELLO */
-
 .sello{
 width:150px;
-opacity:0.9;
 position:absolute;
 bottom:0;
 left:50%;
 transform:translateX(-50%);
-z-index:1;
 }
-
-/* FIRMA CRUZANDO SELLO */
 
 .firma-sobre-sello{
 position:absolute;
@@ -235,10 +222,7 @@ left:50%;
 transform:translateX(-50%) rotate(-8deg);
 height:110px;
 z-index:2;
-pointer-events:none;
 }
-
-/* FOOTER */
 
 .footer{
 margin-top:40px;
@@ -249,33 +233,68 @@ border-top:2px solid #dcdcdc;
 padding-top:15px;
 }
 
-.qr img{
-width:90px;
-}
-
 .codigo{
 border:1px solid #ccc;
 padding:8px 12px;
 border-radius:5px;
 font-size:16px;
 }
-
 </style>
 </head>
 
 <body>
 
+<!-- EDITOR EN VIVO -->
+<div class="panel-editor">
+
+<label>Nombre
+<input oninput="cambiar('nombre',this.value)" value="PRISCILA AGUSTINA AYALA">
+</label>
+
+<label>DNI
+<input oninput="cambiar('dni',this.value)" value="47.640.900">
+</label>
+
+<label>Establecimiento
+<input oninput="cambiar('escuela',this.value)" value="COLEGIO CORAZONISTA “BENITO NAZAR”">
+</label>
+
+<label>Dirección
+<input oninput="cambiar('direccion',this.value)" value="AV. ESTADO DE ISRAEL 4230 – CABA">
+</label>
+
+<label>Ciclo Lectivo
+<input oninput="cambiar('ciclo',this.value)" value="2020">
+</label>
+
+<label>Título
+<input oninput="cambiar('titulo2',this.value)" value="Bachiller">
+</label>
+
+<label>Fecha
+<input oninput="cambiar('fecha',this.value)" value="Buenos Aires, 16 de marzo de 2026">
+</label>
+
+<label>N° Constancia
+<input oninput="cambiar('numero',this.value)" value="18735/2026">
+</label>
+
+<label>Código
+<input oninput="cambiar('codigo',this.value)" value="BA-2026-18735">
+</label>
+
+</div>
+
 <button class="boton-pdf" onclick="descargarPDF()">
-Descargar Constancia en PDF
+Descargar PDF
 </button>
 
 <div class="documento" id="documento">
 
 <div class="header">
-
 <div class="logo">
 
-<img src="https://i.postimg.cc/8FPNZ2fJ/250px-Coat-of-arms-of-Argentina-svg-(1).png" crossorigin="anonymous">
+<img src="https://i.postimg.cc/8FPNZ2fJ/250px-Coat-of-arms-of-Argentina-svg-(1).png">
 
 <div>
 <div class="logo-text">PROVINCIA DE BUENOS AIRES</div>
@@ -285,169 +304,99 @@ Descargar Constancia en PDF
 </div>
 
 <div class="numero">
-<b>N° DE CONSTANCIA:</b> 18735/2026<br>
+<b>N° DE CONSTANCIA:</b> <span id="numero">18735/2026</span><br>
 <b>CUE:</b> 5400637-00
 </div>
-
 </div>
 
 <div class="titulo">
-CONSTANCIA DE ANALÍTICO / TÍTULO EN TRÁMITE 
+CONSTANCIA DE ANALÍTICO / TÍTULO EN TRÁMITE
 </div>
 
-<div class="texto">
-Se deja constancia que el/la alumno/a:
-</div>
+<div class="texto">Se deja constancia que el/la alumno/a:</div>
 
 <div class="campos">
-
-<div>
-Apellido y Nombre:
-<span class="linea">PRISCILA AGUSTINA AYALA</span>
+<div>Apellido y Nombre: <span class="linea" id="nombre">PRISCILA AGUSTINA AYALA</span></div>
+<div>DNI: <span class="linea" id="dni">47.640.900</span></div>
 </div>
 
-<div>
-DNI:
-<span class="linea">47.640.900</span>
-</div>
-
-</div>
+<div class="texto">ha finalizado los estudios correspondientes a</div>
 
 <div class="texto">
-ha finalizado los estudios correspondientes a
-</div>
-
-<div class="texto">
-
 <span class="check active">✔ Educación Secundaria</span>
-
 <span class="check">Educación Terciaria / Universitaria</span>
-
 </div>
 
 <div class="establecimiento">
-
 en el establecimiento:
-<span class="linea">COLEGIO CORAZONISTA “BENITO NAZAR”</span>
-
+<span class="linea" id="escuela">COLEGIO CORAZONISTA “BENITO NAZAR”</span>
 </div>
 
-<div class="texto">
-AV. ESTADO DE ISRAEL 4230 – CABA - Provincia de Buenos Aires
+<div class="texto" id="direccion">
+AV. ESTADO DE ISRAEL 4230 – CABA
 </div>
 
 <div class="campos">
-
-<div>
-Ciclo Lectivo:
-<span class="linea">2020</span>
-</div>
-
-<div>
-Título:
-<span class="linea">Bachiller</span>
-</div>
-
+<div>Ciclo Lectivo: <span class="linea" id="ciclo">2020</span></div>
+<div>Título: <span class="linea" id="titulo2">Bachiller</span></div>
 </div>
 
 <div class="texto">
-Y que el <b>ANALÍTICO / TÍTULO</b> se encuentra <b>EN TRÁMITE</b>, en el plazo establecido por la normativa vigente.
+Y que el <b>ANALÍTICO / TÍTULO</b> se encuentra <b>EN TRÁMITE</b>.
 </div>
 
 <div class="texto">
-La presente constancia se extiende a pedido del interesado/a para ser presentada ante quien corresponda.
+La presente constancia se extiende a pedido del interesado/a.
 </div>
 
-<div class="texto" style="text-align:right;">
+<div class="texto" style="text-align:right;" id="fecha">
 Buenos Aires, 16 de marzo de 2026
 </div>
 
 <div class="firmas">
 
 <div class="sello-area">
-
-<img class="firma-sobre-sello" src="https://i.postimg.cc/Xrtpm734/Screenshot-20260131-172341-2-removebg-preview-(1).png" crossorigin="anonymous">
-
-<img class="sello" src="https://i.postimg.cc/SJrKVx2j/Screenshot-20260105-125151-removebg-preview.png" crossorigin="anonymous">
-
+<img class="firma-sobre-sello" src="https://i.postimg.cc/Xrtpm734/Screenshot-20260131-172341-2-removebg-preview-(1).png">
+<img class="sello" src="https://i.postimg.cc/SJrKVx2j/Screenshot-20260105-125151-removebg-preview.png">
 </div>
 
 <div class="firma-box">
-
-<img src="https://i.postimg.cc/K37Pv3cX/pngwing-com-(1).png" crossorigin="anonymous">
-
+<img src="https://i.postimg.cc/K37Pv3cX/pngwing-com-(1).png">
 <div class="linea-firma"></div>
-
 Director/a
-
 </div>
 
 <div class="firma-box">
-
-<img src="https://i.postimg.cc/mPn8nMtg/Screenshot-20260131-172122-2-removebg-preview.png" crossorigin="anonymous">
-
+<img src="https://i.postimg.cc/mPn8nMtg/Screenshot-20260131-172122-2-removebg-preview.png">
 <div class="linea-firma"></div>
-
 Secretaria
-
 </div>
 
 </div>
 
 <div class="footer">
-
-<div>
-Dirección General de Cultura y Educación (DGCyE)
-</div>
-
-<div class="qr">
-</div>
-
-<div class="codigo">
-BA-2026-18735
-</div>
-
+<div>DGCyE</div>
+<div class="codigo" id="codigo">BA-2026-18735</div>
 </div>
 
 </div>
 
 <script>
+function cambiar(id,valor){
+document.getElementById(id).innerText = valor;
+}
 
 function descargarPDF(){
-
 const elemento = document.getElementById("documento");
 
-const opciones = {
-
+html2pdf().set({
 margin:0,
-filename:'constancia-documentacion-en-tramite.pdf',
-
+filename:'constancia.pdf',
 image:{type:'jpeg',quality:1},
-
-html2canvas:{
-scale:4,
-useCORS:true,
-allowTaint:true,
-letterRendering:true,
-backgroundColor:"#ffffff"
-},
-
-jsPDF:{
-unit:'mm',
-format:'a4',
-orientation:'portrait'
-},
-
-pagebreak:{
-mode:['avoid-all','css','legacy']
+html2canvas:{scale:4,useCORS:true},
+jsPDF:{unit:'mm',format:'a4',orientation:'portrait'}
+}).from(elemento).save();
 }
-
-};
-
-html2pdf().set(opciones).from(elemento).save();
-
-}
-
 </script>
 
 </body>
