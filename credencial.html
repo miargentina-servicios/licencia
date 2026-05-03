@@ -1,181 +1,215 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'Helvetica', Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Contenedor principal del carnet */
-        .credencial {
-            width: 450px;
-            height: 280px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            overflow: hidden;
-            position: relative;
-            border: 1px solid #ccc;
-        }
+<style>
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #e6e6e6;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
 
-        /* Franja superior azul */
-        .header-azul {
-            background-color: #0072bb;
-            height: 40px;
-            width: 100%;
-        }
+/* Credencial */
+.credencial {
+    width: 450px;
+    height: 280px;
+    background: linear-gradient(135deg, #ffffff, #f8f8f8);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #d0d0d0;
+}
 
-        /* Contenido interno */
-        .contenido {
-            padding: 15px;
-            position: relative;
-            z-index: 2;
-        }
+/* Header */
+.header {
+    background: linear-gradient(90deg, #005c97, #0072bb);
+    height: 45px;
+}
 
-        /* Logo y título superior */
-        .top-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+/* Contenido */
+.contenido {
+    padding: 16px;
+    position: relative;
+    z-index: 2;
+}
 
-        .logo-red {
-            width: 35px;
-            height: 35px;
-            margin-right: 10px;
-        }
+/* Top */
+.top-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
 
-        .titulo-principal {
-            color: #333;
-            font-size: 14px;
-            font-weight: bold;
-            line-height: 1.2;
-        }
+.icono {
+    background-color: #d32f2f;
+    border-radius: 50%;
+    padding: 6px;
+    margin-right: 10px;
+}
 
-        /* Datos del profesional */
-        .datos {
-            margin-top: 10px;
-        }
+.titulo {
+    font-size: 13px;
+    font-weight: 600;
+    color: #222;
+    line-height: 1.2;
+}
 
-        .campo {
-            margin-bottom: 8px;
-        }
+.subtitulo {
+    font-size: 9px;
+    color: #555;
+}
 
-        .etiqueta {
-            font-size: 10px;
-            color: #666;
-            display: block;
-            margin-bottom: 1px;
-        }
+/* Datos */
+.datos {
+    margin-top: 8px;
+}
 
-        .valor {
-            font-size: 13px;
-            font-weight: bold;
-            color: #000;
-            text-transform: uppercase;
-        }
+.campo {
+    margin-bottom: 7px;
+}
 
-        /* Grilla para datos secundarios */
-        .grid-datos {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 5px;
-        }
+.etiqueta {
+    font-size: 10px;
+    color: #777;
+    display: block;
+}
 
-        /* Marca de agua (Escudo Nacional) */
-        .marca-agua {
-            position: absolute;
-            right: -20px;
-            bottom: 20px;
-            width: 180px;
-            opacity: 0.1;
-            z-index: 1;
-        }
+.valor {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: 0.3px;
+}
 
-        /* Pie de página con logo Ministerio */
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 35px;
-            background: linear-gradient(to right, #ffffff, #00adef);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 15px;
-            box-sizing: border-box;
-        }
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
 
-        .logo-ministerio {
-            height: 20px;
-        }
+/* Estado */
+.estado-activa {
+    color: #1b8f3a;
+    font-weight: 700;
+}
 
-        .estado-activa {
-            color: #2e7d32;
-            font-weight: bold;
-        }
-    </style>
+/* Marca de agua */
+.marca-agua {
+    position: absolute;
+    right: -10px;
+    bottom: 10px;
+    width: 160px;
+    opacity: 0.08;
+    z-index: 1;
+}
+
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 38px;
+    background: linear-gradient(90deg, #ffffff, #00adef);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.footer-text {
+    font-size: 9px;
+    color: #333;
+    font-weight: 600;
+}
+
+.codigo {
+    font-size: 9px;
+    color: #666;
+}
+</style>
 </head>
+
 <body>
 
 <div class="credencial">
-    <div class="header-azul"></div>
-    
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Escudo_de_la_Rep%C3%BAblica_Argentina.svg" class="marca-agua" alt="Escudo">
+
+    <div class="header"></div>
+
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Escudo_de_la_Rep%C3%BAblica_Argentina.svg" class="marca-agua">
 
     <div class="contenido">
+
         <div class="top-row">
-            <div style="background-color: #d32f2f; border-radius: 50%; padding: 5px;">
-                <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <div class="icono">
+                <svg width="20" height="20" fill="white" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+                    2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 
+                    4.5 2.09C13.09 3.81 14.76 3 
+                    16.5 3 19.58 3 22 5.42 
+                    22 8.5c0 3.78-3.4 6.86-8.55 
+                    11.54L12 21.35z"/>
+                </svg>
             </div>
-            <div class="titulo-principal">
-                <span style="font-size: 9px; font-weight: normal;">Red Federal de Registros de Profesionales de la Salud</span><br>
-                Credencial de profesional de la salud
+
+            <div>
+                <div class="subtitulo">
+                    Red Federal de Registros de Profesionales de la Salud
+                </div>
+                <div class="titulo">
+                    Credencial Profesional
+                </div>
             </div>
         </div>
 
         <div class="datos">
+
             <div class="campo">
-                <span class="etiqueta">Nombre y apellido</span>
+                <span class="etiqueta">Nombre y Apellido</span>
                 <span class="valor">JUAN PÉREZ GARCÍA</span>
             </div>
 
-            <div class="grid-datos">
+            <div class="grid">
                 <div class="campo">
                     <span class="etiqueta">Documento</span>
                     <span class="valor">DNI XX.XXX.XXX</span>
                 </div>
+
                 <div class="campo">
                     <span class="etiqueta">Clave Profesional</span>
                     <span class="valor">XXXXX 34427</span>
                 </div>
+
                 <div class="campo">
-                    <span class="etiqueta">Licencia Sanitaria Federal</span>
-                    <span class="valor estado-activa">Activa</span>
+                    <span class="etiqueta">Licencia</span>
+                    <span class="valor estado-activa">ACTIVA</span>
                 </div>
+
                 <div class="campo">
-                    <span class="etiqueta">Número de matrícula</span>
+                    <span class="etiqueta">Matrícula</span>
                     <span class="valor">XXXX</span>
                 </div>
             </div>
 
-            <div class="campo" style="margin-top: 5px;">
-                <span class="etiqueta">Profesión de Referencia</span>
-                <span class="valor">Licenciado en nutrición</span>
+            <div class="campo" style="margin-top:6px;">
+                <span class="etiqueta">Profesión</span>
+                <span class="valor">LICENCIADO EN NUTRICIÓN</span>
             </div>
+
         </div>
+
     </div>
 
     <div class="footer">
-        <span style="font-size: 8px; color: #444; margin-right: 5px; font-weight: bold;">Ministerio de Salud de la Nación</span>
+        <span class="footer-text">Ministerio de Salud de la Nación</span>
+        <span class="codigo">ID: AR-00045821</span>
     </div>
+
 </div>
 
 </body>
