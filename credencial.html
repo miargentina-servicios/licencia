@@ -16,7 +16,7 @@ body {
 /* Credencial */
 .credencial {
     width: 450px;
-    height: 280px;
+    height: 320px;
     background: linear-gradient(135deg, #ffffff, #f8f8f8);
     border-radius: 12px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.25);
@@ -27,8 +27,23 @@ body {
 
 /* Header */
 .header {
-    background: linear-gradient(90deg, #005c97, #0072bb);
-    height: 45px;
+    background: #00adef;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 16px;
+}
+
+.header .subtitulo {
+    font-size: 10px;
+    color: white;
+}
+
+.header .titulo {
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
 }
 
 /* Contenido */
@@ -50,18 +65,6 @@ body {
     border-radius: 50%;
     padding: 6px;
     margin-right: 10px;
-}
-
-.titulo {
-    font-size: 13px;
-    font-weight: 600;
-    color: #222;
-    line-height: 1.2;
-}
-
-.subtitulo {
-    font-size: 9px;
-    color: #555;
 }
 
 /* Datos */
@@ -90,6 +93,13 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
+}
+
+/* Línea separadora */
+.linea {
+    height: 1px;
+    background: #ccc;
+    margin: 8px 10px;
 }
 
 /* Estado */
@@ -139,7 +149,14 @@ body {
 
 <div class="credencial">
 
-    <div class="header"></div>
+    <div class="header">
+        <div class="subtitulo">
+            Red Federal de Registros de Profesionales de la Salud
+        </div>
+        <div class="titulo">
+            Credencial Profesional
+        </div>
+    </div>
 
     <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Escudo_de_la_Rep%C3%BAblica_Argentina.svg" class="marca-agua">
 
@@ -155,15 +172,6 @@ body {
                     22 8.5c0 3.78-3.4 6.86-8.55 
                     11.54L12 21.35z"/>
                 </svg>
-            </div>
-
-            <div>
-                <div class="subtitulo">
-                    Red Federal de Registros de Profesionales de la Salud
-                </div>
-                <div class="titulo">
-                    Credencial Profesional
-                </div>
             </div>
         </div>
 
@@ -184,21 +192,39 @@ body {
                     <span class="etiqueta">Clave Profesional</span>
                     <span class="valor">XXXXX 34427</span>
                 </div>
+            </div>
 
+            <div class="linea"></div>
+
+            <div class="grid">
                 <div class="campo">
-                    <span class="etiqueta">Licencia</span>
+                    <span class="etiqueta">Profesión de referencia</span>
                     <span class="valor estado-activa">ACTIVA</span>
                 </div>
 
                 <div class="campo">
-                    <span class="etiqueta">Matrícula</span>
+                    <span class="etiqueta">Número de matrícula</span>
                     <span class="valor">XXXX</span>
                 </div>
             </div>
 
+            <div class="linea"></div>
+
+            <div class="grid">
+                <div class="campo">
+                    <span class="etiqueta">Fecha de matriculación</span>
+                    <span class="valor">01/01/2020</span>
+                </div>
+
+                <div class="campo">
+                    <span class="etiqueta">Fecha de vencimiento</span>
+                    <span class="valor">01/01/2025</span>
+                </div>
+            </div>
+
             <div class="campo" style="margin-top:6px;">
-                <span class="etiqueta">Profesión</span>
-                <span class="valor">LICENCIADO EN NUTRICIÓN</span>
+                <span class="etiqueta">Emitido por</span>
+                <span class="valor">MINISTERIO DE SALUD</span>
             </div>
 
         </div>
