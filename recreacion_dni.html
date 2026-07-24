@@ -151,7 +151,7 @@
         .dni-header-textos {  
             display: flex;  
             flex-direction: column;  
-            line-height: 1.0; /* Reducción de espacio entre renglones */  
+            line-height: 1.0;  
         }  
         .dni-header .main-sub {  
             font-size: 6px;  
@@ -373,14 +373,15 @@
                                 <label contenteditable="true">Sexo / Sex</label>  
                                 <div class="val" contenteditable="true">F</div>  
                             </div>  
-                            <div class="field-group" style="flex:3;">  
+                            <div class="field-group" style="flex:2.5;">  
                                 <label contenteditable="true">Nacionalidad / Nationality</label>  
                                 <div class="val" contenteditable="true">ARGENTINA</div>  
                             </div>  
-                        </div> 
-                        <label contenteditable="true">Fecha de emisión / Date of issue</label>  
-                                <div class="val" style="font-size:10px;" contenteditable="true">30.10.2020</div>  
-                    </div>
+                            <div class="field-group" style="flex:2.5;">  
+                                <label contenteditable="true">Fecha de nacimiento / Date of birth</label>  
+                                <div class="val" style="font-size:9px;" contenteditable="true">01.07.1998</div>  
+                            </div>  
+                        </div>  
                         <div class="field-group">  
                             <label contenteditable="true">Documento / Document N°</label>  
                             <div class="val" contenteditable="true">99.999.999</div>  
@@ -388,11 +389,11 @@
                         <div class="row-fields">  
                             <div class="field-group" style="flex:1;">  
                                 <label contenteditable="true">Fecha de emisión / Date of issue</label>  
-                                <div class="val" style="font-size:10px;" contenteditable="true">30.10.2020</div>  
+                                <div class="val" style="font-size:9px;" contenteditable="true">30.10.2020</div>  
                             </div>  
                             <div class="field-group" style="flex:1;">  
                                 <label contenteditable="true">Fecha de vencimiento / Date of expiry</label>  
-                                <div class="val" style="font-size:10px;" contenteditable="true">30.10.2020</div>  
+                                <div class="val" style="font-size:9px;" contenteditable="true">30.10.2035</div>  
                             </div>  
                         </div>  
                         <div class="signature-box">  
@@ -529,7 +530,7 @@
                 document.getElementById('qr-img').src = e.target.result;  
             }  
             reader.readAsDataURL(file);  
-      }  
+        }  
     }  
 
     function loadBgFront(event) {  
