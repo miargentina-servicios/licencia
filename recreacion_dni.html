@@ -224,8 +224,8 @@
         }  
 
         .signature-box {  
-            width: 110px;  
-            height: 20px;  
+            width: 130px;  
+            height: 25px;  
         }  
 
         .signature-box img {  
@@ -237,7 +237,7 @@
         .bottom-bar-horizontal {  
             display: flex;  
             align-items: flex-end;  
-            gap: 8px;  
+            gap: 4px;  
             margin-top: 2px;  
         }  
 
@@ -368,7 +368,7 @@
                         </div>  
                     </div>  
 
-                    <!-- Columna Derecha: Datos del carnet reorganizados según imagen -->  
+                    <!-- Columna Derecha: Datos del carnet -->  
                     <div class="fields-column">  
                         <div class="field-group">  
                             <label contenteditable="true">Apellido / Surname</label>  
@@ -400,31 +400,33 @@
                             <label contenteditable="true">Fecha de emisión / Date of issue</label>  
                             <div class="val" style="font-size:9px;" contenteditable="true">21 AGO/ AUG 2014</div>  
                         </div>  
-                        <div class="field-group">  
-                            <label contenteditable="true">Fecha de vencimiento / Date of expiry</label>  
-                            <div class="val" style="font-size:9px;" contenteditable="true">30 SET/ SET 2018</div>  
-                        </div>  
-                        <div class="field-group">  
-                            <div class="signature-box">  
-                                <img id="signature-img" src="" alt="" style="display:none;">  
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">  
+                            <div class="field-group" style="flex: 1;">  
+                                <label contenteditable="true">Fecha de vencimiento / Date of expiry</label>  
+                                <div class="val" style="font-size:9px;" contenteditable="true">30 SET/ SET 2018</div>  
                             </div>  
-                            <label contenteditable="true">FIRMA IDENTIFICADO / SIGNATURE</label>  
+                            <div class="field-group" style="flex: 1; text-align: left;">  
+                                <label contenteditable="true">FIRMA / SIGNATURE</label>  
+                                <div class="signature-box">  
+                                    <img id="signature-img" src="" alt="" style="display:none;">  
+                                </div>  
+                            </div>  
                         </div>  
                     </div>  
                 </div>  
 
                 <!-- Barra inferior con Documento, Trámite y Código QR horizontal -->  
                 <div class="bottom-bar-horizontal">  
-                    <div class="field-group" style="width: 105px; flex-shrink: 0;">  
+                    <div class="field-group" style="width: 100px; flex-shrink: 0;">  
                         <label contenteditable="true">Documento / Document</label>  
                         <div class="val" style="font-size:10px; font-weight:900;" contenteditable="true">45.087.998</div>  
                     </div>  
-                    <div class="field-group" style="width: 110px; flex-shrink: 0;">  
+                    <div class="field-group" style="width: 105px; flex-shrink: 0;">  
                         <label contenteditable="true">Trámite N° / Of. ident.</label>  
                         <div class="val" style="font-size:8px;" contenteditable="true">00290682655</div>  
                         <div class="val" style="font-size:8px;" contenteditable="true">7142</div>  
                     </div>  
-                    <div class="qr-horizontal">  
+                    <div class="qr-horizontal" style="margin-left: -5px;">  
                         <img id="qr-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' fill='black'><rect width='5' height='20'/><rect x='8' width='2' height='20'/><rect x='13' width='8' height='20'/><rect x='24' width='3' height='20'/><rect x='30' width='12' height='20'/><rect x='45' width='4' height='20'/><rect x='52' width='10' height='20'/><rect x='65' width='5' height='20'/><rect x='73' width='8' height='20'/><rect x='84' width='3' height='20'/><rect x='90' width='10' height='20'/></svg>" alt="QR Horizontal">  
                     </div>  
                 </div>  
@@ -493,7 +495,7 @@
         html2pdf().from(element).set(opt).save().then(() => {  
             if (wasEditing) {  
                 document.body.classList.add('editing');  
-            }  
+          }  
         });  
     }  
 
@@ -502,7 +504,7 @@
         if (file) {  
             const reader = new FileReader();  
             reader.onload = function(e) {  
- document.getElementById('escudo-img').src = e.target.result;  
+                document.getElementById('escudo-img').src = e.target.result;  
             }  
             reader.readAsDataURL(file);  
         }  
