@@ -186,7 +186,7 @@
 
         .photo-box {  
             width: 105px;  
-            height: 125px;  
+            height: 135px;  
             background: transparent;  
             border: none;  
             overflow: hidden;  
@@ -234,36 +234,28 @@
             object-fit: contain;  
         }  
 
-        .mini-photo-bottom {  
-            position: absolute;  
-            right: 50px;  
-            bottom: 5px;  
-            width: 35px;  
-            height: 45px;  
-            background: transparent;  
-            border: none;  
-            overflow: hidden;  
+        .bottom-bar-horizontal {  
+            display: flex;  
+            align-items: flex-end;  
+            gap: 8px;  
+            margin-top: 4px;  
         }  
 
-        .mini-photo-bottom img {  
-            width: 100%;  
-            height: 100%;  
-            object-fit: cover;  
-        }  
-
-        .qr-lateral {  
-            width: 45px;  
-            height: 195px;  
+        .qr-horizontal {  
+            height: 38px;  
             background: white;  
-            padding: 2px;  
+            padding: 1px;  
             border: 1px solid #ccc;  
-            flex-shrink: 0;  
+            flex-grow: 1;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
             overflow: hidden;  
         }  
-        .qr-lateral img {  
+        .qr-horizontal img {  
             width: 100%;  
             height: 100%;  
-            object-fit: cover;  
+            object-fit: fill;  
         }  
 
         /* Back Card Specifics */  
@@ -330,15 +322,11 @@
         <input type="file" id="upload-photo" accept="image/*" onchange="loadMainPhoto(event)">  
     </div>  
     <div class="control-group">  
-        <label>Foto Chiquita:</label>  
-        <input type="file" id="upload-mini-photo" accept="image/*" onchange="loadMiniPhoto(event)">  
-    </div>  
-    <div class="control-group">  
         <label>Firma:</label>  
         <input type="file" id="upload-signature" accept="image/*" onchange="loadSignature(event)">  
     </div>  
     <div class="control-group">  
-        <label>Código QR:</label>  
+        <label>Código QR Horizontal:</label>  
         <input type="file" id="upload-qr" accept="image/*" onchange="loadQR(event)">  
     </div>  
     <div class="control-group">  
@@ -373,23 +361,14 @@
                 </div>  
 
                 <div class="dni-body">  
-                    <!-- Columna Izquierda: Foto, Documento y Trámite -->  
+                    <!-- Columna Izquierda: Foto Principal -->  
                     <div class="photo-column">  
                         <div class="photo-box">  
                             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Foto DNI" id="main-photo">  
                         </div>  
-                        <div class="field-group">  
-                            <label contenteditable="true">Documento / Document</label>  
-                            <div class="val" contenteditable="true">42568912</div>  
-                        </div>  
-                        <div class="field-group">  
-                            <label contenteditable="true">N° trámite / Of. ident.</label>  
-                            <div class="val" contenteditable="true">00570060060</div>  
-                            <div class="val" contenteditable="true">1234</div>  
-                        </div>  
                     </div>  
 
-                    <!-- Columna Central: Datos y Firma -->  
+                    <!-- Columna Derecha: Datos del carnet -->  
                     <div class="fields-column">  
                         <div class="field-group">  
                             <label contenteditable="true">Apellido / Surname</label>  
@@ -432,15 +411,22 @@
                             </div>  
                         </div>  
                     </div>  
-
-                    <!-- Columna Derecha: Código QR Lateral a lo largo -->  
-                    <div class="qr-lateral">  
-                        <img id="qr-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M3 3h8v8H3V3m2 2v4h4V5H5m8-2h8v8h-8V3m2 2v4h4V5h-4M3 13h8v8H3v-8m2 2v4h4v-4H5m13-2h3v2h-3v-2m-3 0h2v3h-2v-3m3 3h3v3h-3v-3m-6 3h2v2h-2v-2m3 0h3v3h-3v-3z'/></svg>" alt="QR">  
-                    </div>  
                 </div>  
 
-                <div class="mini-photo-bottom">  
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Mini Foto" id="mini-photo">  
+                <!-- Barra inferior con Documento, Trámite y Código QR horizontal -->  
+                <div class="bottom-bar-horizontal">  
+                    <div class="field-group" style="width: 105px; flex-shrink: 0;">  
+                        <label contenteditable="true">Documento / Document</label>  
+                        <div class="val" style="font-size:10px; font-weight:900;" contenteditable="true">45.087.998</div>  
+                    </div>  
+                    <div class="field-group" style="width: 110px; flex-shrink: 0;">  
+                        <label contenteditable="true">Trámite N° / Of. ident.</label>  
+                        <div class="val" style="font-size:8px;" contenteditable="true">00290682655</div>  
+                        <div class="val" style="font-size:8px;" contenteditable="true">7142</div>  
+                    </div>  
+                    <div class="qr-horizontal">  
+                        <img id="qr-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' fill='black'><rect width='5' height='20'/><rect x='8' width='2' height='20'/><rect x='13' width='8' height='20'/><rect x='24' width='3' height='20'/><rect x='30' width='12' height='20'/><rect x='45' width='4' height='20'/><rect x='52' width='10' height='20'/><rect x='65' width='5' height='20'/><rect x='73' width='8' height='20'/><rect x='84' width='3' height='20'/><rect x='90' width='10' height='20'/></svg>" alt="QR Horizontal">  
+                    </div>  
                 </div>  
             </div>  
 
@@ -514,7 +500,7 @@
     function loadEscudo(event) {  
         const file = event.target.files[0];  
         if (file) {  
-    const reader = new FileReader();  
+            const reader = new FileReader();  
             reader.onload = function(e) {  
                 document.getElementById('escudo-img').src = e.target.result;  
             }  
@@ -528,17 +514,6 @@
             const reader = new FileReader();  
             reader.onload = function(e) {  
                 document.getElementById('main-photo').src = e.target.result;  
-            }  
-            reader.readAsDataURL(file);  
-        }  
-    }  
-
-    function loadMiniPhoto(event) {  
-        const file = event.target.files[0];  
-        if (file) {  
-            const reader = new FileReader();  
-            reader.onload = function(e) {  
-                document.getElementById('mini-photo').src = e.target.result;  
             }  
             reader.readAsDataURL(file);  
         }  
@@ -563,7 +538,6 @@
             const reader = new FileReader();  
             reader.onload = function(e) {  
                 document.getElementById('qr-img').src = e.target.result;  
-                document.getElementById('qr-img-back').src = e.target.result;  
             }  
             reader.readAsDataURL(file);  
         }  
