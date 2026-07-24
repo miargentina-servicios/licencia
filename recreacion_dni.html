@@ -125,7 +125,7 @@
             justify-content: space-between;  
             border-bottom: 1.5px solid #0b2545;  
             padding-bottom: 4px;  
-            margin-bottom: 6px;  
+            margin-bottom: 5px;  
         }  
         .escudo-box {  
             width: 25px;  
@@ -179,14 +179,14 @@
         .photo-column {  
             display: flex;  
             flex-direction: column;  
-            gap: 4px;  
+            gap: 2px;  
             width: 105px;  
             flex-shrink: 0;  
         }  
 
         .photo-box {  
             width: 105px;  
-            height: 135px;  
+            height: 132px;  
             background: transparent;  
             border: none;  
             overflow: hidden;  
@@ -201,7 +201,7 @@
         .fields-column {  
             display: flex;  
             flex-direction: column;  
-            gap: 2px;  
+            gap: 1px;  
             flex-grow: 1;  
         }  
 
@@ -225,7 +225,7 @@
 
         .signature-box {  
             width: 110px;  
-            height: 22px;  
+            height: 20px;  
         }  
 
         .signature-box img {  
@@ -238,7 +238,7 @@
             display: flex;  
             align-items: flex-end;  
             gap: 8px;  
-            margin-top: 4px;  
+            margin-top: 2px;  
         }  
 
         .qr-horizontal {  
@@ -368,20 +368,20 @@
                         </div>  
                     </div>  
 
-                    <!-- Columna Derecha: Datos del carnet -->  
+                    <!-- Columna Derecha: Datos del carnet reorganizados según imagen -->  
                     <div class="fields-column">  
                         <div class="field-group">  
                             <label contenteditable="true">Apellido / Surname</label>  
-                            <div class="val" contenteditable="true">GONZALEZ RODRIGUEZ</div>  
+                            <div class="val" contenteditable="true">RABBIA</div>  
                         </div>  
                         <div class="field-group">  
-                            <label contenteditable="true">Nombres / Names</label>  
-                            <div class="val" contenteditable="true">MARIANA FLORENCIA</div>  
+                            <label contenteditable="true">Nombre / Name</label>  
+                            <div class="val" contenteditable="true">AGUSTIN IGNACIO</div>  
                         </div>  
                         <div class="row-fields">  
                             <div class="field-group" style="flex:1;">  
                                 <label contenteditable="true">Sexo / Sex</label>  
-                                <div class="val" contenteditable="true">F</div>  
+                                <div class="val" contenteditable="true">M</div>  
                             </div>  
                             <div class="field-group" style="flex:2.5;">  
                                 <label contenteditable="true">Nacionalidad / Nationality</label>  
@@ -394,21 +394,21 @@
                         </div>  
                         <div class="field-group">  
                             <label contenteditable="true">Fecha de nacimiento / Date of birth</label>  
-                            <div class="val" style="font-size:9px;" contenteditable="true">01.07.1998</div>  
+                            <div class="val" style="font-size:9px;" contenteditable="true">30 SET/ SET 2003</div>  
                         </div>  
                         <div class="field-group">  
                             <label contenteditable="true">Fecha de emisión / Date of issue</label>  
-                            <div class="val" style="font-size:9px;" contenteditable="true">30.10.2020</div>  
+                            <div class="val" style="font-size:9px;" contenteditable="true">21 AGO/ AUG 2014</div>  
                         </div>  
                         <div class="field-group">  
                             <label contenteditable="true">Fecha de vencimiento / Date of expiry</label>  
-                            <div class="val" style="font-size:9px;" contenteditable="true">30.10.2035</div>  
+                            <div class="val" style="font-size:9px;" contenteditable="true">30 SET/ SET 2018</div>  
                         </div>  
                         <div class="field-group">  
-                            <label contenteditable="true">Firma / Signature</label>  
                             <div class="signature-box">  
                                 <img id="signature-img" src="" alt="" style="display:none;">  
                             </div>  
+                            <label contenteditable="true">FIRMA IDENTIFICADO / SIGNATURE</label>  
                         </div>  
                     </div>  
                 </div>  
@@ -502,7 +502,7 @@
         if (file) {  
             const reader = new FileReader();  
             reader.onload = function(e) {  
-                document.getElementById('escudo-img').src = e.target.result;  
+ document.getElementById('escudo-img').src = e.target.result;  
             }  
             reader.readAsDataURL(file);  
         }  
