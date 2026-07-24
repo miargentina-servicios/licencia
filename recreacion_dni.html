@@ -100,7 +100,7 @@
             font-size: 11px;  
         }  
 
-        /* Editable elements styling - visible solo en modo edición activa */  
+        /* Editable elements styling */  
         .editing [contenteditable="true"] {  
             border: 1px dashed #0077c8;  
             background: rgba(255,255,255,0.7);  
@@ -179,7 +179,7 @@
 
         .photo-box {  
             width: 105px;  
-            height: 135px;  
+            height: 110px;  
             background: transparent;  
             border: none;  
             position: relative;  
@@ -218,11 +218,8 @@
         }  
 
         .signature-box {  
-            position: absolute;  
-            left: 130px;  
-            bottom: 35px;  
-            width: 130px;  
-            height: 35px;  
+            width: 120px;  
+            height: 25px;  
         }  
 
         .signature-box img {  
@@ -234,9 +231,9 @@
         .mini-photo-bottom {  
             position: absolute;  
             right: 15px;  
-            bottom: 25px;  
-            width: 38px;  
-            height: 48px;  
+            bottom: 5px;  
+            width: 35px;  
+            height: 45px;  
             background: transparent;  
             border: none;  
             overflow: hidden;  
@@ -333,7 +330,7 @@
     </div>  
 </div>  
 
-<!-- Contenedor exclusivo para los carnets (lo que se captura en el PDF) -->  
+<!-- Contenedor exclusivo para los carnets -->  
 <div class="app-container" id="dni-app-capture">  
     <div class="dni-view-area">  
         <div class="dni-cards-row">  
@@ -355,57 +352,82 @@
                 </div>  
 
                 <div class="dni-body">  
-                    <div class="photo-box">  
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Foto DNI" id="main-photo">  
+                    <!-- Columna Izquierda: Foto, Documento y Tramite -->  
+                    <div style="display: flex; flexDirection: column; gap: 4px;">  
+                        <div class="photo-box">  
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Foto DNI" id="main-photo">  
+                        </div>  
+                        <div class="field-group" style="margin-top: 2px;">  
+                            <label contenteditable="true">Documento / Document</label>  
+                            <div class="val" style="font-size: 9px;" contenteditable="true">42568912</div>  
+                        </div>  
+                        <div class="field-group" style="margin-top: 1px;">  
+                            <label contenteditable="true">N° trámite / Of. ident.</label>  
+                            <div class="val" style="font-size: 8px;" contenteditable="true">00570060060</div>  
+                            <div class="val" style="font-size: 8px;" contenteditable="true">1234</div>  
+                        </div>  
                     </div>  
 
-                    <div class="fields-grid">  
-                        <div class="field-group">  
-                            <label contenteditable="true">Apellido / Surname</label>  
-                            <div class="val" contenteditable="true">GONZALEZ RODRIGUEZ</div>  
-                        </div>  
-                        <div class="field-group">  
-                            <label contenteditable="true">Nombres / Names</label>  
-                            <div class="val" contenteditable="true">MARIANA FLORENCIA</div>  
-                        </div>  
-                        <div class="row-fields">  
-                            <div class="field-group" style="flex:1;">  
-                                <label contenteditable="true">Sexo / Sex</label>  
-                                <div class="val" contenteditable="true">F</div>  
+                    <!-- Columna Derecha: Datos y QR Lateral -->  
+                    <div style="display: flex; justify-content: space-between; position: relative;">  
+                        <div class="fields-grid" style="flex: 1;">  
+                            <div class="field-group">  
+                                <label contenteditable="true">Apellido / Surname</label>  
+                                <div class="val" contenteditable="true">GONZALEZ RODRIGUEZ</div>  
                             </div>  
-                            <div class="field-group" style="flex:2.5;">  
-                                <label contenteditable="true">Nacionalidad / Nationality</label>  
-                                <div class="val" contenteditable="true">ARGENTINA</div>  
-                            </div>
-                            <div class="field-group" style="flex:1;">  
-                                <label contenteditable="true">Ejemplar</label>  
-                                <div class="val" contenteditable="true">A</div>  
-                            </div>
-                        </div>  
-                        <div class="row-fields">  
-                            <div class="field-group" style="flex:2.5;">  
-                                <label contenteditable="true">Fecha de nacimiento / Date of birth</label>  
-                                <div class="val" style="font-size:9px;" contenteditable="true">01.07.1998</div>  
+                            <div class="field-group">  
+                                <label contenteditable="true">Nombres / Names</label>  
+                                <div class="val" contenteditable="true">MARIANA FLORENCIA</div>  
+                            </div>  
+                            <div class="row-fields">  
+                                <div class="field-group" style="flex:1;">  
+                                    <label contenteditable="true">Sexo / Sex</label>  
+                                    <div class="val" contenteditable="true">F</div>  
+                                </div>  
+                                <div class="field-group" style="flex:2.5;">  
+                                    <label contenteditable="true">Nacionalidad / Nationality</label>  
+                                    <div class="val" contenteditable="true">ARGENTINA</div>  
+                                </div>  
+                                <div class="field-group" style="flex:1;">  
+                                    <label contenteditable="true">Ejemplar</label>  
+                                    <div class="val" contenteditable="true">A</div>  
+                                </div>  
+                            </div>  
+                            <div class="row-fields">  
+                                <div class="field-group" style="flex:2.5;">  
+                                    <label contenteditable="true">Fecha de nacimiento / Date of birth</label>  
+                                    <div class="val" style="font-size:9px;" contenteditable="true">01.07.1998</div>  
+                                </div>  
+                            </div>  
+                            <div class="row-fields">  
+                                <div class="field-group" style="flex:1;">  
+                                    <label contenteditable="true">Fecha de emisión / Date of issue</label>  
+                                    <div class="val" style="font-size:9px;" contenteditable="true">30.10.2020</div>  
+                                </div>  
+                            </div>  
+                            <div class="row-fields">  
+                                <div class="field-group" style="flex:1;">  
+                                    <label contenteditable="true">Fecha de vencimiento / Date of expiry</label>  
+                                    <div class="val" style="font-size:9px;" contenteditable="true">30.10.2035</div>  
+                                </div>  
+                            </div>  
+                            <div class="field-group" style="margin-top: 2px;">  
+                                <label contenteditable="true">Firma / Signature</label>  
+                                <div class="signature-box">  
+                                    <img id="signature-img" src="" alt="" style="display:none;">  
+                                </div>  
                             </div>  
                         </div>  
-                        <div class="row-fields">  
-                            <div class="field-group" style="flex:1;">  
-                                <label contenteditable="true">Fecha de emisión / Date of issue</label>  
-                                <div class="val" style="font-size:9px;" contenteditable="true">30.10.2020</div>  
+
+                        <!-- Código QR Lateral -->  
+                        <div style="width: 55px; display: flex; align-items: flex-start; justify-content: flex-end; margin-left: 5px;">  
+                            <div class="qr-code" style="width: 50px; height: 135px;">  
+                                <img id="qr-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M3 3h8v8H3V3m2 2v4h4V5H5m8-2h8v8h-8V3m2 2v4h4V5h-4M3 13h8v8H3v-8m2 2v4h4v-4H5m13-2h3v2h-3v-2m-3 0h2v3h-2v-3m3 3h3v3h-3v-3m-6 3h2v2h-2v-2m3 0h3v3h-3v-3z'/></svg>" alt="QR" style="height: 100%; object-fit: cover;">  
                             </div>  
-                            <div class="field-group" style="flex:1;">  
-                                <label contenteditable="true">Fecha de vencimiento / Date of expiry</label>  
-                                <div class="val" style="font-size:9px;" contenteditable="true">30.10.2035</div>  
-                            </div>  
-                        </div>  
-                        <div class="signature-box">  
-                            <img id="signature-img" src="" alt="" style="display:none;">  
                         </div>  
                     </div>  
                 </div>  
 
-                <div style="position: absolute; right: 10px; bottom: 8px; font-size: 8px; color: #555;" contenteditable="true">123456</div>  
-                <div style="position: absolute; right: 80px; bottom: 8px; font-size: 8px; color: #555;" contenteditable="true">000122334</div>  
                 <div class="mini-photo-bottom">  
                     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" alt="Mini Foto" id="mini-photo">  
                 </div>  
@@ -425,7 +447,7 @@
                         </div>  
                     </div>  
                     <div class="qr-code">  
-                        <img id="qr-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M3 3h8v8H3V3m2 2v4h4V5H5m8-2h8v8h-8V3m2 2v4h4V5h-4M3 13h8v8H3v-8m2 2v4h4v-4H5m13-2h3v2h-3v-2m-3 0h2v3h-2v-3m3 3h3v3h-3v-3m-6 3h2v2h-2v-2m3 0h3v3h-3v-3z'/></svg>" alt="QR">  
+                        <img id="qr-img-back" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M3 3h8v8H3V3m2 2v4h4V5H5m8-2h8v8h-8V3m2 2v4h4V5h-4M3 13h8v8H3v-8m2 2v4h4v-4H5m13-2h3v2h-3v-2m-3 0h2v3h-2v-3m3 3h3v3h-3v-3m-6 3h2v2h-2v-2m3 0h3v3h-3v-3z'/></svg>" alt="QR">  
                     </div>  
                 </div>  
 
@@ -464,7 +486,7 @@
             document.body.classList.remove('editing');  
         }  
         const element = document.getElementById('dni-app-capture');  
-        const opt = {  
+      const opt = {  
             margin:       10,  
             filename:     'dni_argentina_profesional.pdf',  
             image:        { type: 'jpeg', quality: 0.98 },  
@@ -530,6 +552,7 @@
             const reader = new FileReader();  
             reader.onload = function(e) {  
                 document.getElementById('qr-img').src = e.target.result;  
+                document.getElementById('qr-img-back').src = e.target.result;  
             }  
             reader.readAsDataURL(file);  
         }  
