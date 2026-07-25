@@ -308,25 +308,23 @@
             padding: 4px;  
             border-radius: 4px;  
         }
-            #dniSerial{
-    position:absolute;
-    top:30px;
-    right:-30px;
+        #dniSerial {
+            position: absolute;
+            top: 30px;
+            right: -30px;
+            transform: rotate(-90deg);
+            font-family: "Share Tech Mono", monospace;
+            font-size: 9px;
+            font-weight: 700;
+            color: #0b2545;
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
 
-    transform:rotate(-90deg);
-
-    font-family:"Share Tech Mono", monospace;
-    font-size:9px;
-    font-weight:700;
-    color:#0b2545;
-    letter-spacing:2px;
-    white-space:nowrap;
-}
-
-.editing #dniSerial{
-    border:1px dashed #0077c8;
-    background:rgba(255,255,255,.3);
-}
+        .editing #dniSerial {
+            border: 1px dashed #0077c8;
+            background: rgba(255,255,255,.3);
+        }
     </style>  
 </head>  
 <body class="editing">  
@@ -438,8 +436,10 @@
                                     <img id="signature-img" src="" alt="" style="display:none;">  
                                 </div>
                             </div>
-                                <div id="dniSerial" contenteditable="true">123456789</div>
-                             </div> 
+                        </div>  
+                    </div>
+                    <div id="dniSerial" contenteditable="true">123456789</div>
+                </div>  
 
                 <!-- Barra inferior con Trámite subido al hueco y Código QR horizontal -->  
                 <div class="bottom-bar-horizontal">  
@@ -504,7 +504,8 @@
     function downloadPDF() {  
         const wasEditing = document.body.classList.contains('editing');  
         if (wasEditing) {  
-            document.body.classList.remove('editing');    
+            document.body.classList.remove('editing');  
+        }  
         const element = document.getElementById('dni-app-capture');  
         const opt = {  
             margin:       10,  
@@ -513,7 +514,7 @@
             html2canvas:  { scale: 2, useCORS: true, logging: false },  
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }  
         };  
-     html2pdf().from(element).set(opt).save().then(() => {  
+        html2pdf().from(element).set(opt).save().then(() => {  
             if (wasEditing) {  
                 document.body.classList.add('editing');  
             }  
@@ -590,4 +591,4 @@
 </script>  
 
 </body>  
-</html>
+</html> 
