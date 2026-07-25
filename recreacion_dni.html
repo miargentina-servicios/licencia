@@ -187,7 +187,7 @@
 
         .photo-box {  
             width: 105px;  
-            height: 150px;  
+            height: 110px;  
             background: transparent;  
             border: none;  
             overflow: hidden;  
@@ -238,8 +238,8 @@
         .bottom-bar-horizontal {  
             display: flex;  
             align-items: flex-end;  
-            gap: 3px;  
-            margin-top: -10px;  
+            gap: 4px;  
+            margin-top: -28px;  
         }  
 
         .qr-horizontal {  
@@ -421,7 +421,7 @@
                     </div>  
                 </div>  
 
-                <!-- Barra inferior con Trámite y Código QR horizontal achicado -->  
+                <!-- Barra inferior con Trámite subido al hueco y Código QR horizontal -->  
                 <div class="bottom-bar-horizontal">  
                     <div class="field-group" style="width: 120px; flex-shrink: 0; margin-left: 105px;">  
                         <label contenteditable="true">Trámite N° / Of. ident.</label>  
@@ -494,7 +494,7 @@
             html2canvas:  { scale: 2, useCORS: true, logging: false },  
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }  
         };  
-        html2p().from(element).set(opt).save().then(() => {  
+     html2pdf().from(element).set(opt).save().then(() => {  
             if (wasEditing) {  
                 document.body.classList.add('editing');  
             }  
