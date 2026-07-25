@@ -310,21 +310,24 @@
         }
             #dniSerial{
     position:absolute;
-    top:88px;
-    right:0px;
-    writing-mode:vertical-rl;
-    text-orientation:upright;
+    top:125px;
+    right:-18px;
+
+    transform:rotate(90deg);
+
     font-family:"Share Tech Mono", monospace;
     font-size:9px;
     font-weight:700;
     color:#0b2545;
     letter-spacing:2px;
+    white-space:nowrap;
+    z-index:100;
 }
 
 .editing #dniSerial{
     border:1px dashed #0077c8;
     background:rgba(255,255,255,.3);
-        }
+}
     </style>  
 </head>  
 <body class="editing">  
@@ -435,9 +438,7 @@
                                 <div class="signature-box">  
                                     <img id="signature-img" src="" alt="" style="display:none;">  
                                 </div>
-                                <div id="dniSerial" contenteditable="true">
-                                123456789
-                              </div>
+                                <div id="dniSerial" contenteditable="true">123456789</div>
                              </div> <!-- Fin de la tarjeta del frente -->
                             </div> 
                           </div>  
