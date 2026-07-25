@@ -326,6 +326,50 @@
             border: 1px dashed #0077c8;
             background: rgba(255,255,255,.3);
         }
+        .back-extra{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-top:10px;
+}
+
+.extra-fields{
+    width:270px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.extra-fields label{
+    display:block;
+    font-size:6px;
+    font-weight:700;
+    color:#4A154B;
+    text-transform:uppercase;
+}
+
+.extra-fields .val{
+    font-size:9px;
+    font-weight:700;
+    color:#0b2545;
+}
+
+.fingerprint-box{
+    width:82px;
+    height:100px;
+    background:#fff;
+    border:1px solid #777;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.fingerprint-box img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    }
     </style>  
 </head>  
 <body class="editing">  
@@ -359,6 +403,13 @@
     <div class="control-group">  
         <label>Fondo Dorso:</label>  
         <input type="file" id="upload-bg-back" accept="image/*" onchange="loadBgBack(event)">  
+    <div class="control-group">
+    <label>Huella Digital:</label>
+    <input type="file"
+           id="upload-fingerprint"
+           accept="image/*"
+           onchange="loadFingerprint(event)">
+    </div>
     </div>  
 </div>  
 
@@ -476,7 +527,59 @@
                     <div style="font-size: 9px;" contenteditable="true">CUIL: 27-99999999-0</div>  
                     <div style="font-size: 9px;" contenteditable="true">Trámite N°: 00570060060</div>  
                 </div>  
+               <div class="back-extra">
 
+    <div class="extra-fields">
+
+        <div class="field-group">
+            <label>Fecha de ingreso al país</label>
+            <div class="val" contenteditable="true">
+                12 ABR 2012
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Categoría de ingreso</label>
+            <div class="val" contenteditable="true">
+                TEMPORARIA
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Expediente</label>
+            <div class="val" contenteditable="true">
+                5274201
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Disposición</label>
+            <div class="val" contenteditable="true">
+                5306
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Fecha de radicación</label>
+            <div class="val" contenteditable="true">
+                29 MAY 2012
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Vencimiento</label>
+            <div class="val" contenteditable="true">
+                29 MAY 2014
+            </div>
+        </div>
+
+    </div>
+
+    <div class="fingerprint-box">
+        <img id="fingerprint-img" src="">
+    </div>
+
+               </div>
                 <div class="mrz" contenteditable="true">  
                     IDARG45980666<4<<<<<<<<<<<<<<<<<<<br>  
                     0107998F201808ARG<<RABBIA<<<<AGUSTIN<<<<<0<br>  
@@ -587,7 +690,16 @@
             reader.readAsDataURL(file);  
         }  
     }  
+    function loadFingerprint(event){
+    const file = event.target.files[0];
+    if(file){
+        const reader = new FileReader();
+        reader.onload=function(e){
+            document.getElementById("fingerprint-img").src=e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+    }
 </script>  
-
 </body>  
 </html>
