@@ -308,18 +308,24 @@
             padding: 4px;  
             border-radius: 4px;  
         }
-        #dniSerial{
+                #dniSerial {
             position: absolute;
-            top: 30px;
-            right: -30px;
+            top: 40px;          /* Ajustado para que baje un poco desde la esquina superior */
+            right: -10px;       /* Lo acerca al borde derecho del carnet */
             transform: rotate(-90deg);
             font-family: "Share Tech Mono", monospace;
-            font-size: 9px;
+            font-size: 7px;     /* Letra más chica (antes estaba en 9px) */
             font-weight: 700;
             color: #0b2545;
-            letter-spacing: 2px;
+            letter-spacing: 1px;/* Reducido el espacio entre letras para que encaje mejor */
             white-space: nowrap;
         }
+
+        .editing #dniSerial {
+            border: 1px dashed #0077c8;
+            background: rgba(255,255,255,.3);
+        }
+
 
         .editing #dniSerial{
             border: 1px dashed #0077c8;
