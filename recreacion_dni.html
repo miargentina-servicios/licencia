@@ -327,49 +327,52 @@
             background: rgba(255,255,255,.3);
         }
         .back-extra{
+    disp.back-extra{
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
-    margin-top:10px;
+    gap:10px;
+    margin:8px 0;
 }
 
 .extra-fields{
-    width:270px;
+    flex:1;
+    font-size:8px;
+    line-height:1.2;
+}
+
+.extra-fields strong{
+    display:inline-block;
+    width:68px;
+}
+
+.extra-fields div{
+    margin:2px 0;
+}
+
+.row-data{
     display:flex;
-    flex-direction:column;
-    gap:4px;
-}
-
-.extra-fields label{
-    display:block;
-    font-size:6px;
-    font-weight:700;
-    color:#4A154B;
-    text-transform:uppercase;
-}
-
-.extra-fields .val{
-    font-size:9px;
-    font-weight:700;
-    color:#0b2545;
+    justify-content:space-between;
+    gap:12px;
 }
 
 .fingerprint-box{
-    width:82px;
-    height:100px;
+    width:72px;
+    height:90px;
+    border:1px solid #666;
     background:#fff;
-    border:1px solid #777;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     overflow:hidden;
+    flex-shrink:0;
 }
 
 .fingerprint-box img{
     width:100%;
     height:100%;
     object-fit:contain;
-    }
+}
     </style>  
 </head>  
 <body class="editing">  
@@ -508,88 +511,101 @@
             </div>  
 
             <!-- TARJETA DORSO -->  
-            <div class="dni-card dni-back" id="card-back-bg">  
-                <div class="back-top">  
-                    <div class="back-fields">  
-                        <div class="field-group">  
-                            <label contenteditable="true">Domicilio / Address</label>  
-                            <div class="val" style="font-size:9px;" contenteditable="true">SAN MARTIN 2538<br>CAÑUELAS - CAÑUELAS - BUENOS AIRES</div>  
-                        </div>  
-                        <div class="field-group">  
-                            <label contenteditable="true">Lugar de nacimiento / Place of birth</label>  
-                            <div class="val" style="font-size:9px;" contenteditable="true">PROVINCIA DE BUENOS AIRES</div>  
-                        </div>  
-                    </div>    
-                </div>  
+            <div class="dni-card dni-back" id="card-back-bg">
 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin: 5px 0;">  
-                    <div style="font-size: 8px;" contenteditable="true">CPN Diego César Santilli<br>Ministro del Interior</div>  
-                    <div style="font-size: 9px;" contenteditable="true">CUIL: 27-99999999-0</div>  
-                    <div style="font-size: 9px;" contenteditable="true">Trámite N°: 00570060060</div>  
-                </div>  
-               <div class="back-extra">
+    <div class="back-top">
 
-    <div class="extra-fields">
+        <div class="back-fields">
 
-        <div class="field-group">
-            <label>Fecha de ingreso al país</label>
-            <div class="val" contenteditable="true">
-                12 ABR 2012
+            <div class="field-group">
+                <label contenteditable="true">Domicilio / Address</label>
+                <div class="val" style="font-size:9px;" contenteditable="true">
+                    SAN MARTIN 2538<br>
+                    CAÑUELAS - CAÑUELAS - BUENOS AIRES
+                </div>
             </div>
-        </div>
 
-        <div class="field-group">
-            <label>Categoría de ingreso</label>
-            <div class="val" contenteditable="true">
-                TEMPORARIA
+            <div class="field-group">
+                <label contenteditable="true">Lugar de nacimiento / Place of birth</label>
+                <div class="val" style="font-size:9px;" contenteditable="true">
+                    PROVINCIA DE BUENOS AIRES
+                </div>
             </div>
-        </div>
 
-        <div class="field-group">
-            <label>Expediente</label>
-            <div class="val" contenteditable="true">
-                5274201
-            </div>
-        </div>
-
-        <div class="field-group">
-            <label>Disposición</label>
-            <div class="val" contenteditable="true">
-                5306
-            </div>
-        </div>
-
-        <div class="field-group">
-            <label>Fecha de radicación</label>
-            <div class="val" contenteditable="true">
-                29 MAY 2012
-            </div>
-        </div>
-
-        <div class="field-group">
-            <label>Vencimiento</label>
-            <div class="val" contenteditable="true">
-                29 MAY 2014
-            </div>
         </div>
 
     </div>
 
-    <div class="fingerprint-box">
-        <img id="fingerprint-img" src="">
+    <div class="back-extra">
+
+        <div class="extra-fields">
+
+            <div>
+                <strong>INGRESO:</strong>
+                <span contenteditable="true">12 ABR 2012</span>
+            </div>
+
+            <div>
+                <strong>CATEGORÍA:</strong>
+                <span contenteditable="true">TEMPORARIA</span>
+            </div>
+
+            <div class="row-data">
+                <div>
+                    <strong>EXP.:</strong>
+                    <span contenteditable="true">5274201</span>
+                </div>
+
+                <div>
+                    <strong>DISP.:</strong>
+                    <span contenteditable="true">5306</span>
+                </div>
+            </div>
+
+            <div class="row-data">
+                <div>
+                    <strong>RAD.:</strong>
+                    <span contenteditable="true">29 MAY 2012</span>
+                </div>
+
+                <div>
+                    <strong>VENC.:</strong>
+                    <span contenteditable="true">29 MAY 2014</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="fingerprint-box">
+            <img id="fingerprint-img" src="">
+        </div>
+
     </div>
 
-               </div>
-                <div class="mrz" contenteditable="true">  
-                    IDARG45980666<4<<<<<<<<<<<<<<<<<<<br>  
-                    0107998F201808ARG<<RABBIA<<<<AGUSTIN<<<<<0<br>  
-                    IGNACIO<RODRIGUEZ<<MARIANA<FL  
-                </div>  
-            </div>  
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:6px 0;font-size:8px;">
 
-        </div>  
-    </div>  
-</div>  
+        <div contenteditable="true">
+            CPN Diego César Santilli<br>
+            Ministro del Interior
+        </div>
+
+        <div contenteditable="true">
+            CUIL: 27-99999999-0
+        </div>
+
+        <div contenteditable="true">
+            Trámite Nº: 00570060060
+        </div>
+
+    </div>
+
+    <div class="mrz" contenteditable="true">
+        IDARG45980666<4<<<<<<<<<<<<<<<<<<<br>
+        0107998F201808ARG<<RABBIA<<<<AGUSTIN<<<<<0<br>
+        IGNACIO<RODRIGUEZ<<MARIANA<FL
+    </div>
+
+                    </div>  
 
 <script>  
     function toggleEditMode() {  
