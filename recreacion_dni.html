@@ -307,7 +307,24 @@
             background: rgba(255,255,255,0.5);  
             padding: 4px;  
             border-radius: 4px;  
-        }  
+        }
+            #dniSerial{
+    position:absolute;
+    top:88px;
+    right:7px;
+    writing-mode:vertical-rl;
+    text-orientation:upright;
+    font-family:"Share Tech Mono", monospace;
+    font-size:9px;
+    font-weight:700;
+    color:#0b2545;
+    letter-spacing:2px;
+}
+
+.editing #dniSerial{
+    border:1px dashed #0077c8;
+    background:rgba(255,255,255,.3);
+        }
     </style>  
 </head>  
 <body class="editing">  
@@ -417,11 +434,13 @@
                                 <label contenteditable="true">FIRMA IDENTIFICADO / SIGNATURE</label>  
                                 <div class="signature-box">  
                                     <img id="signature-img" src="" alt="" style="display:none;">  
-                                </div>  
-                            </div>  
-                        </div>  
-                    </div>  
-                </div>  
+                                </div>
+                                <div id="dniSerial" contenteditable="true">
+                                123456789
+                              </div>
+                             </div> <!-- Fin de la tarjeta del frente -->
+                            </div> 
+                          </div>  
 
                 <!-- Barra inferior con Trámite subido al hueco y Código QR horizontal -->  
                 <div class="bottom-bar-horizontal">  
