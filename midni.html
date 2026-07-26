@@ -359,7 +359,8 @@ He leído y acepto los términos y condiciones
 
 <script>
 function mostrarCampos(){
-  let tipo=document.getElementById("tramite").value;
+  let tipo = document.getElementById("tramite").value;
+  document.getElementById("formulario").style.display = tipo ? "block" : "none";
 }
 
 document.getElementById("cuil").addEventListener("input",function(e){
@@ -401,10 +402,6 @@ function validarFormulario(){
 
   let valido = tipo && nombre && apellido && emailValido && fecha && cuilValido && provincia && localidad && direccion;
 
-  if(document.getElementById("categoria").style.display==="block"){
-    valido = valido && categoria;
-  }
-
   document.getElementById("btnEnviar").disabled=!valido;
 }
 
@@ -441,7 +438,7 @@ let nombres={
 };
 
   let mensaje=
-`*SOLICITUD DE EMISIÓN DE LNC*
+`*SOLICITUD DE EMISIÓN DE DNI DIGITAL*
 
 📌 Tipo de trámite: ${nombres[tipo]}
 
