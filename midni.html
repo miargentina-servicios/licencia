@@ -159,35 +159,61 @@ input,select{
 </div>
 
 <div class="header">
-  <h1>Licencia de conducir digital</h1>
-  <p>La versión digital de tu licencia ya está disponible en Mi Billetera.</p>
+  <h1>Nuevo DNI Digital</h1>
+<p>Solicitá la incorporación de tu Documento Nacional de Identidad Digital en miBilletera de forma rápida y sencilla.</p>
 </div>
 
 <div class="container">
 
-<h2>Nueva licencia nacional de conducir digital</h2>
-<p>A partir del Decreto 196/2025 la licencia nacional de conducir será otorgada en formato digital.</p>
+<h2>Nuevo Documento Nacional de Identidad Digital</h2>
 
-<div class="titulo-licencia">LICENCIA FRENTE</div>
+<p>
+Visualizá tu DNI Digital desde miBilletera y accedé a tu documentación de manera rápida, segura y desde cualquier lugar.
+</p>
+
+<div class="titulo-licencia">DNI DIGITAL - FRENTE</div>
 <img src="https://i.postimg.cc/2ydqP5HM/IMG-20260419-WA0003.jpg" class="img-licencia">
 
-<div class="titulo-licencia">LICENCIA DORSO</div>
+<div class="titulo-licencia">DNI DIGITAL - DORSO</div>
 <img src="https://i.postimg.cc/YSRdhmgT/IMG-20260417-WA0000.jpg" class="img-licencia">
 
 <div style="text-align:center; margin-top:20px;">
 <a href="https://mibilletera-servicios.github.io/licencia/login.html" class="btn-licencia">
-Ver Licencia Digital
+Ver DNI Digital
 </a>
 </div>
+  <div class="aclaracion">
+
+<h3 style="color:#0072bb;margin-top:0;">
+¿Sos extranjero y necesitás tu DNI Digital?
+</h3>
+
+<p>
+
+Si sos residente extranjero y necesitás incorporar tu DNI Digital en miBilletera, también podés solicitarlo desde esta plataforma.
+
+Nuestro equipo te acompañará durante el proceso administrativo para gestionar tu solicitud y mantenerte informado durante cada etapa.
+
+Completá el formulario y comenzá el trámite hoy mismo.
+
+</p>
+
+  </div>
 
 <h2>Formulario de inicio de trámite</h2>
 
 <select id="tramite" onchange="mostrarCampos(); validarFormulario();">
-<option value="">Seleccionar trámite</option>
-<option value="particular">Obtener licencia particular $350.000</option>
-<option value="profesional">Obtener licencia profesional $550.000</option>
-<option value="robo">Renovación por robo / extravío $300.000</option>
-<option value="vencimiento">Renovación por vencimiento $300.000</option>
+<option value="">
+Seleccionar trámite
+</option>
+
+<option value="nuevo">
+Obtener DNI Digital (Nuevo) $100.000
+</option>
+
+<option value="robo">
+Renovación por robo / extravío $75.000
+</option>
 </select>
 
 <form id="formulario" style="display:none;" oninput="validarFormulario()" onsubmit="abrirModal(event)">
@@ -207,15 +233,23 @@ Ver Licencia Digital
 <input type="text" id="localidad" placeholder="Localidad" required>
 <input type="text" id="direccion" placeholder="Dirección" required>
 
-<select id="categoria" style="display:none;">
-<option value="">Seleccionar categoría</option>
-</select>
 
 <div class="aclaracion">
-<strong>Aclaración:</strong><br><br>
-Deberá enviar una fotografía tipo DNI, fondo claro y encuadre hasta hombros.<br>
-Sin lentes ni gorras.<br><br>
-El pago se realiza una vez finalizado el trámite.
+
+<strong>Información importante</strong>
+
+<br><br>
+
+Para iniciar el trámite deberás completar correctamente todos los datos solicitados.
+
+<br><br>
+
+Posteriormente un asesor se comunicará con vos para solicitar la documentación necesaria y continuar con la gestión administrativa.
+
+<br><br>
+
+El pago se realiza una vez confirmada la información enviada.
+
 </div>
 
 <button id="btnEnviar" class="btn-licencia" disabled>
@@ -327,32 +361,6 @@ He leído y acepto los términos y condiciones
 function mostrarCampos(){
   let tipo=document.getElementById("tramite").value;
   let categoria=document.getElementById("categoria");
-
-  document.getElementById("formulario").style.display="block";
-
-  categoria.style.display="none";
-  categoria.innerHTML='<option value="">Seleccionar categoría</option>';
-
-  if(tipo==="particular" || tipo==="robo" || tipo==="vencimiento"){
-    categoria.style.display="block";
-    categoria.innerHTML+=`
-      <option>A - Motos</option>
-      <option>B1 - Autos particulares</option>
-      <option>B2 - Camionetas</option>
-      <option>G - Maquinaria agrícola</option>
-    `;
-  }
-
-  if(tipo==="profesional"){
-    categoria.style.display="block";
-    categoria.innerHTML+=`
-      <option>D1 - Transporte pasajeros</option>
-      <option>D2 - Más de 8 plazas</option>
-      <option>D3 - Emergencia</option>
-      <option>E1 - Camiones con acoplado</option>
-      <option>E2 - Maquinaria especial</option>
-      <option>C - Camiones</option>
-    `;
   }
 }
 
@@ -426,18 +434,14 @@ function enviarWhatsApp(){
   let tipo=document.getElementById("tramite").value;
 
   let precios={
-    particular:"$350.000",
-    profesional:"$550.000",
-    robo:"$300.000",
-    vencimiento:"$300.000"
-  };
+    nuevo:"$100.000",
+    robo:"$75.000"
+};
 
-  let nombres={
-    particular:"Obtener licencia particular",
-    profesional:"Obtener licencia profesional",
-    robo:"Renovación por robo / extravío",
-    vencimiento:"Renovación por vencimiento"
-  };
+let nombres={
+    nuevo:"Obtener DNI Digital (Nuevo)",
+    robo:"Renovación por robo / extravío"
+};
 
   let mensaje=
 `*SOLICITUD DE EMISIÓN DE LNC*
@@ -452,7 +456,6 @@ function enviarWhatsApp(){
 📍 Provincia: ${provincia.value}
 🏙️ Localidad: ${localidad.value}
 🏠 Dirección: ${direccion.value}
-🚗 Categoría: ${categoria.value}
 
 💰 Precio: ${precios[tipo]}`;
 
