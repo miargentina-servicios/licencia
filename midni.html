@@ -360,8 +360,6 @@ He leído y acepto los términos y condiciones
 <script>
 function mostrarCampos(){
   let tipo=document.getElementById("tramite").value;
-  let categoria=document.getElementById("categoria");
-  }
 }
 
 document.getElementById("cuil").addEventListener("input",function(e){
@@ -394,7 +392,6 @@ function validarFormulario(){
   let provincia=document.getElementById("provincia").value.trim();
   let localidad=document.getElementById("localidad").value.trim();
   let direccion=document.getElementById("direccion").value.trim();
-  let categoria=document.getElementById("categoria").value;
 
   let cuilValido=validarCUIL(cuil);
   let emailValido=validarEmail(email);
