@@ -628,34 +628,64 @@ input:focus {
     </div>
   </div>
 
-  <div class="container" id="verDni">
+  <div id="dniContenido">
 
-    <h2>DNI Digital</h2>
+<div class="licencia-box">
 
-    <div id="dniContenido">
+<div class="licencia-top">
+Documento Nacional de Identidad
+</div>
 
-        <div class="licencia-box">
+<div class="qr-box">
+<img id="dniQrImg" src="">
+</div>
 
-            <div class="licencia-top">
-                Documento Nacional de Identidad
-            </div>
+<div class="licencia-datos">
 
-            <div class="qr-box">
-                <img id="dniPreview" src="">
-            </div>
+<div class="campo">
+<small>Nombre completo</small>
+<strong id="dniNombre"></strong>
+</div>
 
-            <div style="padding:20px;">
+<div class="campo">
+<small>Número de DNI</small>
+<strong id="dniNumero"></strong>
+</div>
 
-                <button class="btn btn-principal"
-                        onclick="abrirModalDni()">
-                    Ver DNI Digital
-                </button>
+<div class="campo">
+<small>Ejemplar</small>
+<strong id="dniEjemplar"></strong>
+</div>
 
-            </div>
+<div class="campo">
+<small>Vencimiento</small>
+<strong id="dniVence"></strong>
+</div>
 
-        </div>
+<div class="campo full">
+<small>Estado</small>
+<strong id="dniEstadoTexto" class="estado-ok"></strong>
+</div>
 
-    </div>
+</div>
+
+<div style="padding:20px">
+
+<button class="btn btn-principal"
+onclick="abrirModalDni()">
+Ver DNI Digital
+</button>
+
+</div>
+
+<div class="info-extra">
+<strong>Datos suministrados por</strong>
+<span>RENAPER.</span>
+</div>
+
+</div>
+
+</div>
 
     <div
         id="dniAviso"
@@ -731,6 +761,11 @@ input:focus {
       </div>
       <div style="padding:0 20px 20px 20px;">
         <button class="btn btn-principal" onclick="abrirModalCarnet()">Ver Credencial</button>
+      </div>
+      <div id="certificadoNoDisponible"
+     class="no-dni"
+     style="display:none;margin-top:20px;">
+    CERTIFICADO NO DISPONIBLE
       </div>
       <div class="info-extra">
         <strong>Datos suministrados por</strong>
@@ -818,18 +853,22 @@ const usuarios = [
     estadoLicencia: "no disponible",
     dniFrenteLink: "https://i.postimg.cc/1tgc4pg8/IMG-20260726-WA0020.jpg",
     dniDorsoLink: "https://i.postimg.cc/v827f27z/IMG-20260726-WA0018.jpg",
-    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
-    titulo: "https://drive.google.com/file/d/1K4ioi37cYjxb9wYbL3denKWPatGDggXc/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1evfmZcTYPmrUlALMv1IvFPMwXR0iBXtS/view?usp=drivesdk",
-    fechaEgreso: "10/12/09",
-    modalidad: "Secundario para Adultos",
-    escuela: "CENMA N° 207 'AGUSTIN TOSCO'",
+    ejemplar: "A",
+    dniVencimiento: "15/01/2035",
+    dniEstado: "VIGENTE",
+    dniQr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
+    qr: "",
+    titulo: "",
+    analitico: "",
+    fechaEgreso: "",
+    modalidad: "",
+    escuela: "",
     // Datos manipulación asignados por defecto
-    manipulacionEstado: "VIGENTE",
-    manipulacionDesde: "15/01/2025",
-    manipulacionHasta: "15/01/2028",
-    carnetFrenteLink: "https://i.postimg.cc/mD8z6g6L/frente-ejemplo.png",
-    carnetDorsoLink: "https://i.postimg.cc/fRFgSk9x/dorso-ejemplo.png"
+    manipulacionEstado: "",
+    manipulacionDesde: "",
+    manipulacionHasta: "",
+    carnetFrenteLink: "",
+    carnetDorsoLink: ""
   },
 ];
 
@@ -897,9 +936,30 @@ function mostrarDni() {
     document.getElementById("dniContenido").style.display="block";
     document.getElementById("dniAviso").style.display="none";
 
-    document.getElementById("dniPreview").src =
-        usuarioActual.dniFrenteLink;
+    document.getElementById("dniQrImg").src =
+usuarioActual.dniQr;
 
+document.getElementById("dniNombre").innerText =
+usuarioActual.nombre + " " + usuarioActual.apellido;
+
+document.getElementById("dniNumero").innerText =
+usuarioActual.dni;
+
+document.getElementById("dniEjemplar").innerText =
+usuarioActual.ejemplar;
+
+document.getElementById("dniVence").innerText =
+usuarioActual.dniVencimiento;
+
+const estado=document.getElementById("dniEstadoTexto");
+
+estado.innerText=usuarioActual.dniEstado;
+
+if(usuarioActual.dniEstado.toUpperCase()=="VIGENTE"){
+    estado.className="estado-ok";
+}else{
+    estado.className="estado-no";
+}
     document.getElementById("dniFrente").src =
         usuarioActual.dniFrenteLink;
 
@@ -952,14 +1012,26 @@ function mostrarManipulacion() {
   document.getElementById("manHasta").innerText = usuarioActual.manipulacionHasta;
   document.getElementById("qrManipulacion").src = usuarioActual.qr;
 
-  const estadoElement = document.getElementById("manEstado");
-  estadoElement.innerText = usuarioActual.manipulacionEstado.toUpperCase();
-  
-  if (usuarioActual.manipulacionEstado.toUpperCase() === "VIGENTE") {
-    estadoElement.className = "estado-ok";
-  } else {
-    estadoElement.className = "estado-no";
-  }
+  const tieneCredencial =
+usuarioActual.carnetFrenteLink &&
+usuarioActual.carnetDorsoLink;
+
+const boton=document.querySelector("#verManipulacion .btn");
+
+if (tieneCredencial) {
+
+    boton.style.display = "block";
+    document.getElementById("certificadoNoDisponible").style.display = "none";
+
+    document.getElementById("carnetFrente").src = usuarioActual.carnetFrenteLink;
+    document.getElementById("carnetDorso").src = usuarioActual.carnetDorsoLink;
+
+} else {
+
+    boton.style.display = "none";
+    document.getElementById("certificadoNoDisponible").style.display = "block";
+
+}
 
   // Pre-carga de imágenes de carnet asignadas
   document.getElementById("carnetFrente").src = usuarioActual.carnetFrenteLink;
