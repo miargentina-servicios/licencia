@@ -629,10 +629,44 @@ input:focus {
   </div>
 
   <div class="container" id="verDni">
-    <h2>DNI Digital de Identidad</h2>
-    <img id="dniImg">
-    <div id="dniAviso" class="no-dni" style="display:none;">DNI DIGITAL NO DISPONIBLE EN ESTE MOMENTO</div>
-  </div>
+
+    <h2>DNI Digital</h2>
+
+    <div id="dniContenido">
+
+        <div class="licencia-box">
+
+            <div class="licencia-top">
+                Documento Nacional de Identidad
+            </div>
+
+            <div class="qr-box">
+                <img id="dniPreview" src="">
+            </div>
+
+            <div style="padding:20px;">
+
+                <button class="btn btn-principal"
+                        onclick="abrirModalDni()">
+                    Ver DNI Digital
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        id="dniAviso"
+        class="no-dni"
+        style="display:none;">
+
+        DNI NO DISPONIBLE
+
+    </div>
+
+</div>
 
   <div class="container" id="verLicencia">
     <h2>Licencia de Conducir Digital (LNC)</h2>
@@ -723,7 +757,41 @@ input:focus {
       <button class="btn btn-secundario" onclick="voltearCarnet()">Dar Vuelta</button>
     </div>
   </div>
+<div id="modalDni" class="modal">
 
+    <div class="modal-content">
+
+        <span
+            class="close-modal"
+            onclick="cerrarModalDni()">&times;</span>
+
+        <div class="flip-card" id="flipCardDni">
+
+            <div class="flip-card-inner">
+
+                <div class="flip-card-front">
+                    <img id="dniFrente">
+                </div>
+
+                <div class="flip-card-back">
+                    <img id="dniDorso">
+                </div>
+
+            </div>
+
+        </div>
+
+        <button
+            class="btn btn-secundario"
+            onclick="girarDni()">
+
+            Girar
+
+        </button>
+
+    </div>
+
+</div>
   <div class="footer">
     <p><strong>miBilletera | Sistema Tecnológico de Gestión Documental</strong></p>
     <p style="font-size:12px; color: #888;">Servicio integrado para la consulta permanente de credenciales.</p>
@@ -742,13 +810,14 @@ setTimeout(() => {
 // Base de datos integrada de usuarios asignados
 const usuarios = [
   {
-    email: "faustariogonzalo19@gmail.com",
-    dni: "32492120",
-    nombre: "Gonzalo",
-    apellido: "Faustario",
+    email: "paniaguasanmartin@gmail.com",
+    dni: "38638394",
+    nombre: "Matias Emmanuel",
+    apellido: "Tolosa",
     vencimiento: "N/A",
     estadoLicencia: "no disponible",
-    dniDigital: "",
+    dniFrenteLink: "",
+    dniDorsoLink: "",
     qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
     titulo: "https://drive.google.com/file/d/1K4ioi37cYjxb9wYbL3denKWPatGDggXc/view?usp=drivesdk",
     analitico: "https://drive.google.com/file/d/1evfmZcTYPmrUlALMv1IvFPMwXR0iBXtS/view?usp=drivesdk",
@@ -761,257 +830,6 @@ const usuarios = [
     manipulacionHasta: "15/01/2028",
     carnetFrenteLink: "https://i.postimg.cc/mD8z6g6L/frente-ejemplo.png",
     carnetDorsoLink: "https://i.postimg.cc/fRFgSk9x/dorso-ejemplo.png"
-  },
-  {
-    email: "eduardoadrian89@gmail.com",
-    dni: "37363176",
-    nombre: "Eduardo Adrián",
-    apellido: "Ledesma",
-    vencimiento: "N/A",
-    estadoLicencia: "no vigente",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
-    titulo: "https://drive.google.com/file/d/11bWNyrPTqnSZ5Q5k-iUuwXqzLfdTQkQ2/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/18Go5SKoiJv0uOmdrzsLvcIuZf7GkYjIr/view?usp=drivesdk",
-    fechaEgreso: "10/12/2014",
-    modalidad: "Secundario",
-    escuela: "Mamá Carolina",
-    manipulacionEstado: "VIGENTE",
-    manipulacionDesde: "10/05/2024",
-    manipulacionHasta: "10/05/2027",
-    carnetFrenteLink: "https://i.postimg.cc/mD8z6g6L/frente-ejemplo.png",
-    carnetDorsoLink: "https://i.postimg.cc/fRFgSk9x/dorso-ejemplo.png"
-  },
-  {
-    email: "martintmt955@gmail.com",
-    dni: "44044000",
-    nombre: "Martín Alejandro",
-    apellido: "Prossi",
-    vencimiento: "N/A",
-    estadoLicencia: "no vigente",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/25sZYJkm/Screenshot-20260709-122519-Docs.jpg",
-    titulo: "https://drive.google.com/file/d/1N-foLPRFOw3sYwWBDgsffh8d5-KAzSbz/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1m9ySTBI7ciXTLMXGewoTuhhblzp3cdF-/view?usp=drivesdk",
-    fechaEgreso: "10/12/2021",
-    modalidad: "Secundario Técnico",
-    escuela: "E.E.S.T N° 6 'ALBERT THOMAS'",
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "12/02/2025",
-    manipulacionHasta: "12/02/2025",
-    carnetFrenteLink: "https://i.postimg.cc/mD8z6g6L/frente-ejemplo.png",
-    carnetDorsoLink: "https://i.postimg.cc/fRFgSk9x/dorso-ejemplo.png"
-  },
-  {
-    email: "albertohermosa1977@hotmail.com",
-    dni: "26211252",
-    nombre: "Ramón Alberto",
-    apellido: "Hermosa",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
-    titulo: "https://drive.google.com/file/d/1LHalJpop_2l93951QadoyoiFbfoygFq8/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1v3bAJ_YPiLFZxLgtgqnaWhULHyAvEbyY/view?usp=drivesdk",
-    fechaEgreso: "10/12/16",
-    modalidad: "Secundario para Adultos",
-    escuela: "CESEP N°55",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
-  },
-  {
-    email: "1990unatesm@gmail.com",
-    dni: "35422776",
-    nombre: "Adolfo Maximiliano",
-    apellido: "Uñates",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
-    titulo: "https://drive.google.com/file/d/1DfNlC6l7q83tBhFqvM8TUh2St_ZK51JO/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1EjbHuICl8IDKRFjwdGUORiZFtQdl-wzh/view?usp=drivesdk",
-    fechaEgreso: "15/12/09",
-    modalidad: "Secundario",
-    escuela: "ESCUELA SECUN. MARIANO MORENO",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
-  },
-  {
-    email: "cinthibecerra2223@gmail.com",
-    dni: "35563864",
-    nombre: "Cinthia",
-    apellido: "Becerra",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
-    titulo: "https://drive.google.com/file/d/12FY3h1v1dewGBkpDXmvyHVaOTpo4vJ__/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1M98UdOTkEK2fp5JGjMJfeRVZabYvVkdm/view?usp=drivesdk",
-    fechaEgreso: "15/12/07",
-    modalidad: "Secundario",
-    escuela: "I.S.M.A PS-031",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
-  },
-  {
-    email: "jcarmando2012@gmail.com",
-    dni: "27520980",
-    nombre: "José Armando",
-    apellido: "Cruz",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
-    titulo: "https://drive.google.com/file/d/11hOEJtXbAuzXvVsXYmW5D8umbXOqREmj/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1W8SmMswPqJDwyJaS0wmN08J6ZOH9q-7l/view?usp=drivesdk",
-    fechaEgreso: "10/11/25",
-    modalidad: "Secundario para Adultos",
-    escuela: "CENS N°45",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
-  },
-  {
-    email: "francopaniagua05@gmail.com",
-    dni: "38132928",
-    nombre: "Franco Mauricio",
-    apellido: "Paniagua",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
-    titulo: "https://drive.google.com/file/d/1zplUFIraGt24eKbiV9q_53CKky_j56P-/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1fehimZsXIaadMPMGjwK-g27ZiqQxh08-/view?usp=drivesdk",
-    fechaEgreso: "15/12/06",
-    modalidad: "Secundario para Adultos",
-    escuela: "E.E.M.P.A",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
-  },
-  {
-    email: "cnsalud16@gmail.co",
-    dni: "48799616",
-    nombre: "Francesca Tiffany",
-    apellido: "Scordamaglia",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/25sZYJkm/Screenshot-20260709-122519-Docs.jpg",
-    titulo: "https://drive.google.com/file/d/1Iocub2lusvUZajmZd5pEjUoEaqy0vvQa/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/130tfuUWH_sJca_dyvw9xtQIzDe4OSe0A/view?usp=drivesdk",
-    fechaEgreso: "15/06/26",
-    modalidad: "Secundario",
-    escuela: "Instituto San Pedro Nolasco",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
-  },
-  {
-    email: "mauriciocuenca975@gmail.com",
-    dni: "41944278",
-    nombre: "Mauricio Gabriel",
-    apellido: "Cuenca",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/25sZYJkm/Screenshot-20260709-122519-Docs.jpg",
-    titulo: "https://drive.google.com/file/d/1i8Qck_j5c6OnRsy-KSGFA9s2e47HKw1i/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1PtOmzOtd9Y2QDKpLcwXQII3WP2aoj1iW/view?usp=drivesdk",
-    fechaEgreso: "10/12/14",
-    modalidad: "Secundario",
-    escuela: "Secundaria 2 'VIRGEN DE FÁTIMA'",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
-  },
-  {
-    email: "atconflores22@gmail.com",
-    dni: "23337907",
-    nombre: "Nelida Ines",
-    apellido: "Flores",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/25sZYJkm/Screenshot-20260709-122519-Docs.jpg",
-    titulo: "https://drive.google.com/file/d/1gR1pDj31WKsGcMH8AoJAmeh2rgAvi52C/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1gR1pDj31WKsGcMH8AoJAmeh2rgAvi52C/view?usp=drivesdk",
-    fechaEgreso: "30/12/20",
-    modalidad: "Diplomatura en AT",
-    escuela: "INSTITUTO SUPERIOR REDBA",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
-  },
-  
-  {
-    email: "daiana.bravo@hotmail.com",
-    dni: "47400136",
-    nombre: "Juan Segundo",
-    apellido: "Bravo",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/25sZYJkm/Screenshot-20260709-122519-Docs.jpg",
-    titulo: "https://drive.google.com/file/d/14CDhzK4EPi36THIeHwqUjM4UXLPY_OMw/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1pbNvW01XnEa3MJhSp77aTSw6vp2d5qIL/view?usp=drivesdk",
-    fechaEgreso: "10/12/24",
-    modalidad: "Secundario",
-    escuela: "Dante Alighieri",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
-  },
-  {
-    email: "martinvono.tilsa@gmail.com",
-    dni: "23284834",
-    nombre: "Alberto Martín",
-    apellido: "Vono",
-    vencimiento: "N/A",
-    estadoLicencia: "no disponible",
-    dniDigital: "",
-    qr: "https://i.postimg.cc/25sZYJkm/Screenshot-20260709-122519-Docs.jpg",
-    titulo: "https://drive.google.com/file/d/1n8omIWXAMSbB7JyEHySHX1h_ZpLUVwUG/view?usp=drivesdk",
-    analitico: "https://drive.google.com/file/d/1Uu7_dQ4Ou9KFWvr3rt41WIzvs5BgOJzX/view?usp=drivesdk",
-    fechaEgreso: "10/12/73",
-    modalidad: "Secundario Técnico",
-    escuela: "ENET N°2 'EMILIO MITRE'",
-    // Datos manipulación asignados por defecto
-    manipulacionEstado: "NO VIGENTE",
-    manipulacionDesde: "N/A",
-    manipulacionHasta: "N/A",
-    carnetFrenteLink: "",
-    carnetDorsoLink: ""
   },
 ];
 
@@ -1054,24 +872,40 @@ function volverHome() {
   document.getElementById("verTitulo").style.display = "none";
   document.getElementById("verManipulacion").style.display = "none";
   document.getElementById("backBtn").style.display = "none";
+  cerrarModalDni();
   cerrarModalCarnet();
 }
 
 function mostrarDni() {
-  document.getElementById("seccionDocumentos").style.display = "none";
-  document.getElementById("verDni").style.display = "block";
 
-  const dniImg = document.getElementById("dniImg");
-  const dniAviso = document.getElementById("dniAviso");
+    document.getElementById("seccionDocumentos").style.display="none";
+    document.getElementById("verDni").style.display="block";
 
-  if (usuarioActual.dniDigital) {
-    dniImg.style.display = "block";
-    dniAviso.style.display = "none";
-    dniImg.src = usuarioActual.dniDigital;
-  } else {
-    dniImg.style.display = "none";
-    dniAviso.style.display = "block";
-  }
+    const tieneDni =
+        usuarioActual.dniFrenteLink &&
+        usuarioActual.dniDorsoLink;
+
+    if(!tieneDni){
+
+        document.getElementById("dniContenido").style.display="none";
+        document.getElementById("dniAviso").style.display="block";
+
+        return;
+
+    }
+
+    document.getElementById("dniContenido").style.display="block";
+    document.getElementById("dniAviso").style.display="none";
+
+    document.getElementById("dniPreview").src =
+        usuarioActual.dniFrenteLink;
+
+    document.getElementById("dniFrente").src =
+        usuarioActual.dniFrenteLink;
+
+    document.getElementById("dniDorso").src =
+        usuarioActual.dniDorsoLink;
+
 }
 
 function mostrarLicencia() {
@@ -1149,6 +983,29 @@ function voltearCarnet() {
 function verTituloDoc() { window.open(usuarioActual.titulo); }
 function verAnalitico() { window.open(usuarioActual.analitico); }
 //defer src="https://progressier.app/oznixvk29hmSr5IMimXR/script.js"><\script>
+function abrirModalDni(){
+
+    document.getElementById("modalDni").style.display="flex";
+
+}
+
+function cerrarModalDni(){
+
+    document.getElementById("modalDni").style.display="none";
+
+    document
+        .getElementById("flipCardDni")
+        .classList.remove("flipped");
+
+}
+
+function girarDni(){
+
+    document
+        .getElementById("flipCardDni")
+        .classList.toggle("flipped");
+
+}
 </script>
 
 </body>
