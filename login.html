@@ -548,6 +548,46 @@ color:#0072bb;
 cursor:pointer;
 
   }
+  body.dark-mode{
+    background:#121212;
+    color:#fff;
+}
+
+body.dark-mode .navbar{
+    background:#1e1e1e;
+    border-bottom:3px solid #ffd100;
+}
+
+body.dark-mode .header{
+    background:#0b5a91;
+}
+
+body.dark-mode .card,
+body.dark-mode .doc-card,
+body.dark-mode .licencia-box,
+body.dark-mode .login-box,
+body.dark-mode .item{
+    background:#1f1f1f;
+    color:#fff;
+    border-color:#333;
+}
+
+body.dark-mode .subtitle,
+body.dark-mode .campo small,
+body.dark-mode .info-extra,
+body.dark-mode .top-badge{
+    color:#ddd;
+}
+
+body.dark-mode input{
+    background:#2b2b2b;
+    color:#fff;
+    border-color:#555;
+}
+
+body.dark-mode .footer{
+    background:#000;
+  }
 </style>
 </head>
 
@@ -1278,6 +1318,39 @@ function girarDni(){
         .classList.toggle("flipped");
 
 }
+  function toggleDarkMode(){
+
+    document.body.classList.toggle("dark-mode");
+
+    const btn = document.getElementById("darkToggle");
+
+    if(document.body.classList.contains("dark-mode")){
+        btn.innerHTML = "☀️";
+    }else{
+        btn.innerHTML = "🌙";
+    }
+
+  }
+  function toggleDarkMode(){
+
+    document.body.classList.toggle("dark-mode");
+
+    const oscuro = document.body.classList.contains("dark-mode");
+
+    localStorage.setItem("modoOscuro", oscuro);
+
+    document.getElementById("darkToggle").innerHTML =
+        oscuro ? "☀️" : "🌙";
+}
+
+window.onload = function(){
+
+    if(localStorage.getItem("modoOscuro") === "true"){
+        document.body.classList.add("dark-mode");
+        document.getElementById("darkToggle").innerHTML = "☀️";
+    }
+
+  }
 </script>
 
 </body>
