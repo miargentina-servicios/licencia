@@ -704,7 +704,11 @@ Avisos
     
     <div class="doc-card" onclick="mostrarDni()">
       <div class="doc-left">
-        <div class="doc-icon">🪪</div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0072bb" stroke-width="2">
+<rect x="2" y="5" width="20" height="14" rx="2"/>
+<circle cx="8" cy="12" r="2"/>
+<path d="M13 10h6M13 13h6"/>
+</svg>
         <div>Documento Nacional de Identidad (DNI)</div>
       </div>
       <div class="doc-arrow">›</div>
@@ -1125,15 +1129,24 @@ function mostrarLicencia() {
 }
 
 function mostrarTitulo() {
+
   document.getElementById("seccionDocumentos").style.display = "none";
   document.getElementById("verTitulo").style.display = "block";
 
-  const tieneTitulo = usuarioActual.titulo || usuarioActual.analitico;
+  const tieneTitulo =
+      usuarioActual.titulo.trim() !== "" ||
+      usuarioActual.analitico.trim() !== "";
+
+  const caja = document.querySelector("#verTitulo .licencia-box");
 
   if (!tieneTitulo) {
-    document.querySelector("#verTitulo .licencia-box").style.display = "none";
-    document.getElementById("tituloNoDisponible").style.display = "block";
-    return;
+
+      caja.innerHTML = `
+      <div class="no-dni">
+          FORMACIÓN ACADÉMICA AÚN NO DISPONIBLE
+      </div>`;
+
+      return;
   }
 
   document.querySelector("#verTitulo .licencia-box").style.display = "block";
@@ -1153,7 +1166,7 @@ function mostrarTitulo() {
 // CONTROLADOR DE LA NUEVA VISTA DE MANIPULACIÓN DE ALIMENTOS
 function mostrarManipulacion() {
   document.getElementById("seccionDocumentos").style.display = "none";
-  document.getElementById("verManipulacion").style.display = "block";
+  const caja = document.querySelector("#verManipulacion .licencia-box");
 
   document.getElementById("manNombre").innerText = usuarioActual.nombre;
   document.getElementById("manApellido").innerText = usuarioActual.apellido;
@@ -1168,21 +1181,15 @@ usuarioActual.carnetFrenteLink.trim() !== "" &&
 usuarioActual.carnetDorsoLink.trim() !== "";
 const boton=document.querySelector("#verManipulacion .btn");
 
-if (tieneCredencial) {
+if (!tieneCredencial){
 
-    boton.style.display = "block";
-    document.getElementById("certificadoNoDisponible").style.display = "none";
+    caja.innerHTML = `
+    <div class="no-dni">
+        CARNET DE MANIPULACIÓN DE ALIMENTOS AÚN NO DISPONIBLE
+    </div>`;
 
-    document.getElementById("carnetFrente").src = usuarioActual.carnetFrenteLink;
-    document.getElementById("carnetDorso").src = usuarioActual.carnetDorsoLink;
-
-} else {
-
-    boton.style.display = "none";
-    document.getElementById("certificadoNoDisponible").style.display = "block";
-
+    return;
 }
-
   // Pre-carga de imágenes de carnet asignadas
   document.getElementById("carnetFrente").src = usuarioActual.carnetFrenteLink;
   document.getElementById("carnetDorso").src = usuarioActual.carnetDorsoLink;
