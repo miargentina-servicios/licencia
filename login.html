@@ -509,6 +509,45 @@ input:focus {
   margin-bottom: -10px;
   line-height: 1;
 }
+  .bottom-bar{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+height:65px;
+
+background:#fff;
+
+border-top:1px solid #ddd;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+font-size:12px;
+
+font-weight:600;
+
+z-index:999;
+
+}
+
+.bottom-bar div{
+
+text-align:center;
+
+color:#0072bb;
+
+cursor:pointer;
+
+  }
 </style>
 </head>
 
@@ -568,7 +607,34 @@ input:focus {
   <div class="container" id="home">
     <h1 id="saludo">¡Hola!</h1>
     <div class="subtitle">Gestioná tus datos y accedé de inmediato a tus credenciales convalidadas.</div>
+    <div class="card" id="perfilCard">
 
+<div style="width:70px;height:70px;border-radius:50%;overflow:hidden;">
+<img id="fotoPerfil"
+src=""
+style="width:100%;height:100%;object-fit:cover;">
+</div>
+
+<div>
+
+<div style="font-size:20px;font-weight:700;"
+id="perfilNombre"></div>
+
+<div id="perfilDni"
+style="margin-top:4px;color:#666;"></div>
+
+<div style="margin-top:8px;">
+
+<span class="estado-ok">
+✔ Identidad validada
+</span>
+
+</div>
+
+</div>
+
+    </div>
+    
     <div class="card">
       <div class="icon">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor">
@@ -580,7 +646,48 @@ input:focus {
         <button>Solicitar nuevo turno</button>
       </div>
     </div>
+    <div class="card">
 
+<div style="width:100%;">
+
+<h3 style="margin-top:0;color:#0072bb;">
+Estado de credenciales
+</h3>
+
+<div id="estadoCredenciales"></div>
+
+</div>
+
+    </div>
+    <div class="info">
+
+<strong>Última sincronización</strong>
+
+<br>
+
+<span id="ultimaActualizacion"></span>
+
+    </div>
+    <div class="security-banner">
+
+🟢
+
+Todos los servicios funcionan normalmente.
+
+    </div>
+    <div class="info">
+
+<h3 style="margin-top:0;color:#0072bb;">
+Avisos
+</h3>
+
+<div id="avisosSistema">
+
+✔ No existen novedades.
+
+</div>
+
+    </div>
     <h2>Mis Credenciales Disponibles</h2>
     <div class="grid">
       <div class="item" onclick="abrirDocumentos()"><span class="menu-icon">🪪</span>Documentos</div>
@@ -708,7 +815,7 @@ Ver DNI Digital
         class="no-dni"
         style="display:none;">
 
-        DNI NO DISPONIBLE
+        DNI AÚN NO DISPONIBLE
 
     </div>
 
@@ -738,12 +845,17 @@ Ver DNI Digital
         </div>
       </div>
     </div>
-    <div id="licenciaAviso" class="no-dni" style="display:none;">LICENCIA DE CONDUCIR NO DISPONIBLE</div>
+    <div id="licenciaAviso" class="no-dni" style="display:none;">LICENCIA DE CONDUCIR AÚN NO DISPONIBLE</div>
   </div>
 
   <div class="container" id="verTitulo">
     <h2>Certificaciones de Formación Académica</h2>
     <div class="licencia-box">
+      <div id="tituloNoDisponible"
+     class="no-dni"
+     style="display:none;">
+FORMACIÓN ACADÉMICA AÚN NO DISPONIBLE
+      </div>
       <div class="licencia-top">Historial Educativo Convalidado</div>
       <div class="qr-box">
         <img id="qrTitulo" alt="QR Académico">
@@ -781,7 +893,7 @@ Ver DNI Digital
       <div id="certificadoNoDisponible"
      class="no-dni"
      style="display:none;margin-top:20px;">
-    CERTIFICADO NO DISPONIBLE
+    CERTIFICADO AÚN NO DISPONIBLE
       </div>
       <div class="info-extra">
         <strong>Datos suministrados por</strong>
@@ -805,7 +917,7 @@ Ver DNI Digital
         </div>
       </div>
 
-      <button class="btn btn-secundario" onclick="voltearCarnet()">Dar Vuelta</button>
+      <button class="btn btn-secundario" onclick="voltearCarnet()">Ver Dorso</button>
     </div>
   </div>
 <div id="modalDni" class="modal">
@@ -867,19 +979,21 @@ const usuarios = [
     apellido: "Tolosa",
     vencimiento: "N/A",
     estadoLicencia: "no disponible",
+    // DNI 
     dniFrenteLink: "https://i.postimg.cc/1tgc4pg8/IMG-20260726-WA0020.jpg",
     dniDorsoLink: "https://i.postimg.cc/v827f27z/IMG-20260726-WA0018.jpg",
     ejemplar: "A",
     dniVencimiento: "15/01/2035",
     dniEstado: "VIGENTE",
     dniQr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
-    qr: "",
+    // Formación Academica
+    qr: "https://i.postimg.cc/RZL3SMKW/April16-014726PM.png",
     titulo: "",
     analitico: "",
     fechaEgreso: "",
     modalidad: "",
     escuela: "",
-    // Datos manipulación asignados por defecto
+    // Datos manipulación 
     manipulacionEstado: "",
     manipulacionDesde: "",
     manipulacionHasta: "",
@@ -898,8 +1012,12 @@ function login() {
 
   if (user) {
     document.getElementById("login").style.display = "none";
+    
     document.getElementById("loader").style.display = "flex";
-
+document.getElementById("ultimaActualizacion")
+.innerHTML=
+new Date().toLocaleString("es-AR");
+    
     setTimeout(() => {
       usuarioActual = user;
       document.getElementById("loader").style.display = "none";
@@ -1010,13 +1128,28 @@ function mostrarTitulo() {
   document.getElementById("seccionDocumentos").style.display = "none";
   document.getElementById("verTitulo").style.display = "block";
 
-  document.getElementById("titNombre").innerText = usuarioActual.nombre + " " + usuarioActual.apellido;
-  document.getElementById("titFecha").innerText = usuarioActual.fechaEgreso;
-  document.getElementById("titModalidad").innerText = usuarioActual.modalidad;
-  document.getElementById("titEscuela").innerText = usuarioActual.escuela;
-  document.getElementById("qrTitulo").src = usuarioActual.qr;
-}
+  const tieneTitulo = usuarioActual.titulo || usuarioActual.analitico;
 
+  if (!tieneTitulo) {
+    document.querySelector("#verTitulo .licencia-box").style.display = "none";
+    document.getElementById("tituloNoDisponible").style.display = "block";
+    return;
+  }
+
+  document.querySelector("#verTitulo .licencia-box").style.display = "block";
+  document.getElementById("tituloNoDisponible").style.display = "none";
+
+  document.getElementById("titNombre").innerText =
+      usuarioActual.nombre + " " + usuarioActual.apellido;
+  document.getElementById("titFecha").innerText =
+      usuarioActual.fechaEgreso;
+  document.getElementById("titModalidad").innerText =
+      usuarioActual.modalidad;
+  document.getElementById("titEscuela").innerText =
+      usuarioActual.escuela;
+  document.getElementById("qrTitulo").src =
+      usuarioActual.qr;
+}
 // CONTROLADOR DE LA NUEVA VISTA DE MANIPULACIÓN DE ALIMENTOS
 function mostrarManipulacion() {
   document.getElementById("seccionDocumentos").style.display = "none";
@@ -1030,8 +1163,9 @@ function mostrarManipulacion() {
 
   const tieneCredencial =
 usuarioActual.carnetFrenteLink &&
-usuarioActual.carnetDorsoLink;
-
+usuarioActual.carnetDorsoLink &&
+usuarioActual.carnetFrenteLink.trim() !== "" &&
+usuarioActual.carnetDorsoLink.trim() !== "";
 const boton=document.querySelector("#verManipulacion .btn");
 
 if (tieneCredencial) {
@@ -1068,8 +1202,17 @@ function voltearCarnet() {
   document.getElementById("flipCard").classList.toggle("flipped");
 }
 
-function verTituloDoc() { window.open(usuarioActual.titulo); }
-function verAnalitico() { window.open(usuarioActual.analitico); }
+function verTituloDoc(){
+    if(usuarioActual.titulo){
+        window.open(usuarioActual.titulo);
+    }
+}
+
+function verAnalitico(){
+    if(usuarioActual.analitico){
+        window.open(usuarioActual.analitico);
+    }
+}
 //defer src="https://progressier.app/oznixvk29hmSr5IMimXR/script.js"><\script>
 function abrirModalDni(){
 
