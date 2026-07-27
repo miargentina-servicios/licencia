@@ -82,9 +82,10 @@ body {
 }
 
 .container {
-  padding: 25px 20px;
+  padding: 25px 20px 90px;
   max-width: 950px;
   margin: auto;
+  animation: aparecer .3s ease;
 }
 
 h1 { font-size: 24px; margin-bottom: 8px; color: #111; }
@@ -320,6 +321,13 @@ input:focus {
   transition: 0.2s;
 }
 .doc-card:hover { border-color: #0072bb; }
+  .doc-card:active,
+.card:active,
+.item:active{
+
+transform:scale(.97);
+
+}
 .doc-card:active { transform: scale(.98); }
 
 .doc-left {
@@ -649,6 +657,79 @@ opacity:1;
 }
 
     }
+  .progress-line{
+
+height:8px;
+
+background:#ddd;
+
+border-radius:10px;
+
+margin:10px 0 20px 0;
+
+}
+
+
+.progress-line.activo{
+
+background:#00a650;
+
+    }
+  /* ANIMACIONES DE APP */
+
+.container{
+animation: aparecer .25s ease;
+}
+
+
+.doc-card,
+.card,
+.item{
+
+animation: subir .35s ease;
+}
+
+
+@keyframes aparecer{
+
+from{
+
+opacity:0;
+
+transform:translateY(10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+
+@keyframes subir{
+
+from{
+
+opacity:0;
+
+transform:translateY(15px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+  }
 </style>
 </head>
 
@@ -704,9 +785,22 @@ opacity:1;
 <div id="app" style="display:none">
 
   <div class="header">
-    <span class="back-btn" id="backBtn" onclick="volverHome()"></span>
-    <div style="font-size: 18px; font-weight: 700;">Portal miBilletera</div>
-  </div>
+
+<span 
+class="back-btn" 
+id="backBtn" 
+onclick="volverHome()">
+</span>
+
+
+<div 
+id="tituloSeccion"
+style="font-size:18px;font-weight:700;">
+Portal miBilletera
+</div>
+
+
+</div>
 
   <div class="container" id="home">
     <h1 id="saludo">¡Hola!</h1>
@@ -807,25 +901,37 @@ Vehículos
 
 </div>
 
-  <div class="item">
-    <i class="bi bi-briefcase menu-icon"></i>
-    Trabajo
-  </div>
+  <div class="item" onclick="abrirTrabajo()">
 
-  <div class="item">
-    <i class="bi bi-heart-pulse menu-icon"></i>
-    Salud
-  </div>
+<i class="bi bi-briefcase menu-icon"></i>
 
-  <div class="item">
-    <i class="bi bi-credit-card menu-icon"></i>
-    Pagos
-  </div>
+Trabajo
 
-  <div class="item">
-    <i class="bi bi-file-earmark-text menu-icon"></i>
-    Trámites
-  </div>
+</div>
+
+  <div class="item" onclick="abrirSalud()">
+
+<i class="bi bi-heart-pulse menu-icon"></i>
+
+Salud
+
+</div>
+
+  <div class="item" onclick="abrirPagos()">
+
+<i class="bi bi-credit-card menu-icon"></i>
+
+Pagos
+
+</div>
+
+  <div class="item" onclick="abrirTramites()">
+
+<i class="bi bi-file-earmark-text menu-icon"></i>
+
+Trámites
+
+</div>
 
 </div>
   </div>
@@ -867,6 +973,128 @@ Vehículos
 </div>
 
 
+<div class="container" id="seccionTrabajo" style="display:none;">
+
+<h2>Mi Información Laboral</h2>
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-person-badge doc-icon"></i>
+
+<div>
+
+<strong>Datos laborales</strong>
+
+<br>
+
+<span>
+Consultar información registrada
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-file-earmark-text doc-icon"></i>
+
+<div>
+
+<strong>Constancias</strong>
+
+<br>
+
+<span>
+Certificados laborales disponibles
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-award doc-icon"></i>
+
+<div>
+
+<strong>Credenciales</strong>
+
+<br>
+
+<span>
+Matrículas y registros asociados
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="info">
+
+<strong>Estado laboral</strong>
+
+<br>
+
+<span>
+✔ Información sincronizada correctamente
+</span>
+
+</div>
+
+
+</div>
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-card-heading doc-icon"></i>
+
+<div>
+<strong>Cédula Digital</strong>
+<br>
+<span>Consultar credencial</span>
+</div>
+
+</div>
+
+</div>
+
+
 <div class="doc-card">
 
 <div class="doc-left">
@@ -880,6 +1108,353 @@ Vehículos
 </div>
 
 </div>
+
+</div>
+
+
+  </div>
+  <div class="container" id="seccionSalud" style="display:none;">
+
+<h2>Mi Salud Digital</h2>
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-heart-pulse doc-icon"></i>
+
+<div>
+
+<strong>Cobertura médica</strong>
+
+<br>
+
+<span>
+Obra social / prepaga asociada
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-shield-check doc-icon"></i>
+
+<div>
+
+<strong>Vacunas</strong>
+
+<br>
+
+<span>
+Registro de vacunación digital
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-file-earmark-medical doc-icon"></i>
+
+<div>
+
+<strong>Estudios médicos</strong>
+
+<br>
+
+<span>
+Consultas y resultados disponibles
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-prescription2 doc-icon"></i>
+
+<div>
+
+<strong>Recetas digitales</strong>
+
+<br>
+
+<span>
+Medicaciones indicadas
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="info">
+
+<strong>Estado sanitario</strong>
+
+<br>
+
+🟢 Servicios de salud disponibles
+
+</div>
+
+
+  </div>
+  <div class="container" id="seccionPagos" style="display:none;">
+
+<h2>Mis Pagos</h2>
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-credit-card doc-icon"></i>
+
+<div>
+
+<strong>Medios de pago</strong>
+
+<br>
+
+<span>
+Tarjetas y cuentas asociadas
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-receipt doc-icon"></i>
+
+<div>
+
+<strong>Facturas y servicios</strong>
+
+<br>
+
+<span>
+Consultar vencimientos pendientes
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-clock-history doc-icon"></i>
+
+<div>
+
+<strong>Historial de pagos</strong>
+
+<br>
+
+<span>
+Últimos movimientos realizados
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="card" style="display:block;">
+
+<h3 style="color:#0072bb;">
+Estado de cuenta
+</h3>
+
+<div style="font-size:14px;">
+
+🟢 Cuenta activa
+
+<br><br>
+
+Sin pagos pendientes registrados.
+
+</div>
+
+</div>
+
+
+  </div>
+  <div class="container" id="seccionTramites" style="display:none;">
+
+<h2>Mis Trámites</h2>
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-folder2-open doc-icon"></i>
+
+<div>
+
+<strong>Solicitud de documentación</strong>
+
+<br>
+
+<span>
+Estado: En revisión
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="card" style="display:block;">
+
+<h3 style="color:#0072bb;">
+Seguimiento del trámite
+</h3>
+
+
+<div style="margin-top:15px;">
+
+<strong>
+Inicio de solicitud
+</strong>
+
+<div class="progress-line activo"></div>
+
+
+<strong>
+Validación de datos
+</strong>
+
+<div class="progress-line activo"></div>
+
+
+<strong>
+Finalización
+</strong>
+
+<div class="progress-line"></div>
+
+
+</div>
+
+</div>
+
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-calendar-event doc-icon"></i>
+
+<div>
+
+<strong>Turnos</strong>
+
+<br>
+
+<span>
+No hay turnos pendientes
+</span>
+
+</div>
+
+</div>
+
+<div class="doc-arrow">
+›
+</div>
+
+</div>
+
+
+
+<div class="info">
+
+<strong>Estado general</strong>
+
+<br>
+
+🟢 Todos los servicios disponibles.
 
 </div>
 
@@ -1238,12 +1813,14 @@ function login() {
 }
 
 function abrirDocumentos() {
+  cambiarTitulo("Mis Documentos");
   document.getElementById("home").style.display = "none";
   document.getElementById("seccionDocumentos").style.display = "block";
   document.getElementById("backBtn").style.display = "flex";
 }
 
 function volverHome() {
+  cambiarTitulo("Portal miBilletera");
   document.getElementById("home").style.display = "block";
   document.getElementById("seccionDocumentos").style.display = "none";
   document.getElementById("verLicencia").style.display = "none";
@@ -1252,6 +1829,10 @@ function volverHome() {
   document.getElementById("verManipulacion").style.display = "none";
   document.getElementById("backBtn").style.display = "none";
   document.getElementById("seccionVehiculos").style.display="none";
+  document.getElementById("seccionTrabajo").style.display="none";
+  document.getElementById("seccionSalud").style.display="none";
+  document.getElementById("seccionPagos").style.display="none";
+  document.getElementById("seccionTramites").style.display="none";
   cerrarModalDni();
   cerrarModalCarnet();
 }
@@ -1496,12 +2077,53 @@ imagen.requestFullscreen();
 
   }
   function abrirVehiculos(){
-
+cambiarTitulo("Mis Vehículos");
 document.getElementById("home").style.display="none";
 
 document.getElementById("seccionVehiculos").style.display="block";
 
 document.getElementById("backBtn").style.display="flex";
+
+  }
+  function abrirTrabajo(){
+cambiarTitulo("Mi Trabajo");
+document.getElementById("home").style.display="none";
+
+document.getElementById("seccionTrabajo").style.display="block";
+
+document.getElementById("backBtn").style.display="flex";
+
+}
+  function abrirSalud(){
+cambiarTitulo("Mi Salud Digital");
+document.getElementById("home").style.display="none";
+
+document.getElementById("seccionSalud").style.display="block";
+
+document.getElementById("backBtn").style.display="flex";
+
+  }
+  function abrirPagos(){
+cambiarTitulo("Mi Salud Digital");
+document.getElementById("home").style.display="none";
+
+document.getElementById("seccionPagos").style.display="block";
+
+document.getElementById("backBtn").style.display="flex";
+
+  }
+  function abrirTramites(){
+cambiarTitulo("Mis Trámites");
+document.getElementById("home").style.display="none";
+
+document.getElementById("seccionTramites").style.display="block";
+
+document.getElementById("backBtn").style.display="flex";
+
+  }
+  function cambiarTitulo(titulo){
+
+document.getElementById("tituloSeccion").innerText = titulo;
 
   }
 </script>
