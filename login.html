@@ -1755,6 +1755,13 @@ onclick="girarDni()">
     </div>
 
 </div>
+  <div id="pageLoader">
+
+<div class="spinner"></div>
+
+<p>Cargando...</p>
+
+  </div>
 <div class="footer">
     <p><strong>miBilletera | Sistema Tecnológico de Gestión Documental</strong></p>
     <p style="font-size:12px; color: #888;">Servicio integrado para la consulta permanente de credenciales.</p>
@@ -1953,8 +1960,8 @@ function mostrarTitulo() {
   document.getElementById("verTitulo").style.display = "block";
 
   const tieneTitulo =
-      usuarioActual.titulo.trim() !== "" ||
-      usuarioActual.analitico.trim() !== "";
+(usuarioActual.titulo || "").trim() !== "" ||
+(usuarioActual.analitico || "").trim() !== "";
 
   const caja = document.querySelector("#verTitulo .licencia-box");
 
@@ -2077,17 +2084,6 @@ function girarDni(){
     }
 
   }
-  function toggleDarkMode(){
-
-    document.body.classList.toggle("dark-mode");
-
-    const oscuro = document.body.classList.contains("dark-mode");
-
-    localStorage.setItem("modoOscuro", oscuro);
-
-    document.getElementById("darkToggle").innerHTML =
-        oscuro ? "☀️" : "🌙";
-}
 
 window.onload = function(){
 
@@ -2142,8 +2138,11 @@ document.getElementById("backBtn").style.display="flex";
 
   }
   function abrirPagos(){
-    cargarPantalla();
-cambiarTitulo("Mi Salud Digital");
+
+cargarPantalla();
+
+cambiarTitulo("Mis Pagos");
+
 document.getElementById("home").style.display="none";
 
 document.getElementById("seccionPagos").style.display="block";
@@ -2169,6 +2168,8 @@ document.getElementById("tituloSeccion").innerText = titulo;
   function cargarPantalla(){
 
 let loader=document.getElementById("pageLoader");
+
+if(!loader) return;
 
 loader.style.display="flex";
 
