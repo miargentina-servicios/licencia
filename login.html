@@ -631,6 +631,24 @@ body.dark-mode .item{
     background:#222;
     color:#5ab7ff;
   }
+  .modal-content{
+animation: aparecerModal .3s ease;
+}
+
+
+@keyframes aparecerModal{
+
+from{
+transform:scale(.8);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+    }
 </style>
 </head>
 
@@ -781,10 +799,13 @@ Avisos
     Documentos
   </div>
 
-  <div class="item">
-    <i class="bi bi-car-front menu-icon"></i>
-    Vehículos
-  </div>
+  <div class="item" onclick="abrirVehiculos()">
+
+<i class="bi bi-car-front menu-icon"></i>
+
+Vehículos
+
+</div>
 
   <div class="item">
     <i class="bi bi-briefcase menu-icon"></i>
@@ -807,6 +828,62 @@ Avisos
   </div>
 
 </div>
+  </div>
+  <div class="container" id="seccionVehiculos" style="display:none;">
+
+<h2>Mis Vehículos</h2>
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-car-front doc-icon"></i>
+
+<div>
+<strong>Vehículo registrado</strong>
+<br>
+<span>Sin vehículos asociados</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-card-heading doc-icon"></i>
+
+<div>
+<strong>Cédula Digital</strong>
+<br>
+<span>Consultar credencial</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="doc-card">
+
+<div class="doc-left">
+
+<i class="bi bi-shield-check doc-icon"></i>
+
+<div>
+<strong>Seguro</strong>
+<br>
+<span>Consultar póliza</span>
+</div>
+
+</div>
+
+</div>
+
+
   </div>
   <div class="container" id="seccionDocumentos">
     <h2>Elegí el documento a visualizar</h2>
@@ -1051,14 +1128,20 @@ FORMACIÓN ACADÉMICA AÚN NO DISPONIBLE
             </div>
 
         </div>
+<button
+class="btn btn-principal"
+onclick="pantallaCompletaDni()">
 
+⛶ Ampliar
+
+</button>
         <button
-            class="btn btn-secundario"
-            onclick="girarDni()">
+class="btn btn-secundario"
+onclick="girarDni()">
 
-            Girar
+↻ Ver reverso
 
-        </button>
+</button>
 
     </div>
 
@@ -1085,7 +1168,7 @@ const usuarios = [
     dni: "38638394",
     nombre: "Matias Emmanuel",
     apellido: "Tolosa",
-    foto: "https://tu-imagen.jpg",
+    foto: "https://i.postimg.cc/tgJLmHG2/1000045586.png",
     vencimiento: "N/A",
     estadoLicencia: "no disponible",
     // DNI 
@@ -1168,6 +1251,7 @@ function volverHome() {
   document.getElementById("verTitulo").style.display = "none";
   document.getElementById("verManipulacion").style.display = "none";
   document.getElementById("backBtn").style.display = "none";
+  document.getElementById("seccionVehiculos").style.display="none";
   cerrarModalDni();
   cerrarModalCarnet();
 }
@@ -1395,6 +1479,29 @@ window.onload = function(){
         document.body.classList.add("dark-mode");
         document.getElementById("darkToggle").innerHTML = "☀️";
     }
+
+  }
+  function pantallaCompletaDni(){
+
+let imagen=document.querySelector(
+"#flipCardDni img"
+);
+
+
+if(imagen.requestFullscreen){
+
+imagen.requestFullscreen();
+
+}
+
+  }
+  function abrirVehiculos(){
+
+document.getElementById("home").style.display="none";
+
+document.getElementById("seccionVehiculos").style.display="block";
+
+document.getElementById("backBtn").style.display="flex";
 
   }
 </script>
