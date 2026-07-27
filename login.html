@@ -974,34 +974,45 @@ Trámites
 <h2>Mis Vehículos</h2>
 
 <div class="doc-card">
+    <div class="doc-left">
+        <i class="bi bi-car-front doc-icon"></i>
 
-<div class="doc-left">
+        <div>
+            <strong>Vehículo registrado</strong><br>
+            <span>Sin vehículos asociados</span>
+        </div>
+    </div>
 
-<i class="bi bi-car-front doc-icon"></i>
-
-<div>
-<strong>Vehículo registrado</strong>
-<br>
-<span>Sin vehículos asociados</span>
+    <div class="doc-arrow">›</div>
 </div>
-
 
 <div class="doc-card">
+    <div class="doc-left">
+        <i class="bi bi-card-heading doc-icon"></i>
 
-<div class="doc-left">
+        <div>
+            <strong>Cédula Digital</strong><br>
+            <span>Consultar credencial</span>
+        </div>
+    </div>
 
-<i class="bi bi-card-heading doc-icon"></i>
+    <div class="doc-arrow">›</div>
+</div>
 
-<div>
-<strong>Cédula Digital</strong>
-<br>
-<span>Consultar credencial</span>
+<div class="doc-card">
+    <div class="doc-left">
+        <i class="bi bi-shield-check doc-icon"></i>
+
+        <div>
+            <strong>Seguro</strong><br>
+            <span>Consultar póliza</span>
+        </div>
+    </div>
+
+    <div class="doc-arrow">›</div>
 </div>
 
 </div>
-
-</div>
-
 
 <div class="container" id="seccionTrabajo" style="display:none;">
 
@@ -1104,40 +1115,6 @@ Matrículas y registros asociados
 
 </div>
 
-
-</div>
-
-
-<div class="doc-card">
-
-<div class="doc-left">
-
-<i class="bi bi-card-heading doc-icon"></i>
-
-<div>
-<strong>Cédula Digital</strong>
-<br>
-<span>Consultar credencial</span>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="doc-card">
-
-<div class="doc-left">
-
-<i class="bi bi-shield-check doc-icon"></i>
-
-<div>
-<strong>Seguro</strong>
-<br>
-<span>Consultar póliza</span>
-</div>
-
-</div>
 
 </div>
 
@@ -2074,12 +2051,16 @@ function girarDni(){
     const btn = document.getElementById("darkToggle");
 
     if(document.body.classList.contains("dark-mode")){
-        btn.innerHTML = "☀️";
+        btn.innerHTML="☀️";
     }else{
-        btn.innerHTML = "🌙";
+        btn.innerHTML="🌙";
     }
 
-  }
+    localStorage.setItem(
+        "modoOscuro",
+        document.body.classList.contains("dark-mode")
+    );
+}
 
 window.onload = function(){
 
@@ -2091,18 +2072,15 @@ window.onload = function(){
   }
   function pantallaCompletaDni(){
 
-let imagen=document.querySelector(
-"#flipCardDni img"
-);
+    let imagen=document.querySelector("#flipCardDni img");
 
-
-if(imagen.requestFullscreen){
-
-imagen.requestFullscreen();
+    if(imagen.requestFullscreen){
+        imagen.requestFullscreen();
+    }else if(imagen.webkitRequestFullscreen){
+        imagen.webkitRequestFullscreen();
+    }
 
 }
-
-  }
   function abrirVehiculos(){
     cargarPantalla();
 cambiarTitulo("Mis Vehículos");
