@@ -202,7 +202,24 @@ Completá el formulario y comenzá el trámite hoy mismo.
 
 <h2>Formulario de inicio de trámite</h2>
 
-<select id="tramite" onchange="mostrarCampos(); validarFormulario();">
+<select id="tipoPersona" onchange="cambiarTipoPersona(); actualizarPrecio(); validarFormulario();">
+
+<option value="">
+Seleccionar tipo de solicitante
+</option>
+
+<option value="argentino">
+🇦🇷 Residente argentino
+</option>
+
+<option value="extranjero">
+🌎 Residente extranjero
+</option>
+
+</select>
+
+
+<select id="tramite" onchange="mostrarCampos(); actualizarPrecio(); validarFormulario();">
 
 <option value="">
 Seleccionar trámite
@@ -217,7 +234,15 @@ Renovación por robo / extravío
 </option>
 
 </select>
+<div id="precioVisible" class="aclaracion" style="display:none; text-align:center;">
 
+<strong>Costo del trámite seleccionado</strong>
+
+<h2 id="montoPrecio" style="color:#0072bb;margin:10px 0;">
+$0
+</h2>
+
+</div>
 <form id="formulario" style="display:none;" oninput="validarFormulario()" onsubmit="abrirModal(event)">
 
 <input type="text" id="nombre" placeholder="Nombre" required>
@@ -228,8 +253,56 @@ Renovación por robo / extravío
 
 <input type="text" id="fecha" placeholder="Fecha de nacimiento (15/03/1990)" required>
 
-<input type="text" id="cuil" placeholder="CUIL (20-12345678-3)" required>
-<div class="error" id="errorCuil">CUIL inválido</div>
+<div id="datosArgentino" style="display:none;">
+
+<input 
+type="text" 
+id="cuil" 
+placeholder="CUIL (20-12345678-3)">
+
+<div class="error" id="errorCuil">
+CUIL inválido
+</div>
+
+</div>
+
+
+<div id="datosExtranjero" style="display:none;">
+
+<input 
+type="text"
+id="pasaporte"
+placeholder="Número de pasaporte">
+
+
+<input
+type="text"
+id="nacionalidad"
+placeholder="Nacionalidad">
+
+
+<select id="residencia">
+
+<option value="">
+Seleccionar tipo de residencia
+</option>
+
+<option>
+Residencia permanente
+</option>
+
+<option>
+Residencia temporaria
+</option>
+
+<option>
+Residencia precaria
+</option>
+
+</select>
+
+
+</div>
 
 <input type="text" id="provincia" placeholder="Provincia" required>
 <input type="text" id="localidad" placeholder="Localidad" required>
@@ -364,11 +437,67 @@ He leído y acepto los términos y condiciones
 </div>
 
 <script>
+  function cambiarTipoPersona(){
+
+let tipo=document.getElementById("tipoPersona").value;
+
+if(tipo=="argentino"){
+document.getElementById("datosArgentino").style.display="block";
+document.getElementById("datosExtranjero").style.display="none";
+}
+
+else if(tipo=="extranjero"){
+document.getElementById("datosArgentino").style.display="none";
+document.getElementById("datosExtranjero").style.display="block";
+}
+
+else{
+document.getElementById("datosArgentino").style.display="none";
+document.getElementById("datosExtranjero").style.display="none";
+}
+
+  }
 function mostrarCampos(){
   let tipo = document.getElementById("tramite").value;
   document.getElementById("formulario").style.display = tipo ? "block" : "none";
 }
+function actualizarPrecio(){
 
+let persona=document.getElementById("tipoPersona").value;
+let tramite=document.getElementById("tramite").value;
+
+let caja=document.getElementById("precioVisible");
+let monto=document.getElementById("montoPrecio");
+
+
+if(!persona || !tramite){
+
+caja.style.display="none";
+return;
+
+}
+
+
+let precios={
+
+argentino:{
+nuevo:"$100.000",
+robo:"$75.000"
+},
+
+extranjero:{
+nuevo:"$150.000",
+robo:"$120.000"
+}
+
+};
+
+
+monto.innerHTML=precios[persona][tramite];
+
+caja.style.display="block";
+
+  }
 document.getElementById("cuil").addEventListener("input",function(e){
   let valor=e.target.value.replace(/\D/g,"").substring(0,11);
 
@@ -395,7 +524,44 @@ function validarFormulario(){
   let apellido=document.getElementById("apellido").value.trim();
   let email=document.getElementById("email").value.trim();
   let fecha=document.getElementById("fecha").value.trim();
-  let cuil=document.getElementById("cuil").value.trim();
+  let tipoPersona=document.getElementById("tipoPersona").value;
+
+let documentosValidos=false;
+
+
+if(tipoPersona=="argentino"){
+documentosValidos=cuilValido;
+}
+
+
+if(tipoPersona=="extranjero"){
+
+let pasaporte=document.getElementById("pasaporte").value.trim();
+let nacionalidad=document.getElementById("nacionalidad").value.trim();
+let residencia=document.getElementById("residencia").value;
+
+documentosValidos=
+pasaporte &&
+nacionalidad &&
+residencia;
+
+}
+
+
+let valido =
+tipo &&
+tipoPersona &&
+nombre &&
+apellido &&
+emailValido &&
+fecha &&
+documentosValidos &&
+provincia &&
+localidad &&
+direccion;
+
+
+document.getElementById("btnEnviar").disabled=!valido;
   let provincia=document.getElementById("provincia").value.trim();
   let localidad=document.getElementById("localidad").value.trim();
   let direccion=document.getElementById("direccion").value.trim();
