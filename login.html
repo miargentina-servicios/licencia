@@ -730,6 +730,40 @@ transform:translateY(0);
 }
 
   }
+  #pageLoader{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:#fff;
+
+z-index:10000;
+
+align-items:center;
+
+justify-content:center;
+
+flex-direction:column;
+
+}
+
+
+#pageLoader p{
+
+font-size:14px;
+
+color:#666;
+
+  }
 </style>
 </head>
 
@@ -1518,7 +1552,7 @@ No hay turnos pendientes
         id="dniAviso"
         class="no-dni"
         style="display:none;">
-        DNI NO DISPONIBLE
+        ESTADO: NO DISPONIBLE
 
   </div>
 
@@ -1614,7 +1648,7 @@ Ver DNI Digital
       <div id="tituloNoDisponible"
      class="no-dni"
      style="display:none;">
-FORMACIÓN ACADÉMICA AÚN NO DISPONIBLE
+ESTADO: NO DISPONIBLE
       </div>
       <div class="licencia-top">Historial Educativo Convalidado</div>
       <div class="qr-box">
@@ -1653,7 +1687,7 @@ FORMACIÓN ACADÉMICA AÚN NO DISPONIBLE
       <div id="certificadoNoDisponible"
      class="no-dni"
      style="display:none;margin-top:20px;">
-    CERTIFICADO AÚN NO DISPONIBLE
+    ESTADO: NO DISPONIBLE
       </div>
       <div class="info-extra">
         <strong>Datos suministrados por</strong>
@@ -1813,6 +1847,7 @@ function login() {
 }
 
 function abrirDocumentos() {
+  cargarPantalla();
   cambiarTitulo("Mis Documentos");
   document.getElementById("home").style.display = "none";
   document.getElementById("seccionDocumentos").style.display = "block";
@@ -2077,6 +2112,7 @@ imagen.requestFullscreen();
 
   }
   function abrirVehiculos(){
+    cargarPantalla();
 cambiarTitulo("Mis Vehículos");
 document.getElementById("home").style.display="none";
 
@@ -2086,6 +2122,7 @@ document.getElementById("backBtn").style.display="flex";
 
   }
   function abrirTrabajo(){
+    cargarPantalla();
 cambiarTitulo("Mi Trabajo");
 document.getElementById("home").style.display="none";
 
@@ -2095,6 +2132,7 @@ document.getElementById("backBtn").style.display="flex";
 
 }
   function abrirSalud(){
+    cargarPantalla();
 cambiarTitulo("Mi Salud Digital");
 document.getElementById("home").style.display="none";
 
@@ -2104,6 +2142,7 @@ document.getElementById("backBtn").style.display="flex";
 
   }
   function abrirPagos(){
+    cargarPantalla();
 cambiarTitulo("Mi Salud Digital");
 document.getElementById("home").style.display="none";
 
@@ -2113,6 +2152,7 @@ document.getElementById("backBtn").style.display="flex";
 
   }
   function abrirTramites(){
+    cargarPantalla();
 cambiarTitulo("Mis Trámites");
 document.getElementById("home").style.display="none";
 
@@ -2126,6 +2166,28 @@ document.getElementById("backBtn").style.display="flex";
 document.getElementById("tituloSeccion").innerText = titulo;
 
   }
+  function cargarPantalla(){
+
+let loader=document.getElementById("pageLoader");
+
+loader.style.display="flex";
+
+
+setTimeout(function(){
+
+loader.style.display="none";
+
+},600);
+
+  }
+  
+  <div id="pageLoader">
+
+<div class="spinner"></div>
+
+<p>Cargando información...</p>
+
+</div>
 </script>
 
 </body>
