@@ -611,8 +611,7 @@ cursor:pointer;
 
 <div style="width:70px;height:70px;border-radius:50%;overflow:hidden;">
 <img id="fotoPerfil"
-src=""
-style="width:100%;height:100%;object-fit:cover;">
+src=""style="width:100%;height:100%;object-fit:cover;">
 </div>
 
 <div>
@@ -722,7 +721,7 @@ Avisos
   </div>
 
 </div>
-
+  </div>
   <div class="container" id="seccionDocumentos">
     <h2>Elegí el documento a visualizar</h2>
     
@@ -1200,6 +1199,7 @@ function mostrarTitulo() {
 }
 // CONTROLADOR DE LA NUEVA VISTA DE MANIPULACIÓN DE ALIMENTOS
 function mostrarManipulacion() {
+  document.getElementById("verManipulacion").style.display = "block";
   document.getElementById("seccionDocumentos").style.display = "none";
   const caja = document.querySelector("#verManipulacion .licencia-box");
 
