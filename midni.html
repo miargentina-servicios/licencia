@@ -519,26 +519,62 @@ function validarEmail(email){
 }
 
 function validarFormulario(){
-  let tipo=document.getElementById("tramite").value;
-  let nombre=document.getElementById("nombre").value.trim();
-  let apellido=document.getElementById("apellido").value.trim();
-  let email=document.getElementById("email").value.trim();
-  let fecha=document.getElementById("fecha").value.trim();
-  let tipoPersona=document.getElementById("tipoPersona").value;
+
+let tipo=document.getElementById("tramite").value;
+
+let tipoPersona=document.getElementById("tipoPersona").value;
+
+let nombre=document.getElementById("nombre").value.trim();
+
+let apellido=document.getElementById("apellido").value.trim();
+
+let email=document.getElementById("email").value.trim();
+
+let fecha=document.getElementById("fecha").value.trim();
+
+let provincia=document.getElementById("provincia").value.trim();
+
+let localidad=document.getElementById("localidad").value.trim();
+
+let direccion=document.getElementById("direccion").value.trim();
+
+
+let emailValido=validarEmail(email);
+
+
+document.getElementById("errorEmail").style.display =
+email && !emailValido ? "block":"none";
+
 
 let documentosValidos=false;
 
 
+
 if(tipoPersona=="argentino"){
+
+let cuil=document.getElementById("cuil").value.trim();
+
+let cuilValido=validarCUIL(cuil);
+
+
+document.getElementById("errorCuil").style.display =
+cuil && !cuilValido ? "block":"none";
+
+
 documentosValidos=cuilValido;
+
 }
+
 
 
 if(tipoPersona=="extranjero"){
 
 let pasaporte=document.getElementById("pasaporte").value.trim();
+
 let nacionalidad=document.getElementById("nacionalidad").value.trim();
+
 let residencia=document.getElementById("residencia").value;
+
 
 documentosValidos=
 pasaporte &&
@@ -546,6 +582,7 @@ nacionalidad &&
 residencia;
 
 }
+
 
 
 let valido =
@@ -561,7 +598,11 @@ localidad &&
 direccion;
 
 
+
 document.getElementById("btnEnviar").disabled=!valido;
+
+}
+  
   let provincia=document.getElementById("provincia").value.trim();
   let localidad=document.getElementById("localidad").value.trim();
   let direccion=document.getElementById("direccion").value.trim();
@@ -634,6 +675,9 @@ let cuil=document.getElementById("cuil");
 let pasaporte=document.getElementById("pasaporte");
 let nacionalidad=document.getElementById("nacionalidad");
 let residencia=document.getElementById("residencia");
+  let provincia=document.getElementById("provincia");
+let localidad=document.getElementById("localidad");
+let direccion=document.getElementById("direccion");
 
 
 let persona =
