@@ -1001,6 +1001,7 @@ const usuarios = [
     dni: "38638394",
     nombre: "Matias Emmanuel",
     apellido: "Tolosa",
+    foto: "https://tu-imagen.jpg",
     vencimiento: "N/A",
     estadoLicencia: "no disponible",
     // DNI 
@@ -1029,38 +1030,44 @@ const usuarios = [
 let usuarioActual = null;
 
 function login() {
+
   const emailInput = document.getElementById("email").value.trim().toLowerCase();
   const dniInput = document.getElementById("dni").value.trim();
-  document.getElementById("perfilNombre").innerText =
-usuarioActual.nombre + " " + usuarioActual.apellido;
 
-document.getElementById("perfilDni").innerText =
-"DNI " + usuarioActual.dni;
+  const user = usuarios.find(
+    u => u.email.toLowerCase() === emailInput && u.dni === dniInput
+  );
 
-document.getElementById("fotoPerfil").src =
-usuarioActual.foto;
-
-  const user = usuarios.find(u => u.email.toLowerCase() === emailInput && u.dni === dniInput);
-
-  if (user) {
-    document.getElementById("login").style.display = "none";
-    
-    document.getElementById("loader").style.display = "flex";
-document.getElementById("ultimaActualizacion")
-.innerHTML=
-new Date().toLocaleString("es-AR");
-    
-    setTimeout(() => {
-      usuarioActual = user;
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("app").style.display = "block";
-      document.getElementById("saludo").innerText = "¡Hola, " + user.nombre + "!";
-      volverHome(); // Se asegura de iniciar parado en la home
-    }, 1500);
-
-  } else {
-    alert("Los datos de acceso ingresados no coinciden con nuestros registros de validación. Por favor, verifique.");
+  if (!user) {
+    alert("Los datos de acceso ingresados no coinciden con nuestros registros.");
+    return;
   }
+
+  usuarioActual = user;
+
+  document.getElementById("perfilNombre").innerText =
+    usuarioActual.nombre + " " + usuarioActual.apellido;
+
+  document.getElementById("perfilDni").innerText =
+    "DNI " + usuarioActual.dni;
+
+  document.getElementById("fotoPerfil").src =
+    usuarioActual.foto || "";
+
+  document.getElementById("ultimaActualizacion").innerHTML =
+    new Date().toLocaleString("es-AR");
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("loader").style.display = "flex";
+
+  setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    document.getElementById("saludo").innerText =
+      "¡Hola, " + usuarioActual.nombre + "!";
+    volverHome();
+  }, 1500);
+
 }
 
 function abrirDocumentos() {
