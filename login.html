@@ -588,6 +588,49 @@ body.dark-mode input{
 body.dark-mode .footer{
     background:#000;
   }
+  .dark-btn{
+  background:none;
+  border:none;
+  font-size:24px;
+  cursor:pointer;
+  color:#0072bb;
+  }
+  body.dark-mode{
+    background:#121212;
+    color:#fff;
+}
+
+body.dark-mode .navbar,
+body.dark-mode .card,
+body.dark-mode .doc-card,
+body.dark-mode .licencia-box,
+body.dark-mode .login-box{
+    background:#1e1e1e;
+    color:white;
+    border-color:#333;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3{
+    color:#fff;
+}
+
+body.dark-mode .subtitle,
+body.dark-mode small{
+    color:#ccc;
+}
+
+body.dark-mode input{
+    background:#292929;
+    color:white;
+    border-color:#555;
+}
+
+body.dark-mode .item{
+    background:#222;
+    color:#5ab7ff;
+  }
 </style>
 </head>
 
@@ -598,6 +641,9 @@ body.dark-mode .footer{
   <div class="top-badge">
     🔒 Conexión cifrada de extremo a extremo
   </div>
+  <button id="darkToggle" onclick="toggleDarkMode()" class="dark-btn">
+🌙
+  </button>
 </div>
 
 <div id="loader">
