@@ -690,16 +690,38 @@ Avisos
     </div>
     <h2>Mis Credenciales Disponibles</h2>
     <div class="grid">
-      <i class="bi bi-person-vcard menu-icon"></i>
-Documentos
-      <div class="item"><i class="bi bi-car-front menu-icon"></i>
-      <div class="item"><i class="bi bi-briefcase menu-icon"></i>
-      </svg></span>Trabajo</div>
-      <div class="item"><i class="bi bi-heart-pulse menu-icon"></i>
-      <div class="item"><i class="bi bi-credit-card menu-icon"></i>
-      <div class="item"><i class="bi bi-file-earmark-text menu-icon"></i>
-    </div>
+
+  <div class="item" onclick="abrirDocumentos()">
+    <i class="bi bi-person-vcard menu-icon"></i>
+    Documentos
   </div>
+
+  <div class="item">
+    <i class="bi bi-car-front menu-icon"></i>
+    Vehículos
+  </div>
+
+  <div class="item">
+    <i class="bi bi-briefcase menu-icon"></i>
+    Trabajo
+  </div>
+
+  <div class="item">
+    <i class="bi bi-heart-pulse menu-icon"></i>
+    Salud
+  </div>
+
+  <div class="item">
+    <i class="bi bi-credit-card menu-icon"></i>
+    Pagos
+  </div>
+
+  <div class="item">
+    <i class="bi bi-file-earmark-text menu-icon"></i>
+    Trámites
+  </div>
+
+</div>
 
   <div class="container" id="seccionDocumentos">
     <h2>Elegí el documento a visualizar</h2>
@@ -738,7 +760,7 @@ Documentos
     <div class="doc-card" onclick="mostrarManipulacion()">
       <div class="doc-left">
         <div class="doc-icon">
-    <i class="bi bi-shieldcheck"></i>
+    <i class="bi bi-shield-check"></i>
 </div>
         <div>Carnet de Manipulación de Alimentos</div>
       </div>
@@ -820,15 +842,6 @@ Ver DNI Digital
 </div>
 
 </div>
-
-    <div
-        id="dniAviso"
-        class="no-dni"
-        style="display:none;">
-
-        DNI AÚN NO DISPONIBLE
-
-    </div>
 
 </div>
 
@@ -1018,6 +1031,14 @@ let usuarioActual = null;
 function login() {
   const emailInput = document.getElementById("email").value.trim().toLowerCase();
   const dniInput = document.getElementById("dni").value.trim();
+  document.getElementById("perfilNombre").innerText =
+usuarioActual.nombre + " " + usuarioActual.apellido;
+
+document.getElementById("perfilDni").innerText =
+"DNI " + usuarioActual.dni;
+
+document.getElementById("fotoPerfil").src =
+usuarioActual.foto;
 
   const user = usuarios.find(u => u.email.toLowerCase() === emailInput && u.dni === dniInput);
 
