@@ -572,89 +572,51 @@ if(tipoPersona=="extranjero"){
 let pasaporte=document.getElementById("pasaporte").value.trim();
 function validarFormulario(){
 
-let tipo=document.getElementById("tramite").value;
-let tipoPersona=document.getElementById("tipoPersona").value;
+    let tipo = document.getElementById("tramite").value;
+    let tipoPersona = document.getElementById("tipoPersona").value;
 
-let nombre=document.getElementById("nombre").value.trim();
-let apellido=document.getElementById("apellido").value.trim();
-let email=document.getElementById("email").value.trim();
-let fecha=document.getElementById("fecha").value.trim();
+    let nombre = document.getElementById("nombre").value.trim();
+    let apellido = document.getElementById("apellido").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let fecha = document.getElementById("fecha").value.trim();
 
-let provincia=document.getElementById("provincia").value.trim();
-let localidad=document.getElementById("localidad").value.trim();
-let direccion=document.getElementById("direccion").value.trim();
-
-
-let emailValido=validarEmail(email);
-
-document.getElementById("errorEmail").style.display =
-(email && !emailValido) ? "block":"none";
-
-
-let documentosValidos=false;
-
-
-// ARGENTINO
-if(tipoPersona=="argentino"){
-
-let cuil=document.getElementById("cuil").value.trim();
-
-let cuilValido=validarCUIL(cuil);
-
-document.getElementById("errorCuil").style.display =
-(cuil && !cuilValido) ? "block":"none";
-
-documentosValidos=cuilValido;
-
-}
-
-
-// EXTRANJERO
-if(tipoPersona=="extranjero"){
-
-let pasaporte=document.getElementById("pasaporte").value.trim();
-let nacionalidad=document.getElementById("nacionalidad").value.trim();
-let residencia=document.getElementById("residencia").value;
-
-
-documentosValidos =
-pasaporte &&
-nacionalidad &&
-residencia;
-
-}
-
-
-let valido =
-tipo &&
-tipoPersona &&
-nombre &&
-apellido &&
-emailValido &&
-fecha &&
-documentosValidos &&
-provincia &&
-localidad &&
-direccion;
-
-
-document.getElementById("btnEnviar").disabled=!valido;
-
-}
   
-  let provincia=document.getElementById("provincia").value.trim();
-  let localidad=document.getElementById("localidad").value.trim();
-  let direccion=document.getElementById("direccion").value.trim();
 
-  let cuilValido=validarCUIL(cuil);
-  let emailValido=validarEmail(email);
+        let cuil = document.getElementById("cuil").value.trim();
 
-  document.getElementById("errorCuil").style.display = cuil && !cuilValido ? "block":"none";
-  document.getElementById("errorEmail").style.display = email && !emailValido ? "block":"none";
+        let cuilValido = validarCUIL(cuil);
 
-  let valido = tipo && nombre && apellido && emailValido && fecha && cuilValido && provincia && localidad && direccion;
+        document.getElementById("errorCuil").style.display =
+            (cuil && !cuilValido) ? "block" : "none";
 
-  document.getElementById("btnEnviar").disabled=!valido;
+        documentosValidos = cuilValido;
+    }
+
+    if(tipoPersona=="extranjero"){
+
+        let pasaporte = document.getElementById("pasaporte").value.trim();
+        let nacionalidad = document.getElementById("nacionalidad").value.trim();
+        let residencia = document.getElementById("residencia").value;
+
+        documentosValidos =
+            pasaporte !== "" &&
+            nacionalidad !== "" &&
+            residencia !== "";
+    }
+
+    let valido =
+        tipo &&
+        tipoPersona &&
+        nombre &&
+        apellido &&
+        emailValido &&
+        fecha &&
+        documentosValidos &&
+        provincia &&
+        localidad &&
+        direccion;
+
+    document.getElementById("btnEnviar").disabled = !valido;
 }
 
 function abrirModal(e){
