@@ -570,53 +570,31 @@ documentosValidos=cuilValido;
 if(tipoPersona=="extranjero"){
 
 let pasaporte=document.getElementById("pasaporte").value.trim();
-function validarFormulario(){
+if(tipoPersona=="extranjero"){
 
-    let tipo = document.getElementById("tramite").value;
-    let tipoPersona = document.getElementById("tipoPersona").value;
+    let pasaporte = document.getElementById("pasaporte").value.trim();
+    let nacionalidad = document.getElementById("nacionalidad").value.trim();
+    let residencia = document.getElementById("residencia").value;
 
-    let nombre = document.getElementById("nombre").value.trim();
-    let apellido = document.getElementById("apellido").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let fecha = document.getElementById("fecha").value.trim();
+    documentosValidos =
+        pasaporte !== "" &&
+        nacionalidad !== "" &&
+        residencia !== "";
+}
 
-  
+let valido =
+    tipo &&
+    tipoPersona &&
+    nombre &&
+    apellido &&
+    emailValido &&
+    fecha &&
+    documentosValidos &&
+    provincia &&
+    localidad &&
+    direccion;
 
-        let cuil = document.getElementById("cuil").value.trim();
-
-        let cuilValido = validarCUIL(cuil);
-
-        document.getElementById("errorCuil").style.display =
-            (cuil && !cuilValido) ? "block" : "none";
-
-        documentosValidos = cuilValido;
-    }
-
-    if(tipoPersona=="extranjero"){
-
-        let pasaporte = document.getElementById("pasaporte").value.trim();
-        let nacionalidad = document.getElementById("nacionalidad").value.trim();
-        let residencia = document.getElementById("residencia").value;
-
-        documentosValidos =
-            pasaporte !== "" &&
-            nacionalidad !== "" &&
-            residencia !== "";
-    }
-
-    let valido =
-        tipo &&
-        tipoPersona &&
-        nombre &&
-        apellido &&
-        emailValido &&
-        fecha &&
-        documentosValidos &&
-        provincia &&
-        localidad &&
-        direccion;
-
-    document.getElementById("btnEnviar").disabled = !valido;
+document.getElementById("btnEnviar").disabled = !valido;
 }
 
 function abrirModal(e){
