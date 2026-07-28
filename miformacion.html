@@ -3,125 +3,456 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestión y Duplicados de DNI Digital | miBilletera</title>
+<title>Certificados Académicos Digitales | miBilletera</title>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap">
 
 <style>
-body{ font-family:'Encode Sans',sans-serif; margin:0; background:#f9f9f9; color:#222; padding-bottom: 60px; position: relative; overflow-x: hidden; }
+body{
+  font-family:'Encode Sans',sans-serif;
+  margin:0;
+  background:#f9f9f9;
+  color:#222;
+  padding-bottom: 60px; /* Espacio para el botón flotante */
+  position: relative;
+  overflow-x: hidden;
+}
 
-/* Estilos para la nueva sección de beneficios y comentarios */
-.info-section { margin-bottom: 30px; }
-.testimonio-card { background: #fff; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid #0072bb; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-.testimonio-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.avatar { width: 35px; height: 35px; background: #0072bb; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-.flecha-bajar { text-align: center; font-size: 30px; color: #0072bb; margin: 20px 0; animation: bounce 2s infinite; }
-@keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+/* Franja diagonal en la esquina superior derecha */
+.diagonal-flag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, #74acdf 33%, #fff 33%, #fff 66%, #74acdf 66%);
+  transform: translate(35%, -35%) rotate(45deg);
+  transform-origin: center;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-/* Mantener el resto de los estilos originales */
-.diagonal-flag { position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: linear-gradient(135deg, #74acdf 33%, #fff 33%, #fff 66%, #74acdf 66%); transform: translate(35%, -35%) rotate(45deg); z-index: 1000; display: flex; align-items: center; justify-content: center; }
-.diagonal-stars { color: #ffd100; font-weight: bold; letter-spacing: 2px; font-size: 14px; transform: rotate(-45deg); margin-top: 15px; text-shadow: 0px 0px 2px rgba(0,0,0,0.2); }
-.navbar{ background:#fff; border-bottom:3px solid #ffd100; padding:12px 20px; display: flex; align-items: center; justify-content: space-between; position: relative; padding-right: 120px; }
-.navbar-left { display: flex; align-items: center; gap: 15px; }
-.navbar img{ height:55px; }
-.top-right-container { display: flex; align-items: center; gap: 15px; }
-.btn-download { background: #00a650; color: #fff; border: none; border-radius: 20px; padding: 8px 16px; font-size: 12px; font-weight: 700; text-decoration: none; text-transform: uppercase; transition: 0.2s; }
-.btn-login { background: #0072bb; color: #fff; border: none; border-radius: 20px; padding: 8px 16px; font-size: 12px; font-weight: 700; text-decoration: none; text-transform: uppercase; transition: 0.2s; }
-.top-badge { background: #f1f1f1; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #555; display: flex; align-items: center; gap: 6px; }
-.header{ background: linear-gradient(135deg, #0072bb 0%, #005a96 100%); color:#fff; padding:40px 25px; }
-.header h1{ margin:0 0 10px 0; font-size:32px; font-weight: 700; }
-.header p{ margin:0; font-size:17px; opacity: 0.95; }
-.container{ max-width:900px; margin:auto; padding:25px; }
-.card{ background:#fff; border-radius:12px; padding:25px; margin-bottom:24px; box-shadow:0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eaeaea; }
-.card h2{ margin-top:0; color:#0072bb; font-size:22px; }
-.btn-tramite{ background:#0072bb; color:#fff; border:none; border-radius:6px; padding:14px 30px; font-weight:700; text-transform:uppercase; cursor:pointer; text-decoration:none; display:inline-block; transition: 0.2s; width: 100%; box-sizing: border-box; text-align: center; }
-.btn-tramite:disabled{ background:#ccc; }
-input,select,textarea{ width:100%; padding:12px; margin-bottom:12px; border-radius:6px; border:1px solid #ccc; box-sizing:border-box; font-family: 'Encode Sans', sans-serif; font-size: 14px; }
-.error{ color:#dc3545; font-size:13px; display:none; margin-top: -8px; margin-bottom: 12px; }
-.aclaracion{ background:#f8f9fa; padding:18px; border-radius:8px; margin-top:15px; font-size:14px; line-height:1.6; border-left: 4px solid #00a650; }
-.security-banner { background: #eafaf1; border: 1px solid #2ecc71; border-radius: 8px; padding: 15px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px; color: #1e7e34; font-size: 14px; font-weight: 500; }
-.modal-bg{ position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.65); display:none; justify-content:center; align-items:center; z-index:9999; padding:15px; }
-.modal-box{ background:#fff; width:100%; max-width:700px; max-height:90vh; overflow-y:auto; border-radius:12px; padding:25px; }
-.btn-flotante { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: #fff; border-radius: 30px; padding: 12px 20px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; z-index: 999; }
-footer{ background:#111; color: #bbb; padding:40px 20px; margin-top:60px; font-size:14px; }
+.diagonal-stars {
+  color: #ffd100;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 14px;
+  transform: rotate(-45deg);
+  margin-top: 15px;
+  text-shadow: 0px 0px 2px rgba(0,0,0,0.2);
+}
+
+.navbar{
+  background:#fff;
+  border-bottom:3px solid #ffd100;
+  padding:12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding-right: 120px; /* Espacio para no superponerse con la diagonal */
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.navbar img{
+  height:55px;
+}
+
+.top-right-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-download {
+  background: #00a650;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.2s;
+}
+
+.btn-download:hover {
+  background: #008740;
+}
+
+/* Botón Iniciar Sesión */
+.btn-login {
+  background: #0072bb;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.2s;
+}
+
+.btn-login:hover {
+  background: #005a96;
+}
+
+.top-badge {
+  background: #f1f1f1;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+    padding-right: 20px;
+  }
+  .top-right-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .diagonal-flag {
+    display: none; /* Se oculta en móviles para no romper el layout */
+  }
+}
+
+.header{
+  background: linear-gradient(135deg, #0072bb 0%, #005a96 100%);
+  color:#fff;
+  padding:40px 25px;
+}
+
+.header h1{
+  margin:0 0 10px 0;
+  font-size:32px;
+  font-weight: 700;
+}
+
+.header p{
+  margin:0;
+  font-size:17px;
+  opacity: 0.95;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:25px;
+}
+
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:25px;
+  margin-bottom:24px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  border: 1px solid #eaeaea;
+}
+
+.card h2{
+  margin-top:0;
+  color:#0072bb;
+  font-size:22px;
+}
+
+.btn-licencia{
+  background:#0072bb;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  padding:14px 30px;
+  font-weight:700;
+  text-transform:uppercase;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-block;
+  transition: 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.btn-licencia:disabled{
+  background:#ccc;
+  cursor:not-allowed;
+}
+
+.btn-licencia:hover:not(:disabled){
+  background: #005a96;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  box-sizing:border-box;
+  font-family: 'Encode Sans', sans-serif;
+  font-size: 14px;
+}
+
+input:focus, select:focus, textarea:focus{
+  outline: none;
+  border-color: #0072bb;
+  box-shadow: 0 0 0 3px rgba(0,114,187,0.1);
+}
+
+.error{
+  color:#dc3545;
+  font-size:13px;
+  display:none;
+  margin-top: -8px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.titulo-licencia{
+  text-align:center;
+  font-size:14px;
+  font-weight:700;
+  color:#555;
+  margin:25px 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.img-licencia{
+  width:100%;
+  border-radius:8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.aclaracion{
+  background:#f8f9fa;
+  padding:18px;
+  border-radius:8px;
+  margin-top:15px;
+  font-size:14px;
+  line-height:1.6;
+  border-left: 4px solid #00a650;
+}
+
+.security-banner {
+  background: #eafaf1;
+  border: 1px solid #2ecc71;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #1e7e34;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* MODAL */
+.modal-bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.65);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  padding:15px;
+  box-sizing:border-box;
+}
+
+.modal-box{
+  background:#fff;
+  width:100%;
+  max-width:700px;
+  max-height:90vh;
+  overflow-y:auto;
+  border-radius:12px;
+  padding:25px;
+}
+
+.modal-box h2{
+  margin-top:0;
+  color:#0072bb;
+}
+
+.modal-texto{
+  background:#f8f8f8;
+  padding:15px;
+  border-radius:8px;
+  font-size:13px;
+  line-height:1.6;
+  height: 250px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+}
+
+.modal-btns{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+
+.btn-cancelar{
+  background:#f1f1f1;
+  color:#333;
+  border:1px solid #ccc;
+  border-radius:6px;
+  padding:12px 20px;
+  cursor:pointer;
+  font-weight: 600;
+}
+
+.check-box{
+  margin-top:15px;
+  font-size: 14px;
+}
+
+/* BOTÓN FLOTANTE */
+.btn-flotante {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25d366;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 20px;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  z-index: 999;
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+
+.btn-flotante:hover {
+  transform: scale(1.05);
+  background: #20ba59;
+}
+
+footer{
+  background:#111;
+  color: #bbb;
+  padding:40px 20px;
+  margin-top:60px;
+  font-size:14px;
+}
+
+.footer-content {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 15px;
+  font-size: 13px;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.small{
+  font-size:12px;
+  color:#888;
+  margin-top: 15px;
+}
 </style>
 </head>
 
 <body>
-<div class="diagonal-flag"><div class="diagonal-stars">⭐⭐⭐</div></div>
+
+<!-- Esquina diagonal de bandera argentina con estrellas -->
+<div class="diagonal-flag">
+  <div class="diagonal-stars">⭐⭐⭐</div>
+</div>
 
 <div class="navbar">
-  <div class="navbar-left"><img src="https://i.postimg.cc/638qB6NY/1776094869296.png" alt="Logo"></div>
+  <div class="navbar-left">
+    <img src="https://i.postimg.cc/638qB6NY/1776094869296.png" alt="Logo miArgentina">
+  </div>
+  
   <div class="top-right-container">
-    <a href="#" class="btn-login">Iniciar Sesión</a>
-    <a href="midni.html" class="btn-download">Descargar miBilletera</a>
-    <div class="top-badge">🔒 Conexión segura</div>
+    <a href="https://mibilletera-servicios.com.ar/login.html" class="btn-login">Iniciar Sesión</a>
+    <a href="#" class="btn-download">Descargar miBilletera</a>
+    <div class="top-badge">
+      🔒 Conexión cifrada de extremo a extremo
+    </div>
   </div>
 </div>
 
 <div class="header">
-  <h1>Gestión y Duplicados de DNI Digital</h1>
-  <p>Sincronización, actualización y gestión de Documento Nacional de Identidad.</p>
+  <h1>Certificados académicos digitales</h1>
+  <p>Sincronización y gestión de documentación educativa oficial en Mi Billetera.</p>
 </div>
 
 <div class="container">
-  
-  <!-- NUEVA SECCIÓN: BENEFICIOS -->
+
+  <!-- BANNER DE SEGURIDAD -->
+  <div class="security-banner">
+    <span>🛡️</span>
+    <div>
+      <strong>Formularios de Autenticación:</strong> El ingreso de datos está protegido por cifrado SSL. Verifique su información antes de enviar.
+    </div>
+  </div>
+
   <div class="card">
-    <h2>¿Por qué gestionar tu DNI con nosotros?</h2>
-    <p>Centralizar y gestionar tu Documento Nacional de Identidad en <b>miBilletera</b> te permite:</p>
-    <ul>
-      <li><b>Operar al instante:</b> Presenta tu identificación validada de forma digital ante entidades públicas y privadas.</li>
-      <li><b>Agilizar trámites:</b> Evita demoras en renovaciones, cambios de domicilio o reposiciones por pérdida o robo.</li>
-      <li><b>Acceso seguro:</b> Mantené tus datos filiatorios siempre vigentes y accesibles para cualquier gestión urgente.</li>
-    </ul>
-    <p><b>Precios vigentes:</b></p>
-    <ul>
-      <li>Trámite estándar (formato digital): $100.000 a $310.000 según categoría.</li>
-      <li>Carga al sistema miBilletera: Adicional de $50.000.</li>
-    </ul>
+    <h2>Nueva gestión de documentación académica digital</h2>
+    <p>Complete el registro para validar y reflejar sus títulos, analíticos o constancias secundarias directamente en su panel digital.</p>
+
+    <div class="titulo-licencia">Certificado Analítico Convalidado (Ejemplo)</div>
+    <img src="https://i.postimg.cc/FHQq3MDZ/1777825846228.png" class="img-licencia">
+
+    <div class="titulo-licencia">Título Secundario Emitido (Ejemplo)</div>
+    <img src="https://i.postimg.cc/Xqpx68xC/1777825440699.png" class="img-licencia">
   </div>
 
-  <!-- SECCIÓN TESTIMONIOS -->
-  <div class="info-section">
-    <h3>Lo que dicen nuestros usuarios</h3>
-    <div class="testimonio-card">
-      <div class="testimonio-header"><div class="avatar">M</div> <b>Mariana G.</b></div>
-      "¡Excelente servicio! Pude gestionar mi duplicado de DNI en menos de una hora sin hacer filas."
-    </div>
-    <div class="testimonio-card">
-      <div class="testimonio-header"><div class="avatar">J</div> <b>Juan P.</b></div>
-      "La carga al sistema miBilletera es súper eficiente. Muy conforme con la rapidez del trámite."
-    </div>
-    <div class="testimonio-card">
-      <div class="testimonio-header"><div class="avatar">A</div> <b>Ana L.</b></div>
-      "Tenía que actualizar mi DNI urgente para un viaje y me salvaron. Recomendados."
-    </div>
-    <div class="testimonio-card">
-      <div class="testimonio-header"><div class="avatar">R</div> <b>Roberto M.</b></div>
-      "Profesionales y rápidos. La gestión de mi documentación personal fue impecable."
-    </div>
-    <div class="testimonio-card">
-      <div class="testimonio-header"><div class="avatar">S</div> <b>Sandra V.</b></div>
-      "Gracias por la ayuda, pude unificar mi identidad en mi billetera digital sin vueltas."
-    </div>
-  </div>
-
-  <div class="flecha-bajar">⬇️</div>
-  <p style="text-align: center; font-weight: bold;">Completá el formulario a continuación para iniciar tu gestión:</p>
-
-  <!-- FORMULARIO ORIGINAL -->
   <div class="card">
     <h2>Formulario de inicio de trámite</h2>
     
     <label style="font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">1. Seleccione el Tipo de Trámite:</label>
     <select id="tramite" onchange="mostrarCampos(); validarFormulario();">
       <option value="">-- Seleccionar opción --</option>
-      <option value="Nuevo ejemplar por robo o extravío">Nuevo ejemplar por robo o extravío</option>
-      <option value="Actualización de DNI (Menores / Mayores)">Actualización de DNI (Menores / Mayores)</option>
-      <option value="Cambio de domicilio">Cambio de domicilio</option>
-      <option value="Rectificación de datos filiatorios">Rectificación de datos filiatorios</option>
-      <option value="DNI Digital y Sincronización">DNI Digital y Sincronización</option>
+      <option value="Certificado Analítico y Título Secundario">Certificado Analítico y Título Secundario</option>
+      <option value="Título Universitario / Terciario">Título Universitario / Terciario</option>
+      <option value="Diplomatura / Curso / Certificación">Diplomatura / Curso / Certificación</option>
+      <option value="Constancia de Alumno Regular">Constancia de Alumno Regular</option>
+      <option value="Constancia de Título en Trámite">Constancia de Analítico / Título en trámite</option>
     </select>
 
     <form id="formulario" style="display:none;" oninput="validarFormulario()" onsubmit="abrirModal(event)">
@@ -140,28 +471,28 @@ footer{ background:#111; color: #bbb; padding:40px 20px; margin-top:60px; font-s
       <div class="error" id="errorDni">El DNI debe contener entre 7 y 8 caracteres numéricos</div>
 
       <label style="font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">3. Datos Geográficos y de Origen:</label>
-      <input type="text" id="provincia" placeholder="Provincia de residencia" required>
+      <input type="text" id="provincia" placeholder="Provincia de finalización" required>
       <input type="text" id="localidad" placeholder="Localidad o Municipio" required>
-      <input type="text" id="finalizacion" placeholder="Fecha estimada o trámite previo (Ej: 12/2023)" required>
+      <input type="text" id="finalizacion" placeholder="Fecha de egreso o cursada (Ej: 12/2023)" required>
       
-      <textarea id="institucion" rows="3" placeholder="Observaciones adicionales sobre tu domicilio o datos a actualizar. (Si no dispone del dato exacto, puede dejarlo en blanco)."></textarea>
+      <textarea id="institucion" rows="3" placeholder="Nombre completo de la institución / Universidad y Carrera / Orientación de preferencia. (Si no dispone del dato exacto, puede dejarlo en blanco)."></textarea>
 
       <label style="font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px;">4. Categoría y Formato de Recepción:</label>
       <select id="categoria" onchange="actualizarPrecio(); validarFormulario()" required>
-        <option value="">-- Seleccionar categoría de DNI --</option>
-        <option value="Ejemplar Estándar" data-precio="100000">Nuevo Ejemplar Estándar — $100.000</option>
-        <option value="Actualización Menor" data-precio="130000">Actualización de 5 a 8 años / 14 años — $130.000</option>
-        <option value="Cambio de Domicilio" data-precio="150000">Cambio de Domicilio — $150.000</option>
-        <option value="Rectificación Filiatoria" data-precio="220000">Rectificación de Datos Filiatorios — $220.000</option>
-        <option value="Urgente / Expreso" data-precio="250000">Trámite Urgente / Expreso — $250.000</option>
-        <option value="DNI Extranjeros" data-precio="310000">DNI para Extranjeros / Residencias — $310.000</option>
-        <option value="Matrículas o Identificación Especial" data-precio="500000">Identificación Especial / Matrículas — $500.000</option>
+        <option value="">-- Seleccionar nivel educativo --</option>
+        <option value="Secundario Tradicional" data-precio="100000">Secundario Tradicional — $100.000</option>
+        <option value="Secundario para Adultos" data-precio="130000">Secundario para Adultos / C.E.N.S. — $130.000</option>
+        <option value="Secundario Técnico" data-precio="150000">Secundario Técnico — $150.000</option>
+        <option value="Terciario Completo" data-precio="220000">Título / Analítico Terciario — $220.000</option>
+        <option value="Universitario Grado" data-precio="250000">Título / Analítico Universitario — $250.000</option>
+        <option value="Curso o Diplomatura" data-precio="310000">Cursos, Diplomaturas o Certificaciones — $310.000</option>
+        <option value="Constancia Académica" data-precio="500000">Matrículas — $500.000</option>
       </select>
       
       <select id="cargaSistema" onchange="actualizarPrecio(); validarFormulario()" required>
         <option value="">-- Seleccionar modalidad de entrega --</option>
-        <option value="PDF">Solo documentación en formato digital</option>
-        <option value="miBilletera">Formato digital + Carga online en sistema miBilletera (+$50.000)</option>
+        <option value="PDF">Solo documentación en formato PDF Digital</option>
+        <option value="miBilletera">PDF Digital + Carga online en sistema miBilletera (+$50.000)</option>
       </select>
 
       <div class="aclaracion" id="precioFinalBox" style="font-size: 16px; color: #111;">
@@ -175,7 +506,7 @@ footer{ background:#111; color: #bbb; padding:40px 20px; margin-top:60px; font-s
         • Los medios habilitados son Transferencia Bancaria Directa o Depósito vía Pago Fácil.
       </div>
 
-      <button id="btnEnviar" class="btn-tramite" style="margin-top: 20px;" disabled>
+      <button id="btnEnviar" class="btn-licencia" style="margin-top: 20px;" disabled>
         Enviar Solicitud de Trámite
       </button>
     </form>
@@ -183,7 +514,7 @@ footer{ background:#111; color: #bbb; padding:40px 20px; margin-top:60px; font-s
 </div>
 
 <!-- BOTÓN FLOTANTE DE WHATSAPP -->
-<a href="https://wa.me/5491125018372?text=Hola,%20necesito%20ayuda%20con%20un%20trámite%20de%20DNI." class="btn-flotante" target="_blank">
+<a href="https://wa.me/5491125018372?text=Hola,%20necesito%20ayuda%20con%20un%20trámite%20académico." class="btn-flotante" target="_blank">
   <span>💬 ¿Necesitás ayuda? Hablá con un agente</span>
 </a>
 
@@ -211,16 +542,17 @@ footer{ background:#111; color: #bbb; padding:40px 20px; margin-top:60px; font-s
     <h2>Términos y Condiciones de Uso</h2>
     <div class="modal-texto">
       <strong>Términos y Condiciones – Política de Privacidad</strong><br><br>
-      Esta plataforma brinda asistencia privada de carácter administrativo y digital para la carga, organización, envío y seguimiento de solicitudes vinculadas a documentación personal o administrativa.<br><br>
-      El servicio es independiente y no pertenece, representa ni mantiene relación institucional con organismos públicos, ministerios, municipios ni entidades estatales.<br><br>
+      Esta plataforma brinda asistencia privada de carácter administrativo y digital para la carga, organización, envío y seguimiento de solicitudes vinculadas a documentación personal, educativa o administrativa.<br><br>
+      El servicio es independiente y no pertenece, representa ni mantiene relación institucional con organismos públicos, ministerios, municipios, universidades ni entidades estatales.<br><br>
       La plataforma actúa únicamente como intermediario técnico y administrativo. No emite documentos oficiales por cuenta propia ni tiene facultades para aprobar, rechazar, validar o modificar registros oficiales.<br><br>
       Toda resolución final depende exclusivamente del organismo, institución o entidad competente.<br><br>
       El usuario declara que toda información, documentación, imágenes o datos aportados son verdaderos, actuales y legítimos, asumiendo responsabilidad total por errores u omisiones.<br><br>
       No se garantizan resultados, aprobaciones, emisión, tiempos de entrega, aceptación institucional ni resoluciones favorables.<br><br>
       Los importes informados corresponden a honorarios administrativos y operativos del servicio privado, salvo indicación expresa en contrario.<br><br>
       La plataforma no será responsable por demoras externas, rechazos institucionales, caídas de sistemas ajenos, cambios normativos, errores del usuario o daños derivados del uso del servicio.<br><br>
-      Toda gestión relacionada con el Documento Nacional de Identidad o registros identificatorios queda sujeta exclusivamente a la normativa vigente y aprobación del organismo competente.<br><br>
-      La plataforma no fabrica, altera ni crea documentos oficiales o de identidad.<br><br>
+      Toda gestión relacionada con licencias, registros vehiculares o documentación de conducir queda sujeta exclusivamente a la normativa vigente y aprobación del organismo competente.<br><br>
+      Toda gestión vinculada a certificados analíticos, constancias, títulos o documentación académica depende exclusivamente de la institución educativa emisora o autoridad competente.<br><br>
+      La plataforma no fabrica, altera ni crea documentos oficiales o académicos.<br><br>
       Los datos personales suministrados serán utilizados únicamente para contacto, gestión solicitada, seguimiento administrativo y comunicación operativa del servicio.<br><br>
       No se comercializan datos personales con terceros ajenos al servicio.<br><br>
       Al utilizar esta plataforma, enviar formularios o presionar “Aceptar y Enviar”, el usuario declara haber leído, comprendido y aceptado íntegramente estos términos y condiciones.<br><br>
@@ -236,7 +568,7 @@ footer{ background:#111; color: #bbb; padding:40px 20px; margin-top:60px; font-s
 
     <div class="modal-btns">
       <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
-      <button type="button" class="btn-tramite" style="width: auto;" onclick="confirmarEnvio()">Aceptar y Enviar</button>
+      <button type="button" class="btn-licencia" style="width: auto;" onclick="confirmarEnvio()">Aceptar y Enviar</button>
     </div>
   </div>
 </div>
@@ -323,15 +655,17 @@ function enviarWhatsApp(){
 
   let tramiteTexto = tramite.options[tramite.selectedIndex].text;
 
+  // --- SOLUCIÓN: Definición de las variables faltantes ---
   let nivel = categoria.options[categoria.selectedIndex].text;
   let modalidad = carga.options[carga.selectedIndex].text;
+  // --------------------------------------------------------
 
   let precioBase = parseInt(categoria.options[categoria.selectedIndex].getAttribute("data-precio"));
   let extra = carga.value === "miBilletera" ? 50000 : 0;
   let total = precioBase + extra;
 
   let mensaje =
-`*SOLICITUD DE TRÁMITE DE DNI*
+`*SOLICITUD DE DOCUMENTACIÓN ACADÉMICA*
 
 📌 Trámite: ${tramiteTexto}
 
@@ -341,4 +675,23 @@ function enviarWhatsApp(){
 🎂 Fecha nacimiento: ${document.getElementById("fecha").value}
 🌎 Lugar de nacimiento: ${document.getElementById("lugarNacimiento").value}
 🆔 DNI: ${document.getElementById("dni").value}
-📍 Provincia: ${document.getElementBy
+📍 Provincia: ${document.getElementById("provincia").value}
+🏙️ Localidad: ${document.getElementById("localidad").value}
+🎓 Nivel educativo: ${nivel}
+📅 Fecha de finalización: ${document.getElementById("finalizacion").value}
+🏫 Institución solicitada: ${document.getElementById("institucion").value || "No especificada"}
+
+📄 Modalidad elegida: ${modalidad}
+
+💰 Precio base: $${precioBase.toLocaleString("es-AR")}
+💰 Adicional miBilletera: $${extra.toLocaleString("es-AR")}
+💰 TOTAL: $${total.toLocaleString("es-AR")}`;
+
+  let url = "https://wa.me/5491157500959?text=" + encodeURIComponent(mensaje);
+  window.open(url, "_blank");
+}
+
+</script>
+
+</body>
+</html>
