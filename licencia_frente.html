@@ -1,374 +1,628 @@
-<!DOCTYPE html>      
-<html lang="es">      
-<head>      
-<meta charset="UTF-8">      
-<meta name="viewport" content="width=device-width, initial-scale=1.0">      
-<title>LNC FRENTE</title>      
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>      
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>      
-  
-<style>      
-body {      
-    font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;      
-    background: linear-gradient(135deg, #e6e6e6, #f7f7f7);    
-    display:flex;      
-    justify-content:center;      
-    align-items:center;      
-    height:100vh;      
-    margin:0;      
-    -webkit-font-smoothing: antialiased;    
-    -moz-osx-font-smoothing: grayscale;    
-    text-rendering: optimizeLegibility;    
-}      
-  
-.btn-pdf{      
-    position:absolute;      
-    top:10px;      
-    left:10px;      
-    padding:8px 12px;      
-    background:#4aa3df;      
-    color:#fff;      
-    border:none;      
-    border-radius:5px;      
-    cursor:pointer;      
-    z-index:10;  
-}      
-  
-.carnet-container {    
-    width:500px;    
-    height:315px;    
-    overflow:hidden;    
-    display:flex;    
-    flex-direction:column;    
-    border-radius:14px;    
-    border:1px solid rgba(0,0,0,0.15);    
-    box-shadow:0 8px 25px rgba(0,0,0,0.18);    
-    background:#fff;    
+<!DOCTYPE html>    
+<html lang="es">    
+<head>    
+<meta charset="UTF-8">    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">    
+<title>LNC - Frente y Dorso</title>    
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>    
+
+<style>    
+body {    
+    font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;    
+    background: linear-gradient(135deg, #e6e6e6, #f7f7f7);  
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;    
+    align-items: center;    
+    min-height: 100vh;    
+    margin: 0;    
+    padding: 20px 0;
+    -webkit-font-smoothing: antialiased;  
 }    
-  
-.header {      
+
+.carnet-wrapper {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.btn-group {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 5px;
+    z-index: 10;
+}
+
+.btn-action {
+    padding: 6px 10px;
+    background: #4aa3df;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.btn-action.green { background: #27ae60; }
+
+.carnet-container {  
+    width: 500px;  
+    height: 315px;  
+    overflow: hidden;  
+    display: flex;  
+    flex-direction: column;  
+    border-radius: 14px;  
+    border: 1px solid rgba(0,0,0,0.15);  
+    box-shadow: 0 8px 25px rgba(0,0,0,0.18);  
+    background: #fff;  
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}  
+
+/* Estilos específicos FRENTE */
+.header-frente {      
     background: rgba(255,255,255,0.2);      
     backdrop-filter: blur(6px);      
-    color:#008c8c;      
-    display:flex;      
-    align-items:center;      
-    justify-content:space-between;      
-    padding:4px 10px;    
-    height:38px;      
-    position:relative;    
+    color: #008c8c;      
+    display: flex;      
+    align-items: center;      
+    justify-content: space-between;      
+    padding: 4px 10px;    
+    height: 38px;      
+    position: relative;    
 }      
-  
-.header::after{  
-    content:"";  
-    position:absolute;  
-    bottom:0;  
-    left:0;  
-    right:0;  
-    height:3px;  
-    background:#00a3ff;  
+
+.header-frente::after{  
+    content: "";  
+    position: absolute;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    height: 3px;  
+    background: #00a3ff;  
 }    
-  
+
 .header-title {      
-    font-size:15px;      
-    font-weight:600;      
-    text-align:center;      
-    flex-grow:1;      
-    line-height:1.05;      
-    color:#0072bb;      
-    letter-spacing:1px;      
+    font-size: 15px;      
+    font-weight: 600;      
+    text-align: center;      
+    flex-grow: 1;      
+    line-height: 1.05;      
+    color: #0072bb;      
+    letter-spacing: 1px;      
     text-transform: uppercase;    
 }      
-  
-.flag-icon { width:28px; }      
-.shield-icon { width:22px; }      
-  
-.content {    
-    display:grid;    
-    grid-template-columns:120px 1fr;    
-    padding:6px;    
-    gap:6px;    
-    flex:1;    
-    align-content:start;    
+
+.flag-icon { width: 28px; }      
+.shield-icon { width: 22px; }      
+
+.content-frente {    
+    display: grid;    
+    grid-template-columns: 120px 1fr;    
+    padding: 6px;    
+    gap: 6px;    
+    flex: 1;    
+    align-content: start;    
 }    
-  
+
 .photo-placeholder {  
-    width:112px;  
-    height:132px;  
-    background:#ffffff;  
-    padding:0;  
-    border:1px solid #ffffff;  
-    border-radius:6px;  
-    cursor:pointer;  
-    overflow:hidden;  
-    display:flex;  
-    justify-content:center;  
-    align-items:center;  
-    box-sizing:border-box;  
-    position:relative;  
-    left:8px;  
-    top:14px;  
+    width: 112px;  
+    height: 132px;  
+    background: #ffffff;  
+    padding: 0;  
+    border: 1px solid #ffffff;  
+    border-radius: 6px;  
+    cursor: pointer;  
+    overflow: hidden;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    box-sizing: border-box;  
+    position: relative;  
+    left: 8px;  
+    top: 14px;  
 }  
-  
+
 .photo-placeholder img {  
-    width:100%;  
-    height:100%;  
-    object-fit:cover;  
-    object-position:center center;  
-    display:none;  
-    border-radius:4px;  
+    width: 100%;  
+    height: 100%;  
+    object-fit: cover;  
+    object-position: center center;  
+    display: none;  
+    border-radius: 4px;  
 }      
-  
-.data {      
-    font-size:10.5px;      
-    font-weight:400;    
-    color:#1a1a1a;    
-    letter-spacing:0.1px;    
-    line-height:1.05;    
+
+.data-frente {      
+    font-size: 10.5px;      
+    font-weight: 400;    
+    color: #1a1a1a;    
+    letter-spacing: 0.1px;    
+    line-height: 1.05;    
 }      
-  
-.data b,.editable{  
-    outline:none;  
-}  
-  
-.data b{    
-    font-size:12.5px;      
-    font-weight:600;    
-    color:#000;    
+
+.data-frente b, .editable { outline: none; }  
+
+.data-frente b {    
+    font-size: 12.5px;      
+    font-weight: 600;    
+    color: #000;    
 }      
-  
-.item {      
-    margin-bottom:6px;      
-    padding-bottom:0;      
-    display:flex;    
-    justify-content:flex-start;    
-    gap:18px;    
-    align-items:flex-start;    
+
+.item-frente {      
+    margin-bottom: 6px;      
+    display: flex;    
+    justify-content: flex-start;    
+    gap: 18px;    
+    align-items: flex-start;    
 }      
-  
-.label {      
-    font-weight:400;    
-    display:block;      
-    font-size:9.5px;      
-    color:#333;    
+
+.label-frente {      
+    font-weight: 400;    
+    display: block;      
+    font-size: 9.5px;      
+    color: #333;    
 }      
-  
-.en{    
-    font-weight:400;    
-    color:#444;    
+
+.en { font-weight: 400; color: #444; }    
+
+.item-dates {    
+    display: flex;    
+    justify-content: flex-start;    
+    gap: 60px;    
+    width: 100%;    
+    margin-top: -4px;    
 }    
-  
-.item-dates{    
-    display:flex;    
-    justify-content:flex-start;    
-    gap:60px;    
-    width:100%;    
-    margin-top:-4px;    
-}    
-  
-.item-dates > div{    
-    flex:none;    
-}    
-  
-.footer {      
-    background:#4aa3df;      
-    color:#fff;      
-    width:100%;      
-    height:32px;      
-    display:flex;      
-    justify-content:space-between;      
-    align-items:center;      
-    padding:4px 10px;      
-    font-size:9.5px;    
+
+.footer-frente {      
+    background: #4aa3df;      
+    color: #fff;      
+    width: 100%;      
+    height: 32px;      
+    display: flex;      
+    justify-content: space-between;      
+    align-items: center;      
+    padding: 4px 10px;      
+    font-size: 9.5px;      
+    box-sizing: border-box;
 }      
-  
-.seguridad-vial{    
-    display:flex;    
-    align-items:center;    
-    gap:6px;    
+
+.seguridad-vial {    
+    display: flex;    
+    align-items: center;    
+    gap: 6px;    
 }    
-  
-.seguridad-vial .linea{    
-    width:2px;    
-    height:24px;    
-    background:#fff;    
+
+.seguridad-vial .linea {    
+    width: 2px;    
+    height: 24px;    
+    background: #fff;    
 }    
-  
-.seguridad-vial .texto{    
-    display:flex;    
-    flex-direction:column;    
-    font-weight:700;    
-    font-size:12px;    
-    line-height:1;    
+
+.seguridad-vial .texto {    
+    display: flex;    
+    flex-direction: column;    
+    font-weight: 700;    
+    font-size: 12px;    
+    line-height: 1;    
 }    
-  
-.footer-logo {      
-    width:18px;      
-}      
-  
-.footer-right{    
-    display:flex;    
-    align-items:center;    
-    gap:5px;    
+
+.footer-right {    
+    display: flex;    
+    align-items: center;    
+    gap: 5px;    
     transform: translateX(-15px);    
 }    
-  
-.footer-country{    
-    display:block;    
-    font-size:12px;    
-    margin-top:1px;    
-    font-weight:500;    
+
+.footer-logo { width: 18px; }      
+.footer-country { display: block; font-size: 12px; margin-top: 1px; font-weight: 500; }    
+.clases { margin-left: auto; }    
+.footer-text { font-size: 11px; line-height: 1.1; }    
+
+/* Estilos específicos DORSO */
+.categories-box {
+    margin: 10px 15px 5px 15px; 
+    border: 1.5px solid #333;
+    background: rgba(255, 255, 255, 0.7);
+    overflow-y: auto; 
+    max-height: 185px;
+}
+
+.category-row {
+    display: flex;
+    align-items: center;
+    padding: 3px 10px; 
+    border-bottom: 1.5px solid #333;
+    font-size: 10px; 
+    color: #1a1a1a;
+}
+
+.category-row:last-child { border-bottom: none; }
+
+.category-icon {
+    width: 35px; 
+    display: flex;
+    justify-content: center;
+    margin-right: 12px;
+    flex-shrink: 0;
+    cursor: pointer; 
+}
+
+.category-icon img {
+    width: 28px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.editable { cursor: text; }
+
+.observations-section {
+    padding: 0 15px 5px 15px;
+    display: flex;
+    align-items: flex-end; 
+    gap: 15px;
+    flex-grow: 1;
+    z-index: 1;
+    margin-bottom: 2px; 
+}
+
+.escudo-argentino { width: 38px; }
+
+.obs-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    font-size: 10.5px;
+    color: #1a1a1a;
+    line-height: 1.3;
+    padding-bottom: 2px;
+}
+
+.obs-row { display: flex; gap: 20px; }
+
+.obs-label {
+    font-weight: 600;
+    font-size: 9px;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.lang-en { font-weight: normal !important; }
+
+.footer-reverso {    
+    width: 100%;    
+    height: 65px;    
+    display: flex;    
+    align-items: center;    
+    padding: 0 15px;    
+    box-sizing: border-box;
+    border-top: 2.5px solid #007bff; 
+    position: relative;
 }    
-  
-.clases{    
-    margin-left: auto;    
-}    
-  
-.footer-text{    
-    font-size:11px;    
-    line-height:1.1;    
-}    
-</style>      
-</head>      
-  
-<body>      
-  
-<button class="btn-pdf" onclick="generarPDF()">Descargar PDF</button>      
-<button class="btn-pdf" style="top:45px;" onclick="generarImagen()">Descargar Imagen</button>  
-<button class="btn-pdf" style="top:80px;" onclick="bgInput.click()">Fondo</button>    
-<button class="btn-pdf" style="top:115px;" onclick="firmaInput.click()">Firma</button>
-<input type="file" id="bgInput" hidden onchange="cambiarFondo(this)">    
+
+.lnc-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: #005a8d;
+    margin-right: 10px;
+}
+
+.barcode-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 15px;
+}
+
+.barcode {
+    width: 100%;
+    height: 32px;
+}
+
+.disclaimer-text {
+    font-size: 5.8px;
+    color: #005a8d;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2px;
+    text-transform: uppercase;
+}
+
+.signature-box {
+    text-align: center;
+    font-size: 8.5px;
+    min-width: 90px;
+}
+
+.sig-name {
+    display: block;
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+    margin-bottom: 2px;
+}
+
+.watermark {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 0;
+    opacity: .1;
+    display: flex;
+    gap: 10px;
+}
+
+.watermark .linea {
+    width: 4px;
+    height: 60px;
+    background: #008c8c;
+}
+
+.watermark .texto {
+    display: flex;
+    flex-direction: column;
+    font-size: 32px;
+    font-weight: 900;
+    color: #008c8c;
+    line-height: .85;
+}
+
+select {
+    font-size: 10px;
+    padding: 3px;
+    width: 250px;
+}
+</style>    
+</head>    
+
+<body>    
+
+<!-- INPUTS OCULTOS GENERALES -->
+<input type="file" id="bgInputFrente" hidden onchange="cambiarFondo(this, 'carnet-frente')">    
 <input type="file" id="firmaInput" hidden accept="image/png,image/*" onchange="cargarFirma(this)">
-  
-<div class="carnet-container" id="carnet">      
-  
-<div class="header">      
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon">      
-    <div class="header-title editable" contenteditable="true">      
-        Licencia Nacional de Conducir<br>      
-        Buenos Aires      
-    </div>      
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Coat_of_arms_of_Argentina.svg" class="shield-icon">      
-</div>      
-  
-<div class="content">      
-  
-    <div class="photo-placeholder" onclick="fileInput.click()">      
-        <span id="txtFoto">Subir foto</span>      
-        <img id="preview">      
-    </div>      
-    <input type="file" id="fileInput" hidden onchange="previewImage(this)">      
-  
-    <div class="data">      
-  
-        <div class="item">    
-            <div>    
-                <span class="label"><b>1. N° Licencia</b><span class="en">/ License N°</span></span>    
-                <b class="editable" contenteditable="true">12345678</b>    
+<input type="file" id="fileInputFoto" hidden onchange="previewImage(this)">      
+
+<input type="file" id="bgInputDorso" hidden onchange="cambiarFondo(this, 'carnet-dorso')">  
+<input type="file" id="individualIconInput" hidden onchange="procesarNuevoIcono(this)">
+
+<!------------------- FRENTE ------------------->
+<div class="carnet-wrapper">
+    <div class="btn-group">
+        <button class="btn-action" onclick="generarPDF('carnet-frente', 'licencia_frente.pdf')">PDF</button>    
+        <button class="btn-action green" onclick="generarImagen('carnet-frente', 'licencia_frente.png')">Imagen</button>  
+        <button class="btn-action" onclick="document.getElementById('bgInputFrente').click()">Fondo</button>    
+        <button class="btn-action" onclick="document.getElementById('firmaInput').click()">Firma</button>
+    </div>
+
+    <div class="carnet-container" id="carnet-frente">      
+        <div class="header-frente">      
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Flag_of_Argentina.svg" class="flag-icon">      
+            <div class="header-title editable" contenteditable="true">      
+                Licencia Nacional de Conducir<br>      
+                Buenos Aires      
+            </div>      
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Coat_of_arms_of_Argentina.svg" class="shield-icon">      
+        </div>      
+        
+        <div class="content-frente">      
+            <div class="photo-placeholder" onclick="document.getElementById('fileInputFoto').click()">      
+                <span id="txtFoto">Subir foto</span>      
+                <img id="preview">      
+            </div>      
+        
+            <div class="data-frente">      
+                <div class="item-frente">    
+                    <div>    
+                        <span class="label-frente"><b>1. N° Licencia</b><span class="en">/ License N°</span></span>    
+                        <b class="editable" contenteditable="true">12345678</b>    
+                    </div>    
+                    <div class="clases">    
+                        <span class="label-frente"><b>2. Clases</b> <span class="en">/ Class</span></span>    
+                        <b class="editable" contenteditable="true">A1 B1</b>    
+                    </div>    
+                </div>    
+        
+                <div class="item-frente">    
+                    <div>    
+                        <span class="label-frente"><b>3. Apellido</b> / Last Name</span>    
+                        <b class="editable" contenteditable="true">RODRÍGUEZ</b>    
+                    </div>    
+                </div>    
+        
+                <div class="item-frente">    
+                    <div>    
+                        <span class="label-frente"><b>4. Nombre</b> / First Name</span>    
+                        <b class="editable" contenteditable="true">EMILIANO NICOLÁS</b>    
+                    </div>    
+                </div>    
+        
+                <div class="item-frente">    
+                    <div>    
+                        <span class="label-frente"><b>5. Domicilio</b> / Address</span>    
+                        <b class="editable" contenteditable="true">BILLINGHURST<br>GRAL SAN MARTÍN</b>    
+                    </div>    
+                </div>    
+        
+                <div class="item-frente" style="display:flex; justify-content:space-between; width:100%; align-items:flex-start;">    
+                    <div>    
+                        <span class="label-frente"><b>6. Fecha de Nac.</b> / Date of birth</span>    
+                        <b class="editable" contenteditable="true">21/07/1981</b>    
+                    </div>    
+                    <div style="text-align:right; margin-top:-12px; position:relative; width:160px; height:60px;">    
+                        <img id="firmaPreview" style="position:absolute; left:50%; top:-12px; transform:translateX(-50%); width:145px; height:34px; object-fit:contain; object-position:center; display:none; pointer-events:none;">
+                        <b style="display:block; margin-bottom:-2px;">________________</b>    
+                        <span class="label-frente"><b>7. Firma</b> / Signature</span>    
+                    </div>    
+                </div>    
+        
+                <div class="item-frente item-dates">    
+                    <div>    
+                        <span class="label-frente"><b>8. Otorgamiento</b> / Issue</span>    
+                        <b class="editable" contenteditable="true">25/03/2026</b>    
+                    </div>    
+                    <div>    
+                        <span class="label-frente"><b>9. Vencimiento</b> / Expires</span>    
+                        <b class="editable" contenteditable="true">25/03/2031</b>    
+                    </div>    
+                </div>    
+            </div>      
+        </div>      
+        
+        <div class="footer-frente">      
+            <div class="seguridad-vial">    
+                <div class="linea"></div>    
+                <div class="texto">    
+                    <span>SEGURIDAD</span>    
+                    <span>VIAL</span>    
+                </div>    
             </div>    
-            <div class="clases">    
-                <span class="label"><b>2. Clases</b> <span class="en">/ Class</span></span>    
-                <b class="editable" contenteditable="true">A1 B1</b>    
-            </div>    
+            <div class="footer-right">      
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Coat_of_arms_of_Argentina.svg" class="footer-logo">      
+                <div class="footer-text">    
+                    <span>Ministerio de Transporte</span>    
+                    <span class="footer-country editable" contenteditable="true">República Argentina</span>    
+                </div>    
+            </div>      
+        </div>      
+    </div>
+</div>
+
+<!------------------- DORSO ------------------->
+<div class="carnet-wrapper">
+    <div class="btn-group">
+        <button class="btn-action" onclick="generarPDF('carnet-dorso', 'licencia_dorso.pdf')">PDF</button>    
+        <button class="btn-action green" onclick="generarImagen('carnet-dorso', 'licencia_dorso.png')">Imagen</button>
+        <button class="btn-action" onclick="document.getElementById('bgInputDorso').click()">Fondo</button>  
+        <button class="btn-action" onclick="agregarCategoria()">+ Cat</button>  
+        <button class="btn-action" onclick="quitarCategoria()">- Cat</button>  
+        <button class="btn-action" onclick="toggleRecuadro()">Caja</button>  
+    </div>
+
+    <div class="carnet-container" id="carnet-dorso">    
+        <div class="watermark">
+            <div class="linea"></div>  
+            <div class="texto">  
+                <span>SEGURIDAD</span>  
+                <span>VIAL</span>  
+            </div>
+        </div>
+
+        <div class="categories-box" id="categoriesBox" style="z-index:1;">
+            <div class="category-row">
+                <span class="category-icon" onclick="seleccionarIcono(this)">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3198/3198336.png" class="cat-img">
+                </span>
+                <span class="category-text">
+                    <select onchange="cargarCategoria(this)">
+                        <option value="">Seleccionar categoría</option>
+                    </select>
+                </span>
+            </div>
+        </div>
+
+        <div class="observations-section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Coat_of_arms_of_Argentina.svg" class="escudo-argentino">
+            <div class="obs-content">
+                <div class="obs-row">
+                    <span><span class="obs-label">Grupo y Factor:</span> <b class="editable" contenteditable="true">RH+</b></span>
+                    <span><span class="obs-label">CUIL:</span> <b class="editable" contenteditable="true">12-34567890-1</b></span>
+                </div>
+                <div class="obs-row">
+                    <span><span class="obs-label">Observaciones / <span class="lang-en">Observations:</span></span> <b class="editable" contenteditable="true">NINGUNA</b></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-reverso">    
+            <div class="lnc-text">LNC</div>
+            <div class="barcode-wrapper">
+                <canvas class="barcode" id="barcodeCanvas"></canvas>
+                <div class="disclaimer-text">Los datos de la presente licencia son los obrantes en el Registro Nacional de Antecedentes de Tránsito.</div>
+            </div>
+            <div class="signature-box">
+                <span class="sig-name">NICOLAS NAIDICH</span>
+                <b>Responsable</b><br>
+                <span class="lang-en" style="font-size:7px;">responsible, in charge</span>
+            </div>
         </div>    
-  
-        <div class="item">    
-            <div>    
-                <span class="label"><b>3. Apellido</b> / Last Name</span>    
-                <b class="editable" contenteditable="true">RODRÍGUEZ</b>    
-            </div>    
-        </div>    
-  
-        <div class="item">    
-            <div>    
-                <span class="label"><b>4. Nombre</b> / First Name</span>    
-                <b class="editable" contenteditable="true">EMILIANO NICOLÁS</b>    
-            </div>    
-        </div>    
-  
-        <div class="item">    
-            <div>    
-                <span class="label"><b>5. Domicilio</b> / Address</span>    
-                <b class="editable" contenteditable="true">BILLINGHURST<br>GRAL SAN MARTÍN</b>    
-            </div>    
-        </div>    
-  
-        <div class="item" style="display:flex; justify-content:space-between; width:100%; align-items:flex-start;">    
-            <div>    
-                <span class="label"><b>6. Fecha de Nac.</b> / Date of birth</span>    
-                <b class="editable" contenteditable="true">21/07/1981</b>    
-            </div>    
-  
-            <div style="text-align:right; margin-top:-12px; position:relative; width:160px; height:60px;">    
-                <img id="firmaPreview"
-style="
-position:absolute;
-left:50%;
-top:-12px;
-transform:translateX(-50%);
-width:145px;
-height:34px;
-object-fit:contain;
-object-position:center;
-display:none;
-pointer-events:none;
-">
-                <b style="display:block; margin-bottom:-2px;">________________</b>    
-                <span class="label"><b>7. Firma</b> / Signature</span>    
-            </div>    
-        </div>    
-  
-        <div class="item item-dates">    
-            <div>    
-                <span class="label"><b>8. Otorgamiento</b> / Issue</span>    
-                <b class="editable" contenteditable="true">25/03/2026</b>    
-            </div>    
-            <div>    
-                <span class="label"><b>9. Vencimiento</b> / Expires</span>    
-                <b class="editable" contenteditable="true">25/03/2031</b>    
-            </div>    
-        </div>    
-  
-    </div>      
-</div>      
-  
-<div class="footer">      
-    <div class="seguridad-vial">    
-        <div class="linea"></div>    
-        <div class="texto">    
-            <span>SEGURIDAD</span>    
-            <span>VIAL</span>    
-        </div>    
-    </div>    
-    <div class="footer-right">      
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Coat_of_arms_of_Argentina.svg" class="footer-logo">      
-        <div class="footer-text">    
-            <span>Ministerio de Transporte</span>    
-            <span class="footer-country editable" contenteditable="true">República Argentina</span>    
-        </div>    
-    </div>      
-</div>      
-  
-</div>      
-  
-<script>      
-  
+    </div>
+</div>
+
+<script>
+let iconoSeleccionadoActual = null;
+let recuadroActivo = true;
+
+const categorias = [
+    ["A.1.1","Ciclomotores hasta 50 cc."],
+    ["A.1.2","Motocicletas hasta 150 cc."],
+    ["A.1.3","Motocicletas hasta 300 cc."],
+    ["A.1.4","Motocicletas de más de 300 cc."],
+    ["A.2.1","Triciclos y cuatriciclos livianos."],
+    ["A.2.2","Triciclos y cuatriciclos de mayor potencia."],
+    ["B.1","Automóviles, camionetas y utilitarios hasta 3.500 kg."],
+    ["B.2","Automóviles con acoplado, remolque o casa rodante."],
+    ["F","Vehículos adaptados para personas con discapacidad."],
+    ["G.1","Tractores agrícolas."],
+    ["G.2","Maquinaria vial."],
+    ["G.3","Maquinaria especial."],
+    ["C","Camiones sin acoplado y vehículos de carga mayores a 3.500 kg."],
+    ["D.1","Taxi, remise, utilitarios de pasajeros."],
+    ["D.2","Vehículos de transporte hasta 8 pasajeros."],
+    ["D.3","Transporte público de pasajeros: colectivos, minibuses, micros."],
+    ["E.1","Camiones con remolque o acoplado."],
+    ["E.2","Maquinaria especial de uso profesional."],
+    ["E.3","Vehículos articulados, semi-remolques y bateas."]
+];
+
+function llenarSelects(){
+    document.querySelectorAll("select").forEach(sel => {
+        if(sel.options.length > 1) return;
+        let opciones = `<option value="">Seleccionar categoría</option>`;
+        categorias.forEach(c => {
+            opciones += `<option value="${c[0]}|${c[1]}">${c[0]} — ${c[1]}</option>`;
+        });
+        sel.innerHTML = opciones;
+    });
+}
+
+function dibujarCodigoBarras(){
+    const canvas = document.getElementById("barcodeCanvas");
+    if(!canvas) return;
+    const ctx = canvas.getContext("2d");
+    canvas.width = 260;
+    canvas.height = 32;
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    let x = 0;
+    while(x < canvas.width){
+        let ancho = Math.floor(Math.random() * 3) + 1;
+        ctx.fillStyle = Math.random() > .35 ? "#000" : "#fff";
+        ctx.fillRect(x, 0, ancho, canvas.height);
+        x += ancho;
+    }
+}
+
 function previewImage(input){      
     const img = document.getElementById('preview');      
     const txt = document.getElementById('txtFoto');      
     const reader = new FileReader();      
-    reader.onload = e=>{      
+    reader.onload = e => {      
         img.src = e.target.result;      
-        img.style.display="block";      
-        txt.style.display="none";      
+        img.style.display = "block";      
+        txt.style.display = "none";      
     }      
     reader.readAsDataURL(input.files[0]);      
 }    
-  
-function cambiarFondo(input){    
-    const carnet = document.getElementById('carnet');    
+
+function cambiarFondo(input, idContenedor){    
+    const carnet = document.getElementById(idContenedor);    
     const reader = new FileReader();    
-    reader.onload = e=>{    
+    reader.onload = e => {    
         carnet.style.backgroundImage = `url('${e.target.result}')`;    
         carnet.style.backgroundSize = "cover";    
         carnet.style.backgroundPosition = "center";    
@@ -380,43 +634,107 @@ function cambiarFondo(input){
 function cargarFirma(input){
     const img = document.getElementById("firmaPreview");
     const reader = new FileReader();
-
     reader.onload = function(e){
         img.src = e.target.result;
         img.style.display = "block";
     };
-
     if(input.files[0]){
         reader.readAsDataURL(input.files[0]);
     }
 }
-  
-async function generarPDF(){      
+
+function seleccionarIcono(elemento){
+    iconoSeleccionadoActual = elemento.querySelector('img');
+    document.getElementById('individualIconInput').click();
+}
+
+function procesarNuevoIcono(input){
+    if(input.files && input.files[0] && iconoSeleccionadoActual){
+        const reader = new FileReader();
+        reader.onload = e => iconoSeleccionadoActual.src = e.target.result;
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function agregarCategoria(){
+    const box = document.getElementById("categoriesBox");
+    const fila = document.createElement("div");
+    fila.className = "category-row";
+
+    let opciones = `<option value="">Seleccionar categoría</option>`;
+    categorias.forEach(c => {
+        opciones += `<option value="${c[0]}|${c[1]}">${c[0]} — ${c[1]}</option>`;
+    });
+
+    fila.innerHTML = `
+        <span class="category-icon" onclick="seleccionarIcono(this)">
+            <img src="https://cdn-icons-png.flaticon.com/512/741/741407.png">
+        </span>
+        <span class="category-text">
+            <select onchange="cargarCategoria(this)">
+                ${opciones}
+            </select>
+        </span>
+    `;
+    box.appendChild(fila);
+}
+
+function cargarCategoria(sel){
+    if(!sel.value) return;
+    let datos = sel.value.split("|");
+    sel.parentElement.innerHTML = `<b>${datos[0]}</b> ${datos[1]}`;
+    sel.parentElement.contentEditable = "true";
+    sel.parentElement.classList.add("editable");
+}
+
+function quitarCategoria(){
+    const box = document.getElementById("categoriesBox");
+    if(box.children.length > 1){
+        box.removeChild(box.lastElementChild);
+    }function toggleRecuadro(){
+    const box = document.getElementById("categoriesBox");
+    recuadroActivo = !recuadroActivo;
+    if(recuadroActivo){
+        box.style.border = "1.5px solid #333";
+        [...box.children].forEach(el => el.style.borderBottom = "1.5px solid #333");
+    } else {
+        box.style.border = "none";
+        [...box.children].forEach(el => el.style.borderBottom = "none");
+    }
+}
+
+async function generarPDF(idElemento, nombreArchivo){      
+    if(idElemento === 'carnet-dorso') dibujarCodigoBarras();
     const { jsPDF } = window.jspdf;      
-    const canvas = await html2canvas(document.getElementById("carnet"), {    
-        scale:5,    
-        useCORS:true,  
-        backgroundColor:null  
+    const canvas = await html2canvas(document.getElementById(idElemento), {    
+        scale: 4,    
+        useCORS: true,  
+        backgroundColor: null  
     });      
     const img = canvas.toDataURL("image/png");      
-    const pdf = new jsPDF({ orientation:"landscape", unit:"mm", format:[85.6,54] });      
-    pdf.addImage(img,"PNG",0,0,85.6,54);      
-    pdf.save("carnet.pdf");      
+    const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: [85.6, 54] });      
+    pdf.addImage(img, "PNG", 0, 0, 85.6, 54);      
+    pdf.save(nombreArchivo);      
 }      
-  
-async function generarImagen(){  
-    const canvas = await html2canvas(document.getElementById("carnet"), {    
-        scale:5,    
-        useCORS:true,  
-        backgroundColor:null  
+
+async function generarImagen(idElemento, nombreArchivo){  
+    if(idElemento === 'carnet-dorso') dibujarCodigoBarras();
+    const canvas = await html2canvas(document.getElementById(idElemento), {    
+        scale: 5,    
+        useCORS: true,  
+        backgroundColor: null  
     });  
     const link = document.createElement('a');  
-    link.download = 'carnet.png';  
-    link.href = canvas.toDataURL("image/png",1);  
+    link.download = nombreArchivo;  
+    link.href = canvas.toDataURL("image/png", 1);  
     link.click();  
 }  
-  
-</script>      
-  
-</body>      
-            </html>
+
+// Inicialización
+llenarSelects();
+dibujarCodigoBarras();
+</script>    
+
+</body>    
+</html>
+}
