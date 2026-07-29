@@ -10,26 +10,29 @@
   <style>
     body { font-family: 'Encode Sans', sans-serif; margin: 0; background-color: #f8f9fa; }
     
-    /* NAVBAR FLEXIBLE PARA ALINEAR LOGO Y BOTONES SUPERIORES */
+    /* NAVBAR CENTRADA */
     .navbar { 
       background: #fff; 
       border-bottom: 3px solid #ffd100; 
-      padding: 10px 20px; 
+      padding: 15px 20px; 
       display: flex; 
-      justify-content: space-between; 
+      flex-direction: column;
       align-items: center; 
-      flex-wrap: wrap;
-      gap: 10px;
+      justify-content: center;
+      gap: 15px;
+      text-align: center;
     }
     .navbar img { height: 70px; }
 
     .top-right-container {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .header { background: #0072bb; color: white; padding: 30px; }
+    .header { background: #0072bb; color: white; padding: 30px; text-align: center; }
     .container { max-width: 900px; margin: auto; padding: 20px; }
 
     .btn-licencia {
@@ -192,7 +195,7 @@
 
 <body>
 
-<!-- BARRA DE NAVEGACIÓN CON LOGO Y ACCESOS DIRECTOS -->
+<!-- BARRA DE NAVEGACIÓN CON ELEMENTOS CENTRADOS -->
 <div class="navbar">
   <img src="https://i.postimg.cc/638qB6NY/1776094869296.png" alt="Logo Mi Billetera">
   
@@ -434,5 +437,5 @@ ${vencimiento ? "📅 Vencimiento: "+vencimiento+" años" : ""}
 </script>
 
 </body>
-        </html>
+                                                            </html>
   
