@@ -27,20 +27,19 @@ body {
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Esto los alinea a la izquierda de la tarjeta */
+    align-items: flex-start;
 }
 
 .btn-group {
-    position: relative; /* Cambiado de absolute a relative para sacarlo de la tarjeta */
+    position: relative;
     top: 0;
     left: 0;
-    margin-bottom: 8px; /* Espacio entre los botones y el carnet */
+    margin-bottom: 8px;
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
     z-index: 10;
 }
-
 
 .btn-action {
     padding: 6px 10px;
@@ -70,7 +69,6 @@ body {
     background-repeat: no-repeat;
 }  
 
-/* Estilos específicos FRENTE */
 .header-frente {      
     background: rgba(255,255,255,0.2);      
     backdrop-filter: blur(6px);      
@@ -229,7 +227,6 @@ body {
 .clases { margin-left: auto; }    
 .footer-text { font-size: 11px; line-height: 1.1; }    
 
-/* Estilos específicos DORSO */
 .categories-box {
     margin: 10px 15px 5px 15px; 
     border: 1.5px solid #333;
@@ -389,12 +386,12 @@ select {
 <body>    
 
 <!-- INPUTS OCULTOS GENERALES -->
-<input type="file" id="bgInputFrente" hidden onchange="cambiarFondo(this, 'carnet-frente')">    
-<input type="file" id="firmaInput" hidden accept="image/png,image/*" onchange="cargarFirma(this)">
-<input type="file" id="fileInputFoto" hidden onchange="previewImage(this)">      
+<input type="file" id="bgInputFrente" hidden accept="image/*" onchange="cambiarFondo(this, 'carnet-frente')">    
+<input type="file" id="firmaInput" hidden accept="image/*" onchange="cargarFirma(this)">
+<input type="file" id="fileInputFoto" hidden accept="image/*" onchange="previewImage(this)">      
 
-<input type="file" id="bgInputDorso" hidden onchange="cambiarFondo(this, 'carnet-dorso')">  
-<input type="file" id="individualIconInput" hidden onchange="procesarNuevoIcono(this)">
+<input type="file" id="bgInputDorso" hidden accept="image/*" onchange="cambiarFondo(this, 'carnet-dorso')">  
+<input type="file" id="individualIconInput" hidden accept="image/*" onchange="procesarNuevoIcono(this)">
 
 <!------------------- FRENTE ------------------->
 <div class="carnet-wrapper">
@@ -697,7 +694,10 @@ function quitarCategoria(){
     const box = document.getElementById("categoriesBox");
     if(box.children.length > 1){
         box.removeChild(box.lastElementChild);
-    }function toggleRecuadro(){
+}
+}
+
+function toggleRecuadro(){
     const box = document.getElementById("categoriesBox");
     recuadroActivo = !recuadroActivo;
     if(recuadroActivo){
@@ -743,4 +743,3 @@ dibujarCodigoBarras();
 
 </body>    
 </html>
-}
