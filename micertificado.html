@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carnet de Manipulador de Alimentos - Frente y Dorso</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap');
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: "Arimo", sans-serif;
+            gap: 30px;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        /* Contenedor de botones generales */
+        .acciones-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-descargar {
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-descargar:active {
+            transform: scale(0.98);
+        }
+
+        .btn-pdf { background-color: #2383c4; }
+        .btn-pdf:hover { background-color: #1a6699; }
+
+        .btn-imagen-frente { background-color: #2e7d32; }
+        .btn-imagen-frente:hover { background-color: #1b5e20; }
+
+        .btn-imagen-dorso { background-color: #d84315; }
+        .btn-imagen-dorso:hover { background-color: #bf360c; }
+
+        /* Estructura general de las credenciales */
+        .credencial {
+            width: 780px;
+            height: 500px;
+            background-color: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative;
+            box-sizing: border-box;
+            padding: 25px;
+            overflow: hidden;
+            border: 1px solid #dcdcdc;
+            flex-shrink: 0;
+        }
+
+        /* Borde interno azul grueso */
+        .credencial::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 5px solid #2383c4;
+            border-radius: 18px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Fondo sutil de la bandera argentina */
+        .fondo-patrio {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border-radius: 18px;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .onda-celeste {
+            position: absolute;
+            width: 120%;
+            height: 160px;
+            background: linear-gradient(180deg, rgba(135, 206, 250, 0.2) 0%, rgba(255,255,255,0) 100%);
+            transform: rotate(-10deg);
+            top: 180px;
+            left: -40px;
+        }
+
+        .sol-mayo {
+            position: absolute;
+            right: 120px;
+            bottom: 60px;
+            width: 140px;
+            height: 140px;
+            opacity: 0.15;
+            background: radial-gradient(circle, #f4b41a 20%, transparent 60%);
+        }
+
+        /* Contenido Principal */
+        .contenido {
+            position: relative;
+            z-index: 5;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Encabezados */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 10px;
+            padding: 0 15px;
+        }
+
+        .logos-izq {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-ba-subir {
+            width: 60px;
+            height: 60px;
+            border: 1px dashed #b3b3b3;
+            background-color: #f7f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+        .logo-ba-subir img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        .logo-ba-subir span {
+            font-size: 9px;
+            color: #888;
+            text-align: center;
+            padding: 2px;
+        }
+
+        .texto-gobierno {
+            font-size: 11px;
+            color: #777777;
+            font-weight: bold;
+            line-height: 1.1;
+            letter-spacing: 0.5px;
+        }
+
+        .texto-gobierno span {
+            display: block;
+            font-size: 18px;
+            color: #1994d1;
+            font-weight: 800;
+            letter-spacing: 0px;
+        }
+
+        .ministerio {
+            text-align: left;
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a1a1a;
+            line-height: 1.1;
+            max-width: 360px;
+            text-transform: uppercase;
+            outline: none;
+        }
+
+        /* Títulos */
+        .titulo-principal {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .titulo-principal h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0c0c0c;
+            margin: 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            outline: none;
+        }
+
+        .titulo-principal p {
+            font-size: 17px;
+            color: #444444;
+            margin: 4px 0 0 0;
+            font-weight: 500;
+            outline: none;
+        }
+
+        /* Bloques de Datos (Frente) */
+        .bloque-datos-frente {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 0 15px;
+        }
+
+        .foto-contenedor {
+            width: 155px;
+            height: 200px;
+            border: 1px solid #cccccc;
+            background-color: #eaeaea;
+            overflow: hidden;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .foto-contenedor img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+        .foto-contenedor span {
+            font-size: 14px;
+            color: #555;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .datos-personales-frente {
+            flex-grow: 1;
+            margin-left: 35px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .linea-dato-frente {
+            font-size: 25px;
+            color: #222222;
+            font-weight: 500;
+        }
+
+        .linea-dato-frente span {
+            font-weight: bold;
+            color: #000000;
+            outline: none;
+            display: inline-block;
+            min-width: 50px;
+        }
+        
+        .editable-num {
+            font-family: monospace;
+            font-size: 27px;
+            letter-spacing: 0.5px;
+        }
+
+        .qr-contenedor {
+            width: 110px;
+            height: 110px;
+            border: 1px dashed #b3b3b3;
+            background-color: #f7f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .qr-contenedor img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        .qr-contenedor span {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Bloques de Datos (Dorso) */
+        .bloque-datos-dorso {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 0 15px;
+            gap: 20px;
+        }
+
+        .datos-personales-dorso {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .linea-dato-dorso {
+            font-size: 20px;
+            color: #222222;
+            font-weight: 500;
+        }
+
+        .linea-dato-dorso span {
+            font-weight: bold;
+            color: #000000;
+            outline: none;
+            display: inline-block;
+            min-width: 50px;
+        }
+
+        .texto-legal {
+            font-size: 11px;
+            color: #444444;
+            line-height: 1.35;
+            text-align: justify;
+            outline: none;
+            margin-top: 6px;
+            max-width: 480px;
+        }
+
+        .firma-container-bloque {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .firma-contenedor {
+            width: 150px;
+            height: 85px;
+            border: 1px dashed #b3b3b3;
+            background-color: #f7f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .firma-contenedor img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        .firma-contenedor span {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            font-weight: 500;
+            padding: 4px;
+        }
+
+        .texto-firma {
+            font-size: 11px;
+            font-weight: bold;
+            color: #333333;
+            text-align: center;
+            outline: none;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        /* Utilidades */
+        .input-oculto { display: none; }
+
+        [contenteditable="true"]:hover {
+            background-color: rgba(35, 131, 196, 0.08);
+            border-radius: 4px;
+        }
+        [contenteditable="true"]:focus {
+            background-color: rgba(35, 131, 196, 0.15);
+            outline: 2px dashed #2383c4;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="acciones-container">
+        <button class="btn-descargar btn-pdf" onclick="descargarPDFCompleto()">Descargar Ambos (PDF)</button>
+        <button class="btn-descargar btn-imagen-frente" onclick="descargarImagen('credencial-frente', 'carnet-frente.png')">Descargar Frente (PNG)</button>
+        <button class="btn-descargar btn-imagen-dorso" onclick="descargarImagen('credencial-dorso', 'carnet-dorso.png')">Descargar Dorso (PNG)</button>
+    </div>
+
+    <!-- ================= FRENTE ================= -->
+    <div class="credencial" id="credencial-frente">
+        <div class="fondo-patrio">
+            <div class="onda-celeste"></div>
+            <div class="sol-mayo"></div>
+        </div>
+
+        <div class="contenido">
+            <div class="header">
+                <div class="logos-izq">
+                    <div class="logo-ba-subir" onclick="document.getElementById('input-logo-f').click()">
+                        <span id="txt-logo-f">Logo</span>
+                        <img id="img-logo-f" alt="Logo BA">
+                    </div>
+                    <div class="texto-gobierno">
+                        GOBIERNO DE LA PROVINCIA DE
+                        <span contenteditable="true">BUENOS AIRES</span>
+                    </div>
+                </div>
+                <div class="ministerio" contenteditable="true">
+                    MINISTERIO DE<br>DESARROLLO AGRARIO
+                </div>
+            </div>
+
+            <div class="titulo-principal">
+                <h1 contenteditable="true">Carnet de Manipulador de Alimentos</h1>
+                <p contenteditable="true">Válido en todo el territorio de la República Argentina</p>
+            </div>
+
+            <div class="bloque-datos-frente">
+                <div class="foto-contenedor" onclick="document.getElementById('input-foto').click()">
+                    <span id="txt-foto">Subir<br>foto</span>
+                    <img id="img-foto" alt="Foto de perfil">
+                </div>
+
+                <div class="datos-personales-frente">
+                    <div class="linea-dato-frente">Carnet Nº <span class="editable-num" contenteditable="true">02-102-0000167</span></div>
+                    <div class="linea-dato-frente">Vence <span contenteditable="true">xx/xx/xxxx</span></div>
+                </div>
+
+                <div class="qr-contenedor" onclick="document.getElementById('input-qr').click()">
+                    <span id="txt-qr">Subir<br>QR</span>
+                    <img id="img-qr" alt="Código QR">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= DORSO ================= -->
+    <div class="credencial" id="credencial-dorso">
+        <div class="fondo-patrio">
+            <div class="onda-celeste"></div>
+            <div class="sol-mayo"></div>
+        </div>
+
+        <div class="contenido">
+            <div class="header">
+                <div class="logos-izq">
+                    <div class="logo-ba-subir" onclick="document.getElementById('input-logo-d').click()">
+                        <span id="txt-logo-d">Logo</span>
+                        <img id="img-logo-d" alt="Logo BA">
+                    </div>
+                    <div class="texto-gobierno">
+                        GOBIERNO DE LA PROVINCIA DE
+                        <span contenteditable="true">BUENOS AIRES</span>
+                    </div>
+                </div>
+                <div class="ministerio" contenteditable="true">
+                    MINISTERIO DE<br>DESARROLLO AGRARIO
+                </div>
+            </div>
+
+            <div class="titulo-principal">
+                <h1 contenteditable="true" style="font-size: 24px;">Datos del Titular y Normativa</h1>
+            </div>
+
+            <div class="bloque-datos-dorso">
+                <div class="datos-personales-dorso">
+                    <div class="linea-dato-dorso">Apellido: <span contenteditable="true">PÉREZ</span></div>
+                    <div class="linea-dato-dorso">Nombre: <span contenteditable="true">JUAN CARLOS</span></div>
+                    <div class="linea-dato-dorso">DNI / Documento: <span contenteditable="true">XX.XXX.XXX</span></div>
+                    
+                    <div class="texto-legal" contenteditable="true">
+                        El presente carnet es emitido en conformidad con lo establecido por el Artículo 21 del Código Alimentario Argentino (CAA). Tiene validez nacional y habilita a su titular al desempeño de tareas de manipulación de alimentos. Su exhibición es obligatoria ante los requerimientos de la autoridad sanitaria competente.
+                    </div>
+                </div>
+
+                <div class="firma-container-bloque">
+                    <div class="firma-contenedor" onclick="document.getElementById('input-firma').click()">
+                        <span id="txt-firma">Subir<br>firma</span>
+                        <img id="img-firma" alt="Firma Autoridad">
+                    </div>
+                    <div class="texto-firma" contenteditable="true">
+                        Firma Autoridad<br>Emisora
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inputs ocultos para carga de archivos -->
+    <input type="file" id="input-foto" class="input-oculto" accept="image/*" onchange="cargarImagen(event, 'img-foto', 'txt-foto')">
+    <input type="file" id="input-logo-f" class="input-oculto" accept="image/*" onchange="cargarImagen(event, 'img-logo-f', 'txt-logo-f')">
+    <input type="file" id="input-logo-d" class="input-oculto" accept="image/*" onchange="cargarImagen(event, 'img-logo-d', 'txt-logo-d')">
+    <input type="file" id="input-qr" class="input-oculto" accept="image/*" onchange="cargarImagen(event, 'img-qr', 'txt-qr')">
+    <input type="file" id="input-firma" class="input-oculto" accept="image/*" onchange="cargarImagen(event, 'img-firma', 'txt-firma')">
+
+    <script>
+        function cargarImagen(event, imgId, txtId) {
+            const archivo = event.target.files[0];
+            if (archivo) {
+                const lector = new FileReader();
+                lector.onload = function(e) {
+                    const imagen = document.getElementById(imgId);
+                    const texto = document.getElementById(txtId);
+                    
+                    imagen.src = e.target.result;
+                    imagen.style.display = 'block';
+                    if(texto) texto.style.display = 'none';
+                }
+                lector.readAsDataURL(archivo);
+            }
+        }
+
+        function descargarImagen(idElemento, nombreArchivo) {
+            const elemento = document.getElementById(idElemento);
+            html2canvas(elemento, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: null
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = nombreArchivo;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        function descargarPDFCompleto() {
+            // Crea un contenedor temporal para incluir ambos lados en el PDF de manera ordenada
+            const contenedorTemporal = document.createElement('div');
+            contenedorTemporal.style.display = 'flex';
+            contenedorTemporal.style.flexDirection = 'column';
+            contenedorTemporal.style.gap = '20px';
+            
+            const frenteCopia = document.getElementById('credencial-frente').cloneNode(true);
+            const dorsoCopia = document.getElementById('credencial-dorso').cloneNode(true);
+            
+            contenedorTemporal.appendChild(frenteCopia);
+            contenedorTemporal.appendChild(dorsoCopia);
+
+            const opciones = {
+                margin:       10,
+                filename:     'carnet-manipulador-completo.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'px', format: [800, 1060], orientation: 'portrait' }
+            };
+
+            html2pdf().set(opciones).from(contenedorTemporal).save();
+        }
+    </script>
+</body>
+  </html>
+  
