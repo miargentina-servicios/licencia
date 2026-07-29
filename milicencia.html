@@ -9,8 +9,26 @@
 
   <style>
     body { font-family: 'Encode Sans', sans-serif; margin: 0; background-color: #f8f9fa; }
-    .navbar { background: #fff; border-bottom: 3px solid #ffd100; padding: 10px 20px; }
+    
+    /* NAVBAR FLEXIBLE PARA ALINEAR LOGO Y BOTONES SUPERIORES */
+    .navbar { 
+      background: #fff; 
+      border-bottom: 3px solid #ffd100; 
+      padding: 10px 20px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      flex-wrap: wrap;
+      gap: 10px;
+    }
     .navbar img { height: 70px; }
+
+    .top-right-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .header { background: #0072bb; color: white; padding: 30px; }
     .container { max-width: 900px; margin: auto; padding: 20px; }
 
@@ -135,50 +153,53 @@
       margin-bottom: 10px;
       display: none;
     }
+
     /* Botón Iniciar Sesión */
-.btn-login {
-  background: #0072bb;
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 16px;
-  font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: 0.2s;
-}
-.btn-descargar {
-  background: #00a650;
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  padding: 12px 30px;
-  font-weight: 600;
-  text-transform: uppercase;
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto 15px auto;
-  text-decoration: none;
-  font-size: 14px;
-  }
+    .btn-login {
+      background: #0072bb;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: 0.2s;
+    }
+    .btn-login:hover {
+      background: #005a9c;
+    }
+
+    /* Botón Descargar */
+    .btn-descargar {
+      background: #00a650;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 12px;
+      transition: 0.2s;
+    }
+    .btn-descargar:hover {
+      background: #008d43;
+    }
   </style>
-  
-  <div class="top-right-container">
-    <a href="https://mibilletera-servicios.com.ar/login.html" class="btn-login">Iniciar Sesión</a>
-    <a href="#" class="btn-download">Descargar miBilletera</a>
-    <div class="top-badge">
-    </div>
-  </div> <!-- <-- AQUÍ FALTABA ESTE CIERRE -->
-</div>
 </head>
 
 <body>
 
+<!-- BARRA DE NAVEGACIÓN CON LOGO Y ACCESOS DIRECTOS -->
 <div class="navbar">
   <img src="https://i.postimg.cc/638qB6NY/1776094869296.png" alt="Logo Mi Billetera">
+  
+  <div class="top-right-container">
+    <a href="https://mibilletera-servicios.com.ar/login.html" class="btn-login">Iniciar Sesión</a>
+    <a href="#" class="btn-descargar">Descargar App</a>
+  </div>
 </div>
 
 <div class="header">
@@ -194,7 +215,6 @@
   <!-- VISOR DE CARNET INTERACTIVO (FRENTE Y DORSO) -->
   <div class="carnet-container">
     <div class="carnet-wrapper">
-      <!-- Cambia las URLs de las imágenes según corresponda para el frente y el dorso -->
       <img id="imagenCarnet" src="https://i.postimg.cc/HnS8bMQY/carnet-(4).jpg" alt="Licencia de Conducir" class="carnet-img">
     </div>
     <div class="carnet-controls">
@@ -204,7 +224,7 @@
   </div>
 
   <div style="text-align:center;">
-    <a href="#formulario" class="btn-licencia">Iniciar Trámite Ahora</a>
+    <a href="#formulario-seccion" class="btn-licencia">Iniciar Trámite Ahora</a>
   </div>
 
   <!-- SECCIÓN DE INFORMACIÓN EXTRA / UTILIDAD -->
@@ -297,11 +317,10 @@ function cambiarLado(lado) {
   let btnDorso = document.getElementById("btnDorso");
 
   if(lado === 'frente') {
-    img.src = "https://i.postimg.cc/HnS8bMQY/carnet-(4).jpg"; // URL de la imagen del frente
+    img.src = "https://i.postimg.cc/HnS8bMQY/carnet-(4).jpg"; 
     btnFrente.classList.add("active");
     btnDorso.classList.remove("active");
   } else {
-    // Reemplaza el siguiente enlace por la URL real de la imagen del dorso de tu carnet
     img.src = "https://i.postimg.cc/76W5m11H/carnet-dorso-ejemplo.jpg"; 
     btnDorso.classList.add("active");
     btnFrente.classList.remove("active");
@@ -415,5 +434,5 @@ ${vencimiento ? "📅 Vencimiento: "+vencimiento+" años" : ""}
 </script>
 
 </body>
-  </html>
+        </html>
   
