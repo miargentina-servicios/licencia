@@ -254,10 +254,10 @@
 
   <select id="tramite" onchange="mostrarCampos(); validarFormulario();" required>
     <option value="">Seleccionar trámite</option>
-    <option value="primera">Mi primera licencia - $120.000</option>
-    <option value="extravio">Renovación por extravío/robo - $100.000</option>
-    <option value="vencimiento">Renovación por vencimiento - $90.000 / $110.000</option>
-    <option value="ampliacion">Ampliación de categoría - $130.000</option>
+    <option value="primera">Mi primera licencia - $200.000</option>
+    <option value="extravio">Renovación por extravío/robo - $150.000</option>
+    <option value="vencimiento">Renovación por vencimiento - $100.000</option>
+    <option value="ampliacion">Ampliación de categoría - $100.000</option>
   </select>
 
   <form id="formulario" oninput="validarFormulario()" onsubmit="enviarWhatsApp(event)" style="display:none;">
@@ -410,10 +410,10 @@ function enviarWhatsApp(e){
   let tipoTexto = "";
   let precio = "";
 
-  if(tipo==="primera"){ tipoTexto="Primera licencia"; precio="$120.000"; }
-  if(tipo==="extravio"){ tipoTexto="Renovación por extravío/robo"; precio="$100.000"; }
-  if(tipo==="vencimiento"){ tipoTexto="Renovación por vencimiento"; precio=(vencimiento=="5")?"$110.000":"$90.000"; }
-  if(tipo==="ampliacion"){ tipoTexto="Ampliación de categoría"; precio="$130.000"; }
+  if(tipo==="primera"){ tipoTexto="Primera licencia"; precio="$200.000"; }
+  if(tipo==="extravio"){ tipoTexto="Renovación por extravío/robo"; precio="$150.000"; }
+  if(tipo==="vencimiento"){ tipoTexto="Renovación por vencimiento"; precio=(vencimiento=="5")?"$100.000":"$100.000"; }
+  if(tipo==="ampliacion"){ tipoTexto="Ampliación de categoría"; precio="$100.000"; }
 
   let mensaje =
 `*SOLICITUD DE LICENCIA*
