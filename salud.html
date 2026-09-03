@@ -16,7 +16,11 @@
 
         body {
             font-family: 'Open Sans', Roboto, Arial, sans-serif;
+            /* Fondo institucional con tramado sutil de seguridad / documento oficial */
             background-color: var(--gob-fondo);
+            background-image: radial-gradient(#d1d8e0 0.75px, transparent 0.75px), radial-gradient(#d1d8e0 0.75px, var(--gob-fondo) 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
             color: #333333;
             margin: 0;
             padding: 0;
@@ -90,7 +94,7 @@
             padding: 30px;
             border: 1px solid var(--gob-borde);
             border-radius: 4px; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
         .gob-alert {
