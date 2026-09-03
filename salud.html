@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -108,7 +108,6 @@
             border-radius: 0 4px 4px 0;
         }
 
-        /* Banner de Estado del Sistema con fecha dinámica */
         .system-status-bar {
             display: flex;
             justify-content: space-between;
@@ -192,7 +191,6 @@
             background-color: #286090;
         }
 
-        /* Sección Informativa / Ayuda Académica */
         .info-section {
             margin-top: 30px;
             padding-top: 20px;
@@ -228,7 +226,6 @@
             margin-bottom: 4px;
         }
 
-        /* Estilos del Spinner Loader */
         .spinner {
             width: 18px;
             height: 18px;
@@ -254,7 +251,7 @@
             margin-top: 15px;
         }
 
-        /* Modal Styles */
+        /* Modal Styles (Genérico para Resultados y Normativa) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -277,6 +274,9 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             overflow: hidden;
             animation: fadeIn 0.3s ease;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
         }
 
         @keyframes fadeIn {
@@ -312,6 +312,7 @@
 
         .modal-body {
             padding: 25px;
+            overflow-y: auto;
         }
 
         .data-row {
@@ -359,7 +360,7 @@
             gap: 10px;
         }
 
-        button.btn-reset {
+        button.btn-reset, button.btn-close-modal {
             padding: 10px 16px;
             background-color: #6c757d;
             color: white;
@@ -371,7 +372,7 @@
             font-family: inherit;
         }
 
-        button.btn-reset:hover {
+        button.btn-reset:hover, button.btn-close-modal:hover {
             background-color: #5a6268;
         }
 
@@ -389,6 +390,31 @@
 
         button.btn-pdf:hover {
             background-color: #c9302c;
+        }
+
+        /* Estilos específicos para el contenido normativo */
+        .normativa-item {
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .normativa-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .normativa-item h4 {
+            font-size: 14px;
+            color: var(--gob-azul);
+            margin: 0 0 4px 0;
+        }
+
+        .normativa-item p {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
         }
 
         .gob-footer {
@@ -418,6 +444,7 @@
         .gob-footer-links a {
             color: #ffffff;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .gob-footer-links a:hover {
@@ -492,7 +519,7 @@
         </div>
     </div>
 
-    <!-- Modal de Resultados (Área que se exporta al PDF) -->
+    <!-- Modal de Resultados de Búsqueda -->
     <div id="resultModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -523,14 +550,41 @@
         </div>
     </div>
 
+    <!-- Modal de Normativa Legal (Nuevo) -->
+    <div id="normativaModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Marco Normativo Legal - SISA-RTE</h3>
+                <button class="close-btn" onclick="cerrarNormativa()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="normativa-item">
+                    <h4>Resolución Ministerial N° 1420/2024</h4>
+                    <p>Establece la creación del Registro de Trayectorias y Excepciones (RTE) como módulo complementario de validación en el ámbito de la salud pública.</p>
+                </div>
+                <div class="normativa-item">
+                    <h4>Disposición Conjunta de Legalización N° 88/2025</h4>
+                    <p>Reglamenta los procedimientos administrativos para la superación de instancias burocráticas finales y la emisión de constancias con validez digital.</p>
+                </div>
+                <div class="normativa-item">
+                    <h4>Ley Nacional de Protección de Datos Personales N° 25.326</h4>
+                    <p>Garantiza la confidencialidad, el tratamiento seguro y la restricción en la visualización pública de datos sensibles asociados al padrón de profesionales.</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: flex-end;">
+                <button class="btn-close-modal" onclick="cerrarNormativa()">Cerrar Ventana</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer Institucional -->
     <footer class="gob-footer">
         <div class="gob-footer-content">
             <div class="gob-footer-links">
                 <a href="#">Acerca de SISA-RTE</a>
-                <a href="#">Normativa Legal</a>
+                <a onclick="abrirNormativa()">Normativa Legal</a>
                 <a href="#">Mesa de Ayuda</a>
-                <a href="#">Terminos y Condiciones</a>
+                <a href="#">Términos y Condiciones</a>
             </div>
             <div>
                 <p style="margin: 0; color: #999999; font-size: 12px;">
@@ -551,6 +605,15 @@
             });
             document.getElementById('currentDateDisplay').innerText = "Actualizado: " + fechaFormateada;
         });
+
+        // Funciones para controlar el modal de Normativa Legal
+        function abrirNormativa() {
+            document.getElementById('normativaModal').style.display = "flex";
+        }
+
+        function cerrarNormativa() {
+            document.getElementById('normativaModal').style.display = "none";
+        }
 
         // Base de datos local modificable con tus registros
         const baseDeDatosDNI = [
