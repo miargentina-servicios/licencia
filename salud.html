@@ -15,7 +15,6 @@
         }
 
         body {
-            /* Tipografía moderna, limpia y de aspecto institucional actualizado */
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--gob-fondo);
             background-image: radial-gradient(#d1d8e0 0.75px, transparent 0.75px), radial-gradient(#d1d8e0 0.75px, var(--gob-fondo) 0.75px);
@@ -63,7 +62,6 @@
             font-weight: 400;
         }
 
-        /* Contenedor del Isotipo Superior Derecho */
         .gob-header-logo {
             display: flex;
             align-items: center;
@@ -108,6 +106,30 @@
             color: #856404;
             line-height: 1.6;
             border-radius: 0 4px 4px 0;
+        }
+
+        /* Banner de Estado del Sistema */
+        .system-status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e8f4fd;
+            border: 1px solid #b6d4fe;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 12.5px;
+            color: #084298;
+            margin-bottom: 20px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #28a745;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
         }
 
         h2 {
@@ -168,6 +190,42 @@
 
         button.btn-search:hover {
             background-color: #286090;
+        }
+
+        /* Sección Informativa / Ayuda Académica */
+        .info-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .info-section h4 {
+            font-size: 14px;
+            color: var(--gob-azul);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .info-card {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .info-card strong {
+            color: #333;
+            display: block;
+            margin-bottom: 4px;
         }
 
         /* Estilos del Spinner Loader */
@@ -391,8 +449,16 @@
     <!-- Contenido Principal -->
     <div class="main-wrapper">
         <div class="container">
+            
+            <!-- Banner con el significado completo de las siglas y aviso legal -->
             <div class="gob-alert">
-                <strong>Aviso legal y administrativo:</strong> Este portal opera como un <strong>anexo oficial del SISA (SISA-RTE)</strong> habilitado de manera excepcional para la constatación de perfiles, títulos y trayectorias académicas de profesionales que han cumplimentado las instancias de regularización y superación de requisitos burocráticos finales por vía administrativa.
+                <strong>Aviso legal y administrativo:</strong> Este portal opera como un anexo oficial del <strong>SISA-RTE (Sistema Integrado de Información Sanitaria Argentino - Registro de Trayectorias y Excepciones)</strong> habilitado de manera excepcional para la constatación de perfiles, títulos y trayectorias académicas de profesionales que han cumplimentado las instancias de regularización y superación de requisitos burocráticos finales por vía administrativa.
+            </div>
+
+            <!-- Barra de estado del servicio -->
+            <div class="system-status-bar">
+                <div><span class="status-indicator"></span>Servidor de Padrones Activo y Sincronizado</div>
+                <div id="currentDateDisplay">Actualizado: --/--/----</div>
             </div>
 
             <h2>Consulta de Registro y Habilitación</h2>
@@ -407,6 +473,22 @@
             </div>
 
             <div id="errorMsg" class="msg-error">No se registran datos vinculados al DNI ingresado en este padrón anexo.</div>
+
+            <!-- Sección informativa adicional sobre gestión documental -->
+            <div class="info-section">
+                <h4>Gestión de Documentación Académica</h4>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <strong>Validación por Vía Administrativa</strong>
+                        Los expedientes procesados aquí cuentan con certificación digital respaldatoria para trámites de incumbencia profesional.
+                    </div>
+                    <div class="info-card">
+                        <strong>Constancias y Descargas</strong>
+                        Las fichas emitidas permiten generar un documento en PDF con código de verificación temporal apto para presentación formal.
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -459,6 +541,12 @@
     </footer>
 
     <script>
+        // Insertar fecha actual de forma dinámica en el banner superior
+        document.addEventListener("DOMContentLoaded", () => {
+            const hoy = new Date();
+            document.getElementById('currentDateDisplay').innerText = "Actualizado: " + hoy.toLocaleDateString('es-AR');
+        });
+
         // Base de datos local modificable con tus registros
         const baseDeDatosDNI = [
             {
@@ -507,51 +595,4 @@
                     
                     const ahora = new Date();
                     const fechaFormateada = ahora.toLocaleDateString('es-AR') + ' a las ' + ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }) + ' hs';
-                    document.getElementById('resTimestamp').innerText = fechaFormateada;
-                    
-                    modal.style.display = "flex";
-                } else {
-                    errorMsg.style.display = "block";
-                }
-
-                // Restaurar el botón a su estado normal
-                btnConsultar.disabled = false;
-                btnText.style.display = "inline";
-                btnSpinner.style.display = "none";
-
-            }, 1000); 
-        }
-
-        function cerrarModal() {
-            document.getElementById('resultModal').style.display = "none";
-        }
-
-        function nuevaConsulta() {
-            cerrarModal();
-            document.getElementById('dniInput').value = "";
-            document.getElementById('dniInput').focus();
-        }
-
-        function descargarPDF() {
-            const elemento = document.getElementById('pdfContent');
-            const watermark = document.getElementById('pdfWatermark');
-            
-            watermark.style.display = "block";
-
-            const opciones = {
-                margin:       10,
-                filename:     'constancia-sisa-rte.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().from(elemento).set(opciones).save().then(() => {
-                watermark.style.display = "none";
-            });
-        }
-    </script>
-
-</body>
-                    </html>
-                        
+                    document.getElementById('resTimestamp').innerText = fechaFo
