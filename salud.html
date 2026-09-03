@@ -28,7 +28,7 @@
         .gob-header-bar {
             background-color: var(--gob-azul);
             color: white;
-            padding: 16px 20px;
+            padding: 12px 20px;
             border-bottom: 4px solid #6ab04c; 
         }
 
@@ -38,6 +38,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .gob-header-left {
+            display: flex;
+            flex-direction: column;
         }
 
         .gob-header-title {
@@ -50,6 +55,24 @@
         .gob-header-subtitle {
             font-size: 12px;
             color: #adb5bd;
+        }
+
+        /* Contenedor del Isotipo Superior Derecho */
+        .gob-header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .gob-logo-graphic {
+            width: 36px;
+            height: 36px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .main-wrapper {
@@ -331,8 +354,19 @@
     <!-- Header Institucional -->
     <header class="gob-header-bar">
         <div class="gob-header-content">
-            <div class="gob-header-title">Argentina.gob.ar &bull; SISA-RTE</div>
-            <div class="gob-header-subtitle">Ministerio de Salud</div>
+            <div class="gob-header-left">
+                <div class="gob-header-title">Argentina.gob.ar &bull; SISA-RTE</div>
+                <div class="gob-header-subtitle">Ministerio de Salud</div>
+            </div>
+            <!-- Logo Institucional Integrado en la parte superior derecha -->
+            <div class="gob-header-logo">
+                <div class="gob-logo-graphic">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L3 7V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V7L12 2Z" fill="#337ab7" stroke="#ffffff" stroke-width="1.5"/>
+                        <path d="M12 8V16M8 12H16" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -410,7 +444,7 @@
         // Base de datos local modificable con tus registros
         const baseDeDatosDNI = [
             {
-                dni: "12345678",
+                dni: "35123456",
                 nombre: "Pérez, Juan Carlos",
                 titulo: "Licenciado en Enfermería",
                 expediente: "Resolución Excepcional por Art. 12 / Vía Administrativa Final"
@@ -501,5 +535,5 @@
     </script>
 
 </body>
-</html>
-  
+    </html>
+                
