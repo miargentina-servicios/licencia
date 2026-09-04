@@ -15,6 +15,8 @@
             --card-bg: #ffffff;
             --text-dark: #334155;
             --border-color: #cbd5e1;
+            --highlight-bg: #fef3c7;
+            --highlight-border: #f59e0b;
         }
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -64,13 +66,27 @@
             border: 1px solid var(--border-color);
             border-left: 4px solid var(--primary);
             padding: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             border-radius: 4px;
             font-size: 0.95rem;
         }
         .info-box h3 {
             margin-top: 0;
             color: var(--primary);
+            font-size: 1.05rem;
+        }
+        .cost-box {
+            background: var(--highlight-bg);
+            border: 1px solid var(--highlight-border);
+            border-left: 4px solid #d97706;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        .cost-box h3 {
+            margin-top: 0;
+            color: #b45309;
             font-size: 1.05rem;
         }
         fieldset {
@@ -123,6 +139,29 @@
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
         .btn-submit {
             background-color: var(--whatsapp);
             color: white;
@@ -163,8 +202,13 @@
     </div>
 
     <div class="info-box">
-        <h3>Marco Normativo y Operativo</h3>
-        <p>Este procedimiento formaliza la articulación entre los títulos universitarios o terciarios de la salud y el Sistema Integrado de Información Sanitaria Argentino (SISA-RTE). Complete los campos solicitados con estricto rigor según su documentación oficial para garantizar la correcta tramitación y habilitación de su matrícula profesional.</p>
+        <h3>Marco Operativo y Tiempos de Proceso</h3>
+        <p>Este procedimiento formaliza la articulación entre su título y el Sistema Integrado de Información Sanitaria Argentino (SISA-RTE). La confección y alta inicial del usuario en el sistema es un procedimiento automatizado que demanda entre <strong>3 y 5 minutos</strong>.</p>
+    </div>
+
+    <div class="cost-box">
+        <h3>Condiciones de Pago y Activación (Arancel: $300.000)</h3>
+        <p>La obtención y emisión del título (aplicable a cualquiera de sus categorías) tiene un valor único de <strong>$300.000</strong>. Una vez completado este formulario, se procederá a la creación inmediata de su usuario en SISA-RTE, el cual permanecerá en estado <strong>INACTIVO</strong>. Posteriormente, deberá realizar el pago correspondiente para que el perfil escale de forma definitiva al estado de <strong>ACTIVO SISA-RTE</strong>.</p>
     </div>
 
     <form id="matriculaInstitucionalForm">
@@ -259,8 +303,25 @@
             </div>
         </fieldset>
 
+        <!-- Sección 4: Checklist de Aceptación y Arancel -->
+        <fieldset>
+            <legend>4. Conformidad de Arancel y Proceso SISA-RTE</legend>
+            <div class="checkbox-group">
+                <input type="checkbox" id="check_documentacion" required>
+                <label for="check_documentacion">Confirmo que poseo la documentación académica digital respaldatoria para la emisión del título solicitado.</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="check_proceso" required>
+                <label for="check_proceso">Comprendo que la creación del usuario en SISA-RTE se efectúa en un plazo de 3 a 5 minutos y quedará inicialmente en estado INACTIVO.</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="check_pago" required>
+                <label for="check_pago">Acepto el arancel de emisión de <strong>$300.000</strong>, el cual deberé abonar una vez creado el usuario para proceder a su pase definitivo al estado <strong>ACTIVO SISA-RTE</strong>.</label>
+            </div>
+        </fieldset>
+
         <button type="button" class="btn-submit" onclick="enviarWhatsAppInstitucional()">
-            <span>📲 Enviar Solicitud Validada por WhatsApp</span>
+            <span>📲 Enviar Solicitud y Validar por WhatsApp</span>
         </button>
     </form>
 </div>
@@ -283,9 +344,18 @@
         const jurisdiccion = document.getElementById('jurisdiccion').value;
         const nro_tramite_dni = document.getElementById('nro_tramite_dni').value.trim();
         const comentarios = document.getElementById('comentarios').value.trim() || "Sin observaciones adicionales";
+        
+        const c1 = document.getElementById('check_documentacion').checked;
+        const c2 = document.getElementById('check_proceso').checked;
+        const c3 = document.getElementById('check_pago').checked;
 
         if (!nombre || !apellido || !dni || !cuil || !email || !telefono || !profesion || !institucion || !anio_egreso || !jurisdiccion || !nro_tramite_dni) {
-            alert("Por favor, complete todos los campos obligatorios estipulados en el formulario para proceder con el envío formal.");
+            alert("Por favor, complete todos los campos obligatorios estipulados en el formulario para proceder.");
+            return;
+        }
+
+        if (!c1 || !c2 || !c3) {
+            alert("Debe tildar y aceptar los puntos del checklist de conformidad sobre el proceso SISA-RTE y el arancel correspondiente.");
             return;
         }
 
@@ -305,7 +375,11 @@
                         `• Año de Egreso: ${anio_egreso}\n\n` +
                         `*3. PARÁMETROS SISA-RTE / REFEPS*\n` +
                         `• Jurisdicción Solicitada: ${jurisdiccion}\n` +
-                        `• Observaciones: ${comentarios}\n` +
+                        `• Observaciones: ${comentarios}\n\n` +
+                        `*4. ESTADO FINANCIERO Y PROCESO*\n` +
+                        `• Arancel de Emisión: $300.000 (Pendiente de pago post-creación)\n` +
+                        `• Estado inicial usuario: INACTIVO (Pasa a ACTIVO tras abonar)\n` +
+                        `• Conformidad del cliente: Aceptada via Checklist\n` +
                         `----------------------------------------\n` +
                         `_Mensaje generado automáticamente mediante plataforma de articulación digital._`;
 
@@ -317,4 +391,4 @@
 
 </body>
     </html>
-                                                                                              
+    
