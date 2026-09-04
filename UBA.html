@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador y Editor de Diploma - UBA</title>
-    <!-- Fuentes de Google (Incluyendo variantes) -->
+    <!-- Fuentes de Google -->
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:ital,wght@1,500;1,700&family=Great+Vibes&family=Pinyon+Script&family=Tangerine:wght@700&family=Times+New+Roman:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     <!-- Librería para exportar a PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -163,7 +163,7 @@
 
         /* Clase dinámica para aplicar la fuente seleccionada al resto del texto */
         .dynamic-font-container {
-            font-family: 'Times New Roman', Times, serif;
+            font-family: 'Great Vibes', cursive;
         }
 
         .univ-title {
@@ -259,17 +259,17 @@
     <div id="editor-panel" class="editor-panel">
         <div class="editor-container-grid">
             <h2>
-                <span>Editor del Diploma - Estilos de Cursiva</span>
+                <span>Editor del Diploma - Selector de Cursivas</span>
                 <button class="btn" id="btn-download">Descargar en PDF</button>
             </h2>
             
-            <!-- Columna 1: Configuración general y Selector de Cursivas -->
+            <!-- Columna 1: Configuración general y Selector de Cursiva -->
             <div>
                 <div class="control-group">
-                    <label>Tipo de Cursiva General:</label>
+                    <label>Tipo de Letra Cursiva (Todo el texto):</label>
                     <select id="inp-font-family">
-                        <option value="'Times New Roman', Times, serif">Times New Roman (Clásica Cursiva)</option>
                         <option value="'Great Vibes', cursive" selected>Great Vibes (Elegante Caligráfica)</option>
+                        <option value="'Times New Roman', Times, serif">Times New Roman (Cursiva Clásica)</option>
                         <option value="'Pinyon Script', cursive">Pinyon Script (Fina y Artística)</option>
                         <option value="'Alex Brush', cursive">Alex Brush (Fluida y Suave)</option>
                         <option value="'Tangerine', cursive">Tangerine (Estilizada y Alta)</option>
@@ -332,7 +332,7 @@
     <div id="preview-container">
         <div class="diploma-sheet" id="diploma-content">
             
-            <!-- Encabezado (República Argentina se mantiene intacto) -->
+            <!-- Encabezado -->
             <div class="header-top">
                 <div class="republica-title">
                     <span>REPÚBLICA</span>
@@ -340,7 +340,7 @@
                     <span>ARGENTINA</span>
                 </div>
                 
-                <!-- Todo el contenido de aquí en adelante cambia con el selector -->
+                <!-- Contenedor general que cambia de tipografía dinámicamente -->
                 <div class="dynamic-font-container" id="target-font-container">
                     <div class="univ-title">Universidad de Buenos Aires</div>
                     <div class="facu-title">Facultad de Medicina</div>
@@ -358,7 +358,7 @@
                 </div>
             </div>
 
-            <!-- Bloque de Firmas y Sellos Inferiores (Excluidos) -->
+            <!-- Bloque de Firmas y Sellos Inferiores (Excluidos de la fuente general) -->
             <div class="footer-signatures">
                 
                 <!-- Sello/Firma 1 -->
@@ -395,7 +395,7 @@
 
     <!-- Script de Interactividad y Exportación -->
     <script>
-        // Cambio dinámico de fuente general
+        // Lógica para cambiar la fuente dinámicamente con el selector
         const fontSelector = document.getElementById('inp-font-family');
         const fontContainer = document.getElementById('target-font-container');
         
@@ -422,7 +422,7 @@
         bindInput('inp-sig2-text', 'prev-sig2-text', 'innerHTML');
         bindInput('inp-sig3-text', 'prev-sig3-text', 'innerHTML');
 
-        const handleImageUpload = (fileInputId, imgPreviewId, sizeInputId) => {
+        const handleImageUpload = (fileInputId, imgPreviewId) => {
             const fileInput = document.getElementById(fileInputId);
             const imgPreview = document.getElementById(imgPreviewId);
 
@@ -462,5 +462,5 @@
         });
     </script>
 </body>
-    </html>
-    
+                        </html>
+                        
