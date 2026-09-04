@@ -363,7 +363,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* Botón interno prolijo para ver el título en Google Drive */
         .btn-view-credential {
             display: inline-flex;
             align-items: center;
@@ -755,22 +754,7 @@
         </div>
     </div>
 
-    <!-- Footer Institucional -->
-    <footer class="gob-footer">
-        <div class="gob-footer-content">
-            <div class="gob-footer-links">
-                <a onclick="abrirModal('acercaModal')">Acerca de SISA-RTE</a>
-                <a onclick="abrirModal('normativaModal')">Normativa Legal</a>
-                <a onclick="abrirModal('ayudaModal')">Mesa de Ayuda</a>
-                <a onclick="abrirModal('terminosModal')">Términos y Condiciones</a>
-            </div>
-            <div>
-                <p style="margin: 0; color: #999999; font-size: 12px;">
-                    Los contenidos de SISA-RTE están licenciados bajo Creative Commons Atribución 4.0 Internacional. Sistema de gestión de trayectorias de excepción del ámbito de la salud de la República Argentina.
-                </p>
-            </div>
-        </div>
-
+    <!-- Footer Institucional Único -->
     <footer class="gob-footer">
         <div class="gob-footer-content">
             <div class="gob-footer-links">
@@ -801,7 +785,6 @@
             document.getElementById('currentDateDisplay').innerText = "Actualizado: " + fechaFormateada;
 
             const dniInput = document.getElementById('dniInput');
-
             dniInput.addEventListener('input', (e) => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, '');
             });
@@ -812,7 +795,6 @@
                 }
             });
         });
-
         function abrirModal(idModal) {
             document.getElementById(idModal).style.display = "flex";
         }
@@ -829,25 +811,25 @@
                 dni: "35123456",
                 nombre: "Pérez, Juan Carlos",
                 titulo: "Licenciado en Enfermería",
-                linkDrive: "https://drive.google.com/file/d/TU_ID_DE_GOOGLE_DRIVE_AQUI/view?usp=sharing", // <-- CAMBIA AQUÍ EL LINK DEL PDF DE DRIVE
+                linkDrive: "https://drive.google.com/file/d/TU_ID_DE_GOOGLE_DRIVE_AQUI/view?usp=sharing",
                 matricula: "MP-44892 / M.N. 102.450",
                 jurisdiccion: "Provincia de Buenos Aires",
                 organismo: "Dirección Provincial de Registro y Fiscalización Sanitaria",
                 expediente: "Resolución Excepcional por Art. 12 / Vía Administrativa Final",
-                estado: "INACTIVO", // Cambia a "INACTIVO" según corresponda
+                estado: "INACTIVO",
                 hash: "SISA-RTE-2026-9F8A4B2C1E",
-                qrPersonalizado: "" // (Opcional) Si dejas vacío usa el hash, o pega aquí una URL de QR propia ej: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TULINK"
+                qrPersonalizado: ""
             },
             {
                 dni: "28987654",
                 nombre: "Gómez, María Elena",
                 titulo: "Médica Cirujana",
-                linkDrive: "https://drive.google.com/file/d/OTRO_ID_DE_GOOGLE_DRIVE/view?usp=sharing", // <-- CAMBIA AQUÍ EL LINK DEL PDF DE DRIVE
+                linkDrive: "https://drive.google.com/file/d/OTRO_ID_DE_GOOGLE_DRIVE/view?usp=sharing",
                 matricula: "MP-31204 / M.N. 89.112",
                 jurisdiccion: "Nación / C.A.B.A.",
                 organismo: "Dirección Nacional de Habilitación y Fiscalización Sanitaria",
                 expediente: "Validación Extraordinaria de Trayectoria Académica",
-                estado: "INACTIVO", // Ejemplo con estado inactivo
+                estado: "INACTIVO",
                 hash: "SISA-RTE-2026-3C7D2E9F8A",
                 qrPersonalizado: ""
             }
@@ -890,7 +872,6 @@
                     document.getElementById('resDni').innerText = encontrado.dni;
                     document.getElementById('resTitulo').innerText = encontrado.titulo;
                     
-                    // Asignar Link de Google Drive al botón interno
                     const linkDriveBtn = document.getElementById('resLinkDrive');
                     if (encontrado.linkDrive && encontrado.linkDrive.includes("http")) {
                         linkDriveBtn.href = encontrado.linkDrive;
@@ -905,7 +886,6 @@
                     document.getElementById('resExpediente').innerText = encontrado.expediente;
                     document.getElementById('resHash').innerText = encontrado.hash;
                     
-                    // Manejo dinámico de estado ACTIVO o INACTIVO
                     const estadoContainer = document.getElementById('resEstadoContainer');
                     if (encontrado.estado === "ACTIVO") {
                         estadoContainer.innerHTML = '<span class="badge-official">Activo (SISA-RTE)</span>';
@@ -917,7 +897,6 @@
                     const fechaFormateada = ahora.toLocaleDateString('es-AR') + ' a las ' + ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }) + ' hs';
                     document.getElementById('resTimestamp').innerText = fechaFormateada;
                     
-                    // Código QR (Si el usuario configuró una URL en qrPersonalizado, la usa; sino genera la estándar con el Hash)
                     let urlQrFinal = encontrado.qrPersonalizado;
                     if (!urlQrFinal) {
                         const urlValidacion = `https://sisa.salud.gob.ar/rte/validar?hash=${encontrado.hash}&dni=${encontrado.dni}`;
@@ -978,6 +957,5 @@
             });
         }
     </script>
-
 </body>
 </html>
