@@ -647,7 +647,7 @@
         </div>
     </div>
 
-    <!-- Modales Informativos (Acerca de, Normativa, Ayuda, Términos) -->
+    <!-- Modal Acerca de SISA-RTE -->
     <div id="acercaModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -659,6 +659,14 @@
                     <h4>¿Qué es el SISA-RTE?</h4>
                     <p>Es un módulo integrado del Sistema Integrado de Información Sanitaria Argentino diseñado para la gestión y constatación de trayectorias formativas y excepciones administrativas en el ámbito de la salud.</p>
                 </div>
+                <div class="info-modal-item">
+                    <h4>Propósito del Módulo Anexo</h4>
+                    <p>Brindar una vía de consulta rápida, transparente y segura para verificar el estado de regularización de profesionales que completaron sus expedientes académicos por canales extraordinarios.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>Integridad Operativa</h4>
+                    <p>El padrón sincroniza registros certificados para asegurar la trazabilidad documental ante requerimientos formales de instituciones públicas y privadas en todo el territorio nacional.</p>
+                </div>
             </div>
             <div class="modal-footer" style="justify-content: flex-end;">
                 <button class="btn-close-modal" onclick="cerrarModalGeneral('acercaModal')">Cerrar Ventana</button>
@@ -666,6 +674,7 @@
         </div>
     </div>
 
+    <!-- Modal de Normativa Legal -->
     <div id="normativaModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -677,6 +686,14 @@
                     <h4>Resolución Ministerial N° 1420/2024</h4>
                     <p>Establece la creación del Registro de Trayectorias y Excepciones (RTE) como módulo complementario de validación en el ámbito de la salud pública.</p>
                 </div>
+                <div class="info-modal-item">
+                    <h4>Disposición Conjunta de Legalización N° 88/2025</h4>
+                    <p>Reglamenta los procedimientos administrativos para la superación de instancias burocráticas finales y la emisión de constancias con validez digital.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>Ley Nacional de Protección de Datos Personales N° 25.326</h4>
+                    <p>Garantiza la confidencialidad, el tratamiento seguro y la restricción en la visualización pública de datos sensibles asociados al padrón de profesionales.</p>
+                </div>
             </div>
             <div class="modal-footer" style="justify-content: flex-end;">
                 <button class="btn-close-modal" onclick="cerrarModalGeneral('normativaModal')">Cerrar Ventana</button>
@@ -684,6 +701,7 @@
         </div>
     </div>
 
+    <!-- Modal de Mesa de Ayuda -->
     <div id="ayudaModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -693,7 +711,15 @@
             <div class="modal-body">
                 <div class="info-modal-item">
                     <h4>Atención Telefónica Institucional</h4>
-                    <p>Línea exclusiva para consultas de organismos y validación de expedientes: <strong>0800-333-SISA (7472)</strong>.</p>
+                    <p>Línea exclusiva para consultas de organismos y validación de expedientes: <strong>0800-333-SISA (7472)</strong>, de lunes a viernes de 09:00 a 17:00 hs.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>Correo Electrónico de Soporte</h4>
+                    <p>Para reportar inconvenientes técnicos en la visualización de padrones o incidencias de sistemas: <strong>soporte.sisa@salud.gob.ar</strong></p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>Asistencia Presencial (Trámites Excepcionales)</h4>
+                    <p>Mesa de entradas central habilitada en Av. 9 de Julio 1925, Ciudad Autónoma de Buenos Aires, bajo turno previo gestionado electrónicamente.</p>
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: flex-end;">
@@ -702,6 +728,7 @@
         </div>
     </div>
 
+    <!-- Modal de Términos y Condiciones -->
     <div id="terminosModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -711,7 +738,15 @@
             <div class="modal-body">
                 <div class="info-modal-item">
                     <h4>1. Alcance y Utilización del Servicio</h4>
-                    <p>El acceso a este padrón anexo está destinado exclusivamente a la constatación de trayectorias, títulos y resoluciones excepcionales de profesionales inscriptos.</p>
+                    <p>El acceso a este padrón anexo está destinado exclusivamente a la constatación de trayectorias, títulos y resoluciones excepcionales de profesionales inscriptos en el sistema.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>2. Veracidad de los Datos Consultados</h4>
+                    <p>La información reflejada proviene de los expedientes electrónicos formalizados por vía administrativa. Toda adulteración, uso indebido o falsificación de las constancias digitales generadas en PDF será penada por la legislación vigente.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>3. Privacidad y Seguridad de la Información</h4>
+                    <p>Los datos consultados mediante este sistema se encuentran protegidos por normativas de confidencialidad institucional, prohibiendo su comercialización o divulgación ajena a los fines de validación profesional.</p>
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: flex-end;">
@@ -720,41 +755,21 @@
         </div>
     </div>
 
-    <div id="ayudaModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Mesa de Ayuda - SISA-RTE</h3>
-                <button class="close-btn" onclick="cerrarModalGeneral('ayudaModal')">&times;</button>
+    <!-- Footer Institucional -->
+    <footer class="gob-footer">
+        <div class="gob-footer-content">
+            <div class="gob-footer-links">
+                <a onclick="abrirModal('acercaModal')">Acerca de SISA-RTE</a>
+                <a onclick="abrirModal('normativaModal')">Normativa Legal</a>
+                <a onclick="abrirModal('ayudaModal')">Mesa de Ayuda</a>
+                <a onclick="abrirModal('terminosModal')">Términos y Condiciones</a>
             </div>
-            <div class="modal-body">
-                <div class="info-modal-item">
-                    <h4>Atención Telefónica Institucional</h4>
-                    <p>Línea exclusiva para consultas de organismos y validación de expedientes: <strong>0800-333-SISA (7472)</strong>.</p>
-                </div>
-            </div>
-            <div class="modal-footer" style="justify-content: flex-end;">
-                <button class="btn-close-modal" onclick="cerrarModalGeneral('ayudaModal')">Cerrar Ventana</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="terminosModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Términos y Condiciones de Uso</h3>
-                <button class="close-btn" onclick="cerrarModalGeneral('terminosModal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="info-modal-item">
-                    <h4>1. Alcance y Utilización del Servicio</h4>
-                    <p>El acceso a este padrón anexo está destinado exclusivamente a la constatación de trayectorias, títulos y resoluciones excepcionales de profesionales inscriptos.</p>
-                </div>
-            </div>
-            <div class="modal-footer" style="justify-content: flex-end;">
-                <button class="btn-close-modal" onclick="cerrarModalGeneral('terminosModal')">Cerrar Ventana</button>
+            <div>
+                <p style="margin: 0; color: #999999; font-size: 12px;">
+                    Los contenidos de SISA-RTE están licenciados bajo Creative Commons Atribución 4.0 Internacional. Sistema de gestión de trayectorias de excepción del ámbito de la salud de la República Argentina.
+                </p>
             </div>
         </div>
-    </div>
 
     <footer class="gob-footer">
         <div class="gob-footer-content">
