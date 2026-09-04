@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador y Editor de Diploma - UBA</title>
+    <!-- Fuentes de Google similares a las del título clásico -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <!-- Librería para exportar a PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * {
@@ -21,38 +23,22 @@
             overflow: hidden;
         }
 
-        /* Panel de Control / Editor Mejorado */
+        /* Panel de Control / Editor */
         #editor-panel {
-            width: 400px;
+            width: 380px;
             background: #ffffff;
             border-right: 1px solid #cbd5e1;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-            z-index: 10;
-        }
-
-        .editor-header {
-            padding: 20px 20px 15px 20px;
-            background: #ffffff;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .editor-header h2 {
-            font-size: 1.25rem;
-            color: #1e293b;
-        }
-
-        .editor-content {
             padding: 20px;
             overflow-y: auto;
-            flex: 1;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
         }
 
-        .editor-footer {
-            padding: 15px 20px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
+        #editor-panel h2 {
+            font-size: 1.2rem;
+            color: #1e293b;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
         }
 
         .control-group {
@@ -67,15 +53,12 @@
             margin-bottom: 5px;
         }
 
-        .control-group input[type="text"], 
-        .control-group textarea, 
-        .control-group input[type="file"] {
+        .control-group input, .control-group textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #cbd5e1;
             border-radius: 4px;
             font-size: 0.9rem;
-            background: #fff;
         }
 
         .control-group textarea {
@@ -87,36 +70,23 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-top: 5px;
         }
 
         .range-container input[type="range"] {
             flex: 1;
         }
 
-        .section-divider {
-            margin: 20px 0;
-            border: 0;
-            border-top: 1px solid #cbd5e1;
-        }
-
-        .section-title {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #334155;
-            margin-bottom: 12px;
-        }
-
         .btn {
             background-color: #2563eb;
             color: white;
             border: none;
-            padding: 12px 15px;
+            padding: 10px 15px;
             width: 100%;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
             font-size: 0.95rem;
+            margin-top: 10px;
             transition: background 0.2s;
         }
 
@@ -135,7 +105,7 @@
         }
 
         .diploma-sheet {
-            width: 1122px; /* Proporción tamaño A4 horizontal */
+            width: 1122px; /* Proporción tamaño A4 horizontal aproximada a alta resolución */
             height: 794px;
             background: #ffffff;
             padding: 50px 70px;
@@ -168,6 +138,7 @@
             width: 80px;
             height: 80px;
             object-fit: contain;
+            transition: width 0.1s;
         }
 
         .univ-title {
@@ -262,81 +233,82 @@
 </head>
 <body>
 
+    <!-- Panel de Edición en Vivo -->
     <div id="editor-panel">
-        <div class="editor-header">
-            <h2>Editor del Diploma</h2>
-        </div>
-
-        <div class="editor-content">
-            <div class="control-group">
-                <label>Logo UBA (Subir imagen)</label>
-                <input type="file" id="inp-logo-file" accept="image/*">
-                <div class="range-container">
-                    <label style="font-size:0.75rem;">Tamaño Logo:</label>
-                    <input type="range" id="inp-logo-size" min="40" max="150" value="80">
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label>Nombre del Graduado/a:</label>
-                <input type="text" id="inp-name" value="Julieta Belen Altamirano">
-            </div>
-
-            <div class="control-group">
-                <label>Texto del Cuerpo:</label>
-                <textarea id="inp-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</textarea>
-            </div>
-
-            <div class="control-group">
-                <label>Lugar y Fecha de Emisión:</label>
-                <input type="text" id="inp-date" value="Buenos Aires, 18 de agosto de 2021">
-            </div>
-
-            <hr class="section-divider">
-            <div class="section-title">Firmas y Sellos (1, 2 y 3)</div>
-            
-            <div class="control-group">
-                <label>Sello/Firma 1 - Texto:</label>
-                <input type="text" id="inp-sig1-text" value="CARLOS REYES TORD&#10;SECRETARIO ACADÉMICO">
-                <label style="margin-top:5px;">Imagen 1:</label>
-                <input type="file" id="inp-sig1-file" accept="image/*">
-                <div class="range-container">
-                    <label style="font-size:0.75rem;">Tamaño:</label>
-                    <input type="range" id="inp-sig1-size" min="30" max="150" value="70">
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label>Sello/Firma 2 - Texto:</label>
-                <input type="text" id="inp-sig2-text" value="RICARDO J. GELPÍ&#10;DECANO">
-                <label style="margin-top:5px;">Imagen 2:</label>
-                <input type="file" id="inp-sig2-file" accept="image/*">
-                <div class="range-container">
-                    <label style="font-size:0.75rem;">Tamaño:</label>
-                    <input type="range" id="inp-sig2-size" min="30" max="150" value="70">
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label>Sello/Firma 3 - Texto:</label>
-                <input type="text" id="inp-sig3-text" value="ALBERTO E. BARBIERI&#10;RECTOR">
-                <label style="margin-top:5px;">Imagen 3:</label>
-                <input type="file" id="inp-sig3-file" accept="image/*">
-                <div class="range-container">
-                    <label style="font-size:0.75rem;">Tamaño:</label>
-                    <input type="range" id="inp-sig3-size" min="30" max="150" value="70">
-                </div>
+        <h2>Editor del Diploma</h2>
+        
+        <div class="control-group">
+            <label>Logo UBA (URL o Subir archivo)</label>
+            <input type="file" id="inp-logo-file" accept="image/*">
+            <div class="range-container" style="margin-top:5px;">
+                <label style="font-size:0.75rem;">Tamaño Logo:</label>
+                <input type="range" id="inp-logo-size" min="40" max="150" value="80">
             </div>
         </div>
 
-        <div class="editor-footer">
-            <button class="btn" id="btn-download">Descargar en PDF</button>
+        <div class="control-group">
+            <label>Nombre del Graduado/a:</label>
+            <input type="text" id="inp-name" value="Julieta Belen Altamirano">
         </div>
+
+        <div class="control-group">
+            <label>Texto del Cuerpo:</label>
+            <textarea id="inp-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</textarea>
+        </div>
+
+        <div class="control-group">
+            <label>Lugar y Fecha de Emisión:</label>
+            <input type="text" id="inp-date" value="Buenos Aires, 18 de agosto de 2021">
+        </div>
+
+        <hr style="margin: 15px 0; border:0; border-top:1px solid #cbd5e1;">
+
+        <h3 style="font-size: 1.1rem; color: #1e293b; margin-bottom: 10px;">Firmas y Sellos (1, 2 y 3)</h3>
+        
+        <!-- Firma 1 -->
+        <div class="control-group">
+            <label>Firma/Sello 1 - Texto:</label>
+            <input type="text" id="inp-sig1-text" value="CARLOS REYES TORD&#10;SECRETARIO ACADÉMICO">
+            <label style="margin-top:5px;">Imagen 1 (Firma/Sello):</label>
+            <input type="file" id="inp-sig1-file" accept="image/*">
+            <div class="range-container" style="margin-top:5px;">
+                <label style="font-size:0.75rem;">Tamaño:</label>
+                <input type="range" id="inp-sig1-size" min="30" max="150" value="70">
+            </div>
+        </div>
+
+        <!-- Firma 2 -->
+        <div class="control-group">
+            <label>Firma/Sello 2 - Texto:</label>
+            <input type="text" id="inp-sig2-text" value="RICARDO J. GELPÍ&#10;DECANO">
+            <label style="margin-top:5px;">Imagen 2 (Firma/Sello):</label>
+            <input type="file" id="inp-sig2-file" accept="image/*">
+            <div class="range-container" style="margin-top:5px;">
+                <label style="font-size:0.75rem;">Tamaño:</label>
+                <input type="range" id="inp-sig2-size" min="30" max="150" value="70">
+            </div>
+        </div>
+
+        <!-- Firma 3 -->
+        <div class="control-group">
+            <label>Firma/Sello 3 - Texto:</label>
+            <input type="text" id="inp-sig3-text" value="ALBERTO E. BARBIERI&#10;RECTOR">
+            <label style="margin-top:5px;">Imagen 3 (Firma/Sello):</label>
+            <input type="file" id="inp-sig3-file" accept="image/*">
+            <div class="range-container" style="margin-top:5px;">
+                <label style="font-size:0.75rem;">Tamaño:</label>
+                <input type="range" id="inp-sig3-size" min="30" max="150" value="70">
+            </div>
+        </div>
+
+        <button class="btn" id="btn-download">Descargar en PDF</button>
     </div>
 
+    <!-- Vista Previa del Diploma -->
     <div id="preview-container">
         <div class="diploma-sheet" id="diploma-content">
             
+            <!-- Encabezado -->
             <div class="header-top">
                 <div class="republica-title">
                     <span>REPÚBLICA</span>
@@ -347,6 +319,7 @@
                 <div class="facu-title">Facultad de Medicina</div>
             </div>
 
+            <!-- Cuerpo del texto -->
             <div class="body-text">
                 <div class="line-1">El Rector de la Universidad y el Decano de la Facultad</div>
                 <div class="name-highlight" id="prev-name">Julieta Belen Altamirano</div>
@@ -357,8 +330,10 @@
                 Buenos Aires, 18 de agosto de 2021
             </div>
 
+            <!-- Bloque de Firmas y Sellos Inferiores -->
             <div class="footer-signatures">
                 
+                <!-- Sello/Firma 1 -->
                 <div class="sig-box">
                     <div class="sig-image-container">
                         <img id="prev-sig1-img" class="sig-img" src="" style="display:none;">
@@ -367,6 +342,7 @@
                     <div class="sig-text" id="prev-sig1-text">CARLOS REYES TORD<br>SECRETARIO ACADÉMICO</div>
                 </div>
 
+                <!-- Sello/Firma 2 -->
                 <div class="sig-box">
                     <div class="sig-image-container">
                         <img id="prev-sig2-img" class="sig-img" src="" style="display:none;">
@@ -375,6 +351,7 @@
                     <div class="sig-text" id="prev-sig2-text">RICARDO J. GELPÍ<br>DECANO</div>
                 </div>
 
+                <!-- Sello/Firma 3 -->
                 <div class="sig-box">
                     <div class="sig-image-container">
                         <img id="prev-sig3-img" class="sig-img" src="" style="display:none;">
@@ -388,6 +365,7 @@
         </div>
     </div>
 
+    <!-- Script de Interactividad y Exportación -->
     <script>
         const bindInput = (inputId, previewId, property = 'innerText') => {
             const input = document.getElementById(inputId);
@@ -456,4 +434,4 @@
     </script>
 </body>
                 </html>
-                        
+                    
