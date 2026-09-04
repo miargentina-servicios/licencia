@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISA-RTE - Consulta de Registro y Trayectorias</title>
-    <!-- Librería para generar el PDF automáticamente -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
@@ -187,8 +186,14 @@
             min-width: 110px;
         }
 
-        button.btn-search:hover {
+        button.btn-search:hover:not(:disabled) {
             background-color: #286090;
+        }
+
+        button.btn-search:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .info-section {
@@ -317,6 +322,7 @@
 
         .data-row {
             display: flex;
+            align-items: center;
             padding: 8px 0;
             border-bottom: 1px solid #f1f3f5;
             font-size: 13px;
@@ -347,7 +353,37 @@
             letter-spacing: 0.3px;
         }
 
-        /* Sección de Validación QR Integrada */
+        .badge-inactive {
+            background-color: #d9534f;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        /* Botón interno prolijo para ver el título en Google Drive */
+        .btn-view-credential {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: #f0f4f8;
+            color: var(--gob-azul);
+            border: 1px solid #b6d4fe;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-view-credential:hover {
+            background-color: #e8f4fd;
+            border-color: var(--gob-celeste);
+        }
+
         .verification-box {
             margin-top: 15px;
             background-color: #f8f9fa;
@@ -387,6 +423,8 @@
             display: flex;
             justify-content: space-between;
             border-top: 1px solid var(--gob-borde);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .modal-footer-left {
@@ -426,7 +464,22 @@
             background-color: #c9302c;
         }
 
-        /* Modales informativos generales */
+        button.btn-print {
+            padding: 10px 16px;
+            background-color: #5bc0de;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+        }
+
+        button.btn-print:hover {
+            background-color: #31b0d5;
+        }
+
         .info-modal-item {
             margin-bottom: 18px;
             padding-bottom: 12px;
@@ -489,7 +542,6 @@
 </head>
 <body>
 
-    <!-- Header Institucional -->
     <header class="gob-header-bar">
         <div class="gob-header-content">
             <div class="gob-header-left">
@@ -507,7 +559,6 @@
         </div>
     </header>
 
-    <!-- Contenido Principal -->
     <div class="main-wrapper">
         <div class="container">
             
@@ -550,7 +601,6 @@
         </div>
     </div>
 
-    <!-- Modal de Resultados con QR -->
     <div id="resultModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -567,15 +617,15 @@
                 <div class="data-row"><strong>Apellido y Nombres:</strong> <span id="resNombre">-</span></div>
                 <div class="data-row"><strong>Documento (DNI):</strong> <span id="resDni">-</span></div>
                 <div class="data-row"><strong>Título / Especialidad:</strong> <span id="resTitulo">-</span></div>
+                <div class="data-row"><strong>Visualizar Título Oficial:</strong> <span><a href="#" id="resLinkDrive" target="_blank" class="btn-view-credential">Ver Archivo PDF (Drive)</a></span></div>
                 <div class="data-row"><strong>Matrícula / Registro Único:</strong> <span id="resMatricula">-</span></div>
                 <div class="data-row"><strong>Jurisdicción de Emisión:</strong> <span id="resJurisdiccion">-</span></div>
                 <div class="data-row"><strong>Organismo de Origen:</strong> <span id="resOrganismo">-</span></div>
                 <div class="data-row"><strong>Marco de Excepción / Vía:</strong> <span id="resExpediente">-</span></div>
-                <div class="data-row"><strong>Estado de Habilitación:</strong> <span><span class="badge-official">Activo (SISA-RTE)</span></span></div>
+                <div class="data-row"><strong>Estado de Habilitación:</strong> <span id="resEstadoContainer">-</span></div>
                 <div class="data-row"><strong>Fecha y Hora de Consulta:</strong> <span id="resTimestamp">-</span></div>
                 <div class="data-row"><strong>Código Hash:</strong> <span id="resHash" style="font-family: monospace; font-size: 11.5px; color: #555;">-</span></div>
 
-                <!-- Bloque del Código QR de Validación Oficial -->
                 <div class="verification-box">
                     <div class="qr-container">
                         <img id="qrImage" src="" alt="Código QR de Verificación SISA-RTE">
@@ -590,13 +640,13 @@
             <div class="modal-footer">
                 <div class="modal-footer-left">
                     <button class="btn-pdf" onclick="descargarPDF()">Descargar PDF</button>
+                    <button class="btn-print" onclick="imprimirConstancia()">Imprimir</button>
                 </div>
                 <button class="btn-reset" onclick="nuevaConsulta()">Nueva Consulta</button>
             </div>
         </div>
     </div>
 
-    <!-- Modales Informativos (Acerca de, Normativa, Ayuda, Términos) -->
     <div id="acercaModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -669,7 +719,6 @@
         </div>
     </div>
 
-    <!-- Footer Institucional -->
     <footer class="gob-footer">
         <div class="gob-footer-content">
             <div class="gob-footer-links">
@@ -687,6 +736,9 @@
     </footer>
 
     <script>
+        let intentosFallidos = 0;
+        let bloqueadoHasta = 0;
+
         document.addEventListener("DOMContentLoaded", () => {
             const hoy = new Date();
             const fechaFormateada = hoy.toLocaleDateString('es-AR', {
@@ -695,6 +747,18 @@
                 year: 'numeric'
             });
             document.getElementById('currentDateDisplay').innerText = "Actualizado: " + fechaFormateada;
+
+            const dniInput = document.getElementById('dniInput');
+
+            dniInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            });
+
+            dniInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    buscarDNI();
+                }
+            });
         });
 
         function abrirModal(idModal) {
@@ -704,34 +768,52 @@
         function cerrarModalGeneral(idModal) {
             document.getElementById(idModal).style.display = "none";
         }
-
+        
+        // ==========================================
+        // BASE DE DATOS PERSONALIZABLE POR DNI
+        // ==========================================
         const baseDeDatosDNI = [
             {
                 dni: "35123456",
                 nombre: "Pérez, Juan Carlos",
                 titulo: "Licenciado en Enfermería",
+                linkDrive: "https://drive.google.com/file/d/TU_ID_DE_GOOGLE_DRIVE_AQUI/view?usp=sharing", // <-- CAMBIA AQUÍ EL LINK DEL PDF DE DRIVE
                 matricula: "MP-44892 / M.N. 102.450",
                 jurisdiccion: "Provincia de Buenos Aires",
                 organismo: "Dirección Provincial de Registro y Fiscalización Sanitaria",
                 expediente: "Resolución Excepcional por Art. 12 / Vía Administrativa Final",
-                hash: "SISA-RTE-2026-9F8A4B2C1E"
+                estado: "ACTIVO", // Cambia a "INACTIVO" según corresponda
+                hash: "SISA-RTE-2026-9F8A4B2C1E",
+                qrPersonalizado: "" // (Opcional) Si dejas vacío usa el hash, o pega aquí una URL de QR propia ej: "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TULINK"
             },
             {
                 dni: "28987654",
                 nombre: "Gómez, María Elena",
                 titulo: "Médica Cirujana",
+                linkDrive: "https://drive.google.com/file/d/OTRO_ID_DE_GOOGLE_DRIVE/view?usp=sharing", // <-- CAMBIA AQUÍ EL LINK DEL PDF DE DRIVE
                 matricula: "MP-31204 / M.N. 89.112",
                 jurisdiccion: "Nación / C.A.B.A.",
                 organismo: "Dirección Nacional de Habilitación y Fiscalización Sanitaria",
                 expediente: "Validación Extraordinaria de Trayectoria Académica",
-                hash: "SISA-RTE-2026-3C7D2E9F8A"
+                estado: "INACTIVO", // Ejemplo con estado inactivo
+                hash: "SISA-RTE-2026-3C7D2E9F8A",
+                qrPersonalizado: ""
             }
         ];
 
         function buscarDNI() {
+            const ahoraTiempo = new Date().getTime();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (bloqueadoHasta > ahoraTiempo) {
+                const segundosRestantes = Math.ceil((bloqueadoHasta - ahoraTiempo) / 1000);
+                errorMsg.innerText = `Demasiados intentos fallidos. Sistema bloqueado temporalmente por ${segundosRestantes} segundos.`;
+                errorMsg.style.display = "block";
+                return;
+            }
+
             const inputDni = document.getElementById('dniInput').value.trim();
             const modal = document.getElementById('resultModal');
-            const errorMsg = document.getElementById('errorMsg');
             const btnConsultar = document.getElementById('btnConsultar');
             const btnText = document.getElementById('btnText');
             const btnSpinner = document.getElementById('btnSpinner');
@@ -739,7 +821,7 @@
             errorMsg.style.display = "none";
 
             if (inputDni.length < 7) {
-                alert("Por favor, ingrese un número de DNI válido.");
+                alert("Por favor, ingrese un número de DNI válido de al menos 7 dígitos.");
                 return;
             }
 
@@ -751,26 +833,55 @@
                 const encontrado = baseDeDatosDNI.find(item => item.dni === inputDni);
 
                 if (encontrado) {
+                    intentosFallidos = 0;
                     document.getElementById('resNombre').innerText = encontrado.nombre;
                     document.getElementById('resDni').innerText = encontrado.dni;
                     document.getElementById('resTitulo').innerText = encontrado.titulo;
+                    
+                    // Asignar Link de Google Drive al botón interno
+                    const linkDriveBtn = document.getElementById('resLinkDrive');
+                    if (encontrado.linkDrive && encontrado.linkDrive.includes("http")) {
+                        linkDriveBtn.href = encontrado.linkDrive;
+                        linkDriveBtn.style.display = "inline-flex";
+                    } else {
+                        linkDriveBtn.style.display = "none";
+                    }
+
                     document.getElementById('resMatricula').innerText = encontrado.matricula;
                     document.getElementById('resJurisdiccion').innerText = encontrado.jurisdiccion;
                     document.getElementById('resOrganismo').innerText = encontrado.organismo;
                     document.getElementById('resExpediente').innerText = encontrado.expediente;
                     document.getElementById('resHash').innerText = encontrado.hash;
                     
+                    // Manejo dinámico de estado ACTIVO o INACTIVO
+                    const estadoContainer = document.getElementById('resEstadoContainer');
+                    if (encontrado.estado === "ACTIVO") {
+                        estadoContainer.innerHTML = '<span class="badge-official">Activo (SISA-RTE)</span>';
+                    } else {
+                        estadoContainer.innerHTML = '<span class="badge-inactive">Inactivo / Suspendido</span>';
+                    }
+
                     const ahora = new Date();
                     const fechaFormateada = ahora.toLocaleDateString('es-AR') + ' a las ' + ahora.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' }) + ' hs';
                     document.getElementById('resTimestamp').innerText = fechaFormateada;
                     
-                    // Generar dinámicamente el código QR con el enlace de validación apuntando al Hash del registro
-                    const urlValidacion = `https://sisa.salud.gob.ar/rte/validar?hash=${encontrado.hash}&dni=${encontrado.dni}`;
-                    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlValidacion)}`;
-                    document.getElementById('qrImage').src = qrUrl;
+                    // Código QR (Si el usuario configuró una URL en qrPersonalizado, la usa; sino genera la estándar con el Hash)
+                    let urlQrFinal = encontrado.qrPersonalizado;
+                    if (!urlQrFinal) {
+                        const urlValidacion = `https://sisa.salud.gob.ar/rte/validar?hash=${encontrado.hash}&dni=${encontrado.dni}`;
+                        urlQrFinal = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlValidacion)}`;
+                    }
+                    document.getElementById('qrImage').src = urlQrFinal;
 
                     modal.style.display = "flex";
                 } else {
+                    intentosFallidos++;
+                    if (intentosFallidos >= 3) {
+                        bloqueadoHasta = new Date().getTime() + 15000;
+                        errorMsg.innerText = "Demasiados intentos erróneos consecutivos. Acceso restringido temporalmente por 15 segundos.";
+                    } else {
+                        errorMsg.innerText = "No se registran datos vinculados al DNI ingresado en este padrón anexo.";
+                    }
                     errorMsg.style.display = "block";
                 }
 
@@ -787,8 +898,13 @@
 
         function nuevaConsulta() {
             cerrarModal();
-            document.getElementById('dniInput').value = "";
-            document.getElementById('dniInput').focus();
+            const inputDni = document.getElementById('dniInput');
+            inputDni.value = "";
+            inputDni.focus();
+        }
+
+        function imprimirConstancia() {
+            window.print();
         }
 
         function descargarPDF() {
@@ -812,4 +928,4 @@
     </script>
 
 </body>
-                    </html>
+</html>
