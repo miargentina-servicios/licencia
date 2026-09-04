@@ -528,7 +528,7 @@
                 <button class="close-btn" onclick="cerrarModal()">&times;</button>
             </div>
             
-            <div id="pdfContent" class="modal-body">
+            <div id="pdfContent" class="modal-body" style="background-color: #ffffff;">
                 <div style="text-align: center; margin-bottom: 15px; display: none;" id="pdfWatermark">
                     <strong style="color: #002746; font-size: 15px;">CONSTANCIA OFICIAL DE REGISTRO - SISA-RTE</strong>
                     <hr style="border: 0; border-top: 1px solid #ccc; margin-top: 8px;">
@@ -605,6 +605,33 @@
         </div>
     </div>
 
+    <!-- Modal de Mesa de Ayuda -->
+    <div id="ayudaModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Mesa de Ayuda - SISA-RTE</h3>
+                <button class="close-btn" onclick="cerrarModalGeneral('ayudaModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="info-modal-item">
+                    <h4>Atención Telefónica Institucional</h4>
+                    <p>Línea exclusiva para consultas de organismos y validación de expedientes: <strong>0800-333-SISA (7472)</strong>, de lunes a viernes de 09:00 a 17:00 hs.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>Correo Electrónico de Soporte</h4>
+                    <p>Para reportar inconvenientes técnicos en la visualización de padrones o incidencias de sistemas: <strong>soporte.sisa@salud.gob.ar</strong></p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>Asistencia Presencial (Trámites Excepcionales)</h4>
+                    <p>Mesa de entradas central habilitada en Av. 9 de Julio 1925, Ciudad Autónoma de Buenos Aires, bajo turno previo gestionado electrónicamente.</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: flex-end;">
+                <button class="btn-close-modal" onclick="cerrarModalGeneral('ayudaModal')">Cerrar Ventana</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de Términos y Condiciones -->
     <div id="terminosModal" class="modal-overlay">
         <div class="modal-content">
@@ -638,7 +665,7 @@
             <div class="gob-footer-links">
                 <a onclick="abrirModal('acercaModal')">Acerca de SISA-RTE</a>
                 <a onclick="abrirModal('normativaModal')">Normativa Legal</a>
-                <a href="#">Mesa de Ayuda</a>
+                <a onclick="abrirModal('ayudaModal')">Mesa de Ayuda</a>
                 <a onclick="abrirModal('terminosModal')">Términos y Condiciones</a>
             </div>
             <div>
@@ -750,10 +777,10 @@
             watermark.style.display = "block";
 
             const opciones = {
-                margin:       10,
+                margin:       [15, 15, 15, 15],
                 filename:     'constancia-sisa-rte.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
