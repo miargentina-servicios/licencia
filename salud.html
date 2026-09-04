@@ -647,6 +647,7 @@
         </div>
     </div>
 
+    <!-- Modales Informativos (Acerca de, Normativa, Ayuda, Términos) -->
     <div id="acercaModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
@@ -679,6 +680,42 @@
             </div>
             <div class="modal-footer" style="justify-content: flex-end;">
                 <button class="btn-close-modal" onclick="cerrarModalGeneral('normativaModal')">Cerrar Ventana</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ayudaModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Mesa de Ayuda - SISA-RTE</h3>
+                <button class="close-btn" onclick="cerrarModalGeneral('ayudaModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="info-modal-item">
+                    <h4>Atención Telefónica Institucional</h4>
+                    <p>Línea exclusiva para consultas de organismos y validación de expedientes: <strong>0800-333-SISA (7472)</strong>.</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: flex-end;">
+                <button class="btn-close-modal" onclick="cerrarModalGeneral('ayudaModal')">Cerrar Ventana</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="terminosModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Términos y Condiciones de Uso</h3>
+                <button class="close-btn" onclick="cerrarModalGeneral('terminosModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="info-modal-item">
+                    <h4>1. Alcance y Utilización del Servicio</h4>
+                    <p>El acceso a este padrón anexo está destinado exclusivamente a la constatación de trayectorias, títulos y resoluciones excepcionales de profesionales inscriptos.</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: flex-end;">
+                <button class="btn-close-modal" onclick="cerrarModalGeneral('terminosModal')">Cerrar Ventana</button>
             </div>
         </div>
     </div>
