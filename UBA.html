@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador y Editor de Diploma - UBA</title>
-    <!-- Fuentes de Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:ital,wght@1,500;1,700&family=Great+Vibes&family=Pinyon+Script&family=Times+New+Roman:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
+    <!-- Fuentes de Google (Incluyendo variantes) -->
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:ital,wght@1,500;1,700&family=Great+Vibes&family=Pinyon+Script&family=Tangerine:wght@700&family=Times+New+Roman:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     <!-- Librería para exportar a PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
@@ -28,7 +28,7 @@
         /* Panel de Control / Editor Superior */
         #editor-panel {
             width: 100%;
-            height: 240px;
+            height: 250px;
             background: #ffffff;
             border-bottom: 2px solid #cbd5e1;
             padding: 15px 20px;
@@ -68,7 +68,7 @@
             margin-bottom: 3px;
         }
 
-        .control-group input, .control-group textarea {
+        .control-group input, .control-group textarea, .control-group select {
             width: 100%;
             padding: 6px;
             border: 1px solid #cbd5e1;
@@ -118,7 +118,7 @@
         }
 
         .diploma-sheet {
-            width: 1122px; /* Proporción tamaño A4 horizontal */
+            width: 1122px;
             height: 794px;
             background: #ffffff;
             padding: 50px 70px;
@@ -130,12 +130,13 @@
             flex-shrink: 0;
         }
 
-        /* Estilos Internos del Diploma (Forzados en Cursiva) */
+        /* Estilos Internos del Diploma */
         .header-top {
             text-align: center;
             position: relative;
         }
 
+        /* República Argentina (Excluida del cambio de fuente general) */
         .republica-title {
             font-family: 'Cinzel', serif !important;
             font-style: italic !important;
@@ -160,9 +161,12 @@
             transition: width 0.1s;
         }
 
+        /* Clase dinámica para aplicar la fuente seleccionada al resto del texto */
+        .dynamic-font-container {
+            font-family: 'Times New Roman', Times, serif;
+        }
+
         .univ-title {
-            font-family: 'Great Vibes', cursive !important;
-            font-style: italic !important;
             font-size: 3.2rem;
             color: #222;
             margin-top: 10px;
@@ -170,8 +174,6 @@
         }
 
         .facu-title {
-            font-family: 'Pinyon Script', cursive !important;
-            font-style: italic !important;
             font-size: 2.2rem;
             color: #333;
             margin-top: -5px;
@@ -179,29 +181,20 @@
 
         .body-text {
             text-align: justify;
-            font-family: 'Times New Roman', Times, serif !important;
-            font-style: italic !important;
             font-size: 1.15rem;
             line-height: 1.6;
             color: #222;
             padding: 0 30px;
         }
 
-        .body-text * {
-            font-style: italic !important;
-        }
-
         .body-text .line-1 {
             text-align: center;
-            font-style: italic !important;
             font-size: 1.1rem;
             margin-bottom: 5px;
         }
 
         .body-text .name-highlight {
             text-align: center;
-            font-family: 'Great Vibes', cursive !important;
-            font-style: italic !important;
             font-size: 2.5rem;
             color: #111;
             margin: 5px 0;
@@ -211,14 +204,12 @@
         .date-location {
             display: flex;
             justify-content: flex-end;
-            font-family: 'Times New Roman', Times, serif !important;
-            font-style: italic !important;
             font-size: 1.1rem;
             padding-right: 40px;
             margin-top: -10px;
         }
 
-        /* Firmas y Sellos en la parte inferior (Cursiva) */
+        /* Firmas y Sellos (Excluidos de la fuente general variable) */
         .footer-signatures {
             display: flex;
             justify-content: space-around;
@@ -268,19 +259,21 @@
     <div id="editor-panel" class="editor-panel">
         <div class="editor-container-grid">
             <h2>
-                <span>Editor del Diploma (Todo en Cursiva)</span>
+                <span>Editor del Diploma - Estilos de Cursiva</span>
                 <button class="btn" id="btn-download">Descargar en PDF</button>
             </h2>
             
-            <!-- Columna 1: Configuración general -->
+            <!-- Columna 1: Configuración general y Selector de Cursivas -->
             <div>
                 <div class="control-group">
-                    <label>Logo UBA (Subir imagen)</label>
-                    <input type="file" id="inp-logo-file" accept="image/*">
-                    <div class="range-container" style="margin-top:3px;">
-                        <label style="font-size:0.65rem;">Tam. Logo:</label>
-                        <input type="range" id="inp-logo-size" min="40" max="150" value="80">
-                    </div>
+                    <label>Tipo de Cursiva General:</label>
+                    <select id="inp-font-family">
+                        <option value="'Times New Roman', Times, serif">Times New Roman (Clásica Cursiva)</option>
+                        <option value="'Great Vibes', cursive" selected>Great Vibes (Elegante Caligráfica)</option>
+                        <option value="'Pinyon Script', cursive">Pinyon Script (Fina y Artística)</option>
+                        <option value="'Alex Brush', cursive">Alex Brush (Fluida y Suave)</option>
+                        <option value="'Tangerine', cursive">Tangerine (Estilizada y Alta)</option>
+                    </select>
                 </div>
                 <div class="control-group">
                     <label>Nombre del Graduado/a:</label>
@@ -292,39 +285,43 @@
                 </div>
             </div>
 
-            <!-- Columna 2: Texto del Cuerpo -->
+            <!-- Columna 2: Texto del Cuerpo y Logo -->
             <div style="grid-column: span 2;">
+                <div class="control-group">
+                    <label>Logo UBA (Subir imagen y tamaño):</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="file" id="inp-logo-file" accept="image/*" style="flex: 1;">
+                        <input type="range" id="inp-logo-size" min="40" max="150" value="80" style="width: 100px;">
+                    </div>
+                </div>
                 <div class="control-group">
                     <label>Texto del Cuerpo del Diploma:</label>
-                    <textarea id="inp-body" style="height: 115px;">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</textarea>
+                    <textarea id="inp-body" style="height: 65px;">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</textarea>
                 </div>
             </div>
 
-            <!-- Columna 3 y 4: Sellos y Firmas (1, 2 y 3) -->
+            <!-- Columna 3: Sellos y Firmas (1, 2 y 3) -->
             <div>
                 <div class="control-group">
-                    <label>Sello/Firma 1 (Texto / Imagen / Tam):</label>
-                    <input type="text" id="inp-sig1-text" value="CARLOS REYES TORD&#10;SECRETARIO ACADÉMICO" style="margin-bottom:3px;">
-                    <input type="file" id="inp-sig1-file" accept="image/*" style="margin-bottom:3px;">
-                    <div class="range-container"><input type="range" id="inp-sig1-size" min="30" max="150" value="70"></div>
+                    <label>Sello/Firma 1:</label>
+                    <input type="text" id="inp-sig1-text" value="CARLOS REYES TORD&#10;SECRETARIO ACADÉMICO" style="margin-bottom:2px;">
+                    <input type="file" id="inp-sig1-file" accept="image/*">
                 </div>
             </div>
 
             <div>
                 <div class="control-group">
-                    <label>Sello/Firma 2 (Texto / Imagen / Tam):</label>
-                    <input type="text" id="inp-sig2-text" value="RICARDO J. GELPÍ&#10;DECANO" style="margin-bottom:3px;">
-                    <input type="file" id="inp-sig2-file" accept="image/*" style="margin-bottom:3px;">
-                    <div class="range-container"><input type="range" id="inp-sig2-size" min="30" max="150" value="70"></div>
+                    <label>Sello/Firma 2:</label>
+                    <input type="text" id="inp-sig2-text" value="RICARDO J. GELPÍ&#10;DECANO" style="margin-bottom:2px;">
+                    <input type="file" id="inp-sig2-file" accept="image/*">
                 </div>
             </div>
 
             <div style="grid-column: span 2;">
                 <div class="control-group">
-                    <label>Sello/Firma 3 (Texto / Imagen / Tam):</label>
-                    <input type="text" id="inp-sig3-text" value="ALBERTO E. BARBIERI&#10;RECTOR" style="margin-bottom:3px;">
-                    <input type="file" id="inp-sig3-file" accept="image/*" style="margin-bottom:3px;">
-                    <div class="range-container"><input type="range" id="inp-sig3-size" min="30" max="150" value="70"></div>
+                    <label>Sello/Firma 3:</label>
+                    <input type="text" id="inp-sig3-text" value="ALBERTO E. BARBIERI&#10;RECTOR" style="margin-bottom:2px;">
+                    <input type="file" id="inp-sig3-file" accept="image/*">
                 </div>
             </div>
 
@@ -335,29 +332,33 @@
     <div id="preview-container">
         <div class="diploma-sheet" id="diploma-content">
             
-            <!-- Encabezado -->
+            <!-- Encabezado (República Argentina se mantiene intacto) -->
             <div class="header-top">
                 <div class="republica-title">
                     <span>REPÚBLICA</span>
                     <img id="prev-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Escudo_de_la_Universidad_de_Buenos_Aires.svg/1200px-Escudo_de_la_Universidad_de_Buenos_Aires.svg.png" class="logo-uba" alt="Logo UBA">
                     <span>ARGENTINA</span>
                 </div>
-                <div class="univ-title">Universidad de Buenos Aires</div>
-                <div class="facu-title">Facultad de Medicina</div>
+                
+                <!-- Todo el contenido de aquí en adelante cambia con el selector -->
+                <div class="dynamic-font-container" id="target-font-container">
+                    <div class="univ-title">Universidad de Buenos Aires</div>
+                    <div class="facu-title">Facultad de Medicina</div>
+
+                    <!-- Cuerpo del texto -->
+                    <div class="body-text" style="margin-top: 15px;">
+                        <div class="line-1">El Rector de la Universidad y el Decano de la Facultad</div>
+                        <div class="name-highlight" id="prev-name">Julieta Belen Altamirano</div>
+                        <div id="prev-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</div>
+                    </div>
+
+                    <div class="date-location" id="prev-date" style="margin-top: 20px;">
+                        Buenos Aires, 18 de agosto de 2021
+                    </div>
+                </div>
             </div>
 
-            <!-- Cuerpo del texto -->
-            <div class="body-text">
-                <div class="line-1">El Rector de la Universidad y el Decano de la Facultad</div>
-                <div class="name-highlight" id="prev-name">Julieta Belen Altamirano</div>
-                <div id="prev-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</div>
-            </div>
-
-            <div class="date-location" id="prev-date">
-                Buenos Aires, 18 de agosto de 2021
-            </div>
-
-            <!-- Bloque de Firmas y Sellos Inferiores -->
+            <!-- Bloque de Firmas y Sellos Inferiores (Excluidos) -->
             <div class="footer-signatures">
                 
                 <!-- Sello/Firma 1 -->
@@ -394,6 +395,14 @@
 
     <!-- Script de Interactividad y Exportación -->
     <script>
+        // Cambio dinámico de fuente general
+        const fontSelector = document.getElementById('inp-font-family');
+        const fontContainer = document.getElementById('target-font-container');
+        
+        fontSelector.addEventListener('change', (e) => {
+            fontContainer.style.fontFamily = e.target.value;
+        });
+
         const bindInput = (inputId, previewId, property = 'innerText') => {
             const input = document.getElementById(inputId);
             const preview = document.getElementById(previewId);
@@ -416,7 +425,6 @@
         const handleImageUpload = (fileInputId, imgPreviewId, sizeInputId) => {
             const fileInput = document.getElementById(fileInputId);
             const imgPreview = document.getElementById(imgPreviewId);
-            const sizeInput = document.getElementById(sizeInputId);
 
             fileInput.addEventListener('change', (e) => {
                 const file = e.target.files[0];
@@ -429,18 +437,12 @@
                     reader.readAsDataURL(file);
                 }
             });
-
-            if(sizeInput) {
-                sizeInput.addEventListener('input', () => {
-                    imgPreview.style.height = sizeInput.value + 'px';
-                });
-            }
         };
 
-        handleImageUpload('inp-logo-file', 'prev-logo', 'inp-logo-size');
-        handleImageUpload('inp-sig1-file', 'prev-sig1-img', 'inp-sig1-size');
-        handleImageUpload('inp-sig2-file', 'prev-sig2-img', 'inp-sig2-size');
-        handleImageUpload('inp-sig3-file', 'prev-sig3-img', 'inp-sig3-size');
+        handleImageUpload('inp-logo-file', 'prev-logo');
+        handleImageUpload('inp-sig1-file', 'prev-sig1-img');
+        handleImageUpload('inp-sig2-file', 'prev-sig2-img');
+        handleImageUpload('inp-sig3-file', 'prev-sig3-img');
 
         document.getElementById('inp-logo-size').addEventListener('input', (e) => {
             document.getElementById('prev-logo').style.width = e.target.value + 'px';
