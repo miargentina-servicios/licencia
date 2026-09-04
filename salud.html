@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -251,7 +251,7 @@
             margin-top: 15px;
         }
 
-        /* Modal Styles (Genérico para Resultados y Normativa) */
+        /* Modal Styles */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -392,29 +392,30 @@
             background-color: #c9302c;
         }
 
-        /* Estilos específicos para el contenido normativo */
-        .normativa-item {
+        /* Estilos de elementos internos para modales informativos */
+        .info-modal-item {
             margin-bottom: 18px;
             padding-bottom: 12px;
             border-bottom: 1px solid #e9ecef;
         }
 
-        .normativa-item:last-child {
+        .info-modal-item:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
 
-        .normativa-item h4 {
+        .info-modal-item h4 {
             font-size: 14px;
             color: var(--gob-azul);
             margin: 0 0 4px 0;
         }
 
-        .normativa-item p {
+        .info-modal-item p {
             font-size: 13px;
             color: #666;
             margin: 0;
+            line-height: 1.5;
         }
 
         .gob-footer {
@@ -550,29 +551,83 @@
         </div>
     </div>
 
-    <!-- Modal de Normativa Legal (Nuevo) -->
+    <!-- Modal Acerca de SISA-RTE -->
+    <div id="acercaModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Acerca de SISA-RTE</h3>
+                <button class="close-btn" onclick="cerrarModalGeneral('acercaModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="info-modal-item">
+                    <h4>¿Qué es el SISA-RTE?</h4>
+                    <p>Es un módulo integrado del Sistema Integrado de Información Sanitaria Argentino diseñado para la gestión y constatación de trayectorias formativas y excepciones administrativas en el ámbito de la salud.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>Propósito del Módulo Anexo</h4>
+                    <p>Brindar una vía de consulta rápida, transparente y segura para verificar el estado de regularización de profesionales que completaron sus expedientes académicos por canales extraordinarios.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>Integridad Operativa</h4>
+                    <p>El padrón sincroniza registros certificados para asegurar la trazabilidad documental ante requerimientos formales de instituciones públicas y privadas en todo el territorio nacional.</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: flex-end;">
+                <button class="btn-close-modal" onclick="cerrarModalGeneral('acercaModal')">Cerrar Ventana</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Normativa Legal -->
     <div id="normativaModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Marco Normativo Legal - SISA-RTE</h3>
-                <button class="close-btn" onclick="cerrarNormativa()">&times;</button>
+                <button class="close-btn" onclick="cerrarModalGeneral('normativaModal')">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="normativa-item">
+                <div class="info-modal-item">
                     <h4>Resolución Ministerial N° 1420/2024</h4>
                     <p>Establece la creación del Registro de Trayectorias y Excepciones (RTE) como módulo complementario de validación en el ámbito de la salud pública.</p>
                 </div>
-                <div class="normativa-item">
+                <div class="info-modal-item">
                     <h4>Disposición Conjunta de Legalización N° 88/2025</h4>
                     <p>Reglamenta los procedimientos administrativos para la superación de instancias burocráticas finales y la emisión de constancias con validez digital.</p>
                 </div>
-                <div class="normativa-item">
+                <div class="info-modal-item">
                     <h4>Ley Nacional de Protección de Datos Personales N° 25.326</h4>
                     <p>Garantiza la confidencialidad, el tratamiento seguro y la restricción en la visualización pública de datos sensibles asociados al padrón de profesionales.</p>
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: flex-end;">
-                <button class="btn-close-modal" onclick="cerrarNormativa()">Cerrar Ventana</button>
+                <button class="btn-close-modal" onclick="cerrarModalGeneral('normativaModal')">Cerrar Ventana</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Términos y Condiciones -->
+    <div id="terminosModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Términos y Condiciones de Uso</h3>
+                <button class="close-btn" onclick="cerrarModalGeneral('terminosModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="info-modal-item">
+                    <h4>1. Alcance y Utilización del Servicio</h4>
+                    <p>El acceso a este padrón anexo está destinado exclusivamente a la constatación de trayectorias, títulos y resoluciones excepcionales de profesionales inscriptos en el sistema.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>2. Veracidad de los Datos Consultados</h4>
+                    <p>La información reflejada proviene de los expedientes electrónicos formalizados por vía administrativa. Toda adulteración, uso indebido o falsificación de las constancias digitales generadas en PDF será penada por la legislación vigente.</p>
+                </div>
+                <div class="info-modal-item">
+                    <h4>3. Privacidad y Seguridad de la Información</h4>
+                    <p>Los datos consultados mediante este sistema se encuentran protegidos por normativas de confidencialidad institucional, prohibiendo su comercialización o divulgación ajena a los fines de validación profesional.</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: flex-end;">
+                <button class="btn-close-modal" onclick="cerrarModalGeneral('terminosModal')">Cerrar Ventana</button>
             </div>
         </div>
     </div>
@@ -581,10 +636,10 @@
     <footer class="gob-footer">
         <div class="gob-footer-content">
             <div class="gob-footer-links">
-                <a href="#">Acerca de SISA-RTE</a>
-                <a onclick="abrirNormativa()">Normativa Legal</a>
+                <a onclick="abrirModal('acercaModal')">Acerca de SISA-RTE</a>
+                <a onclick="abrirModal('normativaModal')">Normativa Legal</a>
                 <a href="#">Mesa de Ayuda</a>
-                <a href="#">Términos y Condiciones</a>
+                <a onclick="abrirModal('terminosModal')">Términos y Condiciones</a>
             </div>
             <div>
                 <p style="margin: 0; color: #999999; font-size: 12px;">
@@ -606,13 +661,13 @@
             document.getElementById('currentDateDisplay').innerText = "Actualizado: " + fechaFormateada;
         });
 
-        // Funciones para controlar el modal de Normativa Legal
-        function abrirNormativa() {
-            document.getElementById('normativaModal').style.display = "flex";
+        // Funciones genéricas para manejar los modales informativos
+        function abrirModal(idModal) {
+            document.getElementById(idModal).style.display = "flex";
         }
 
-        function cerrarNormativa() {
-            document.getElementById('normativaModal').style.display = "none";
+        function cerrarModalGeneral(idModal) {
+            document.getElementById(idModal).style.display = "none";
         }
 
         // Base de datos local modificable con tus registros
