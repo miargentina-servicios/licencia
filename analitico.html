@@ -97,6 +97,8 @@
             border: 1px solid #ccc;
             position: relative;
             overflow: hidden;
+            width: 900px; /* Ancho fijo recomendado para exportación limpia */
+            box-sizing: border-box;
         }
         .logo-container {
             text-align: center;
@@ -110,7 +112,7 @@
         .imagen-lateral {
             position: absolute;
             top: 450px; 
-            right: 12px;  /* Controlado dinámicamente */
+            right: 12px;
             width: 75px;
             text-align: center;
             z-index: 10;
@@ -286,7 +288,7 @@
 </div>
 
 <script>
-    let anguloActual = 90; // Inicia con los 90° que ya tenía por defecto
+    let anguloActual = 90;
 
     function cargarImagen(event, idElemento) {
         const archivo = event.target.files[0];
@@ -310,7 +312,11 @@
 
     function descargarPNG() {
         const elemento = document.getElementById('captura-area');
-        html2canvas(elemento, { scale: 2, useCORS: true }).then(canvas => {
+        html2canvas(elemento, { 
+            scale: 2, 
+            useCORS: true,
+            windowWidth: 900 // Fuerza el ancho exacto para evitar recortes laterales
+        }).then(canvas => {
             const enlace = document.createElement('a');
             enlace.download = 'certificado_analitico.png';
             enlace.href = canvas.toDataURL('image/png');
@@ -320,7 +326,11 @@
 
     function descargarPDF() {
         const elemento = document.getElementById('captura-area');
-        html2canvas(elemento, { scale: 2, useCORS: true }).then(canvas => {
+        html2canvas(elemento, { 
+            scale: 2, 
+            useCORS: true,
+            windowWidth: 900 // Fuerza el ancho exacto para evitar recortes laterales
+        }).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF('p', 'mm', 'a4');
@@ -350,4 +360,5 @@
 </script>
 
 </body>
-</html>
+            </html>
+                
