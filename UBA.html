@@ -251,14 +251,22 @@ body {
 }
 
 /* =========================
-   FIRMAS
+   FIRMAS Y SELLO
 ========================= */
+
+.footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 10px;
+    position: relative;
+}
 
 .footer-signatures {
     display: flex;
     justify-content: space-around;
     align-items: flex-end;
-    padding-bottom: 10px;
+    flex: 1;
 }
 
 .sig-box {
@@ -295,6 +303,21 @@ body {
     font-weight: bold;
     color: #333;
     line-height: 1.2;
+}
+
+/* Sello institucional */
+.seal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 15px;
+}
+
+.seal-img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    opacity: 0.85;
 }
 
 /* =========================
@@ -526,6 +549,15 @@ body {
                 </div>
             </div>
 
+            <!-- SECCIÓN NUEVA: SELLO INSTITUCIONAL -->
+            <div class="control-group">
+                <label>Sello Institucional (Imagen y Tamaño):</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="file" id="inp-seal-file" accept="image/*" style="flex:1; font-size:0.75rem;">
+                    <input type="range" id="inp-seal-size" min="50" max="150" value="90" style="width:90px;">
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -617,85 +649,100 @@ body {
         </div>
 
 
-        <!-- FIRMAS -->
+        <!-- FIRMAS Y SELLO -->
 
-        <div class="footer-signatures">
+        <div class="footer-section">
 
-            <div class="sig-box">
+            <div class="footer-signatures">
 
-                <div class="sig-image-container">
+                <div class="sig-box">
 
-                    <img
-                        id="prev-sig1-img"
-                        class="sig-img"
-                        src=""
-                        style="display:none;"
+                    <div class="sig-image-container">
+
+                        <img
+                            id="prev-sig1-img"
+                            class="sig-img"
+                            src=""
+                            style="display:none;"
+                        >
+
+                    </div>
+
+                    <div class="sig-line"></div>
+
+                    <div
+                        class="sig-text"
+                        id="prev-sig1-text"
                     >
+                        CARLOS REYES TORD<br>
+                        SECRETARIO ACADÉMICO
+                    </div>
 
                 </div>
 
-                <div class="sig-line"></div>
 
-                <div
-                    class="sig-text"
-                    id="prev-sig1-text"
-                >
-                    CARLOS REYES TORD<br>
-                    SECRETARIO ACADÉMICO
+                <div class="sig-box">
+
+                    <div class="sig-image-container">
+
+                        <img
+                            id="prev-sig2-img"
+                            class="sig-img"
+                            src=""
+                            style="display:none;"
+                        >
+
+                    </div>
+
+                    <div class="sig-line"></div>
+
+                    <div
+                        class="sig-text"
+                        id="prev-sig2-text"
+                    >
+                        RICARDO J. GELPÍ<br>
+                        DECANO
+                    </div>
+
+                </div>
+
+
+                <div class="sig-box">
+
+                    <div class="sig-image-container">
+
+                        <img
+                            id="prev-sig3-img"
+                            class="sig-img"
+                            src=""
+                            style="display:none;"
+                        >
+
+                    </div>
+
+                    <div class="sig-line"></div>
+
+                    <div
+                        class="sig-text"
+                        id="prev-sig3-text"
+                    >
+                        ALBERTO E. BARBIERI<br>
+                        RECTOR
+                    </div>
+
                 </div>
 
             </div>
 
-
-            <div class="sig-box">
-
-                <div class="sig-image-container">
-
-                    <img
-                        id="prev-sig2-img"
-                        class="sig-img"
-                        src=""
-                        style="display:none;"
-                    >
-
-                </div>
-
-                <div class="sig-line"></div>
-
-                <div
-                    class="sig-text"
-                    id="prev-sig2-text"
+            <!-- CONTENEDOR VISUAL DEL SELLO -->
+            <div class="seal-container">
+                <img
+                    id="prev-seal"
+                    class="seal-img"
+                    src=""
+                    style="display:none;"
+                    alt="Sello Institucional"
                 >
-                    RICARDO J. GELPÍ<br>
-                    DECANO
-                </div>
-
-            </div>
-
-
-            <div class="sig-box">
-
-                <div class="sig-image-container">
-
-                    <img
-                        id="prev-sig3-img"
-                        class="sig-img"
-                        src=""
-                        style="display:none;"
-                    >
-
-                </div>
-
-                <div class="sig-line"></div>
-
-                <div
-                    class="sig-text"
-                    id="prev-sig3-text"
-                >
-                    ALBERTO E. BARBIERI<br>
-                    RECTOR
-                </div>
-
             </div>
 
         </div>
@@ -920,6 +967,32 @@ document
 
 
 /* =========================
+   SELLO INSTITUCIONAL
+========================= */
+
+const sealFile = document.getElementById('inp-seal-file');
+const sealPreview = document.getElementById('prev-seal');
+
+sealFile.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        sealPreview.src = e.target.result;
+        sealPreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+});
+
+document.getElementById('inp-seal-size').addEventListener('input', function (event) {
+    const size = event.target.value + 'px';
+    sealPreview.style.width = size;
+    sealPreview.style.height = size;
+});
+
+
+/* =========================
    EXPORTAR PDF
 ========================= */
 
@@ -986,7 +1059,6 @@ document
 /* =========================
    EXPORTAR PNG
 ========================= */
-
 document
     .getElementById('btn-download-img')
     .addEventListener(
