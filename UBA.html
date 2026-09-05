@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador y Editor de Diploma - UBA</title>
     <!-- Fuentes de Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:ital,wght@1,500;1,700&family=Great+Vibes&family=Pinyon+Script&family=Tangerine:wght@700&family=Times+New+Roman:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
-    <!-- Librería para exportar a PDF -->
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Cinzel:ital,wght@1,500;1,700&family=Great+Vibes&family=Italianno&family=Meddon&family=Monsieur+La+Doulaise&family=Pinyon+Script&family=Tangerine:ital,wght@1,400;1,700&family=Times+New+Roman:ital,wght@1,400;1,700&family=Parisienne&display=swap" rel="stylesheet">
+    <!-- Librerías para exportar a PDF e Imagen -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -28,10 +29,10 @@
         /* Panel de Control / Editor Superior */
         #editor-panel {
             width: 100%;
-            height: 250px;
+            height: 270px;
             background: #ffffff;
             border-bottom: 2px solid #cbd5e1;
-            padding: 15px 20px;
+            padding: 12px 20px;
             overflow-y: auto;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             font-style: normal;
@@ -41,13 +42,13 @@
         .editor-container-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: 12px;
         }
 
         .editor-panel h2 {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #1e293b;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             grid-column: span 4;
             border-bottom: 1px solid #e2e8f0;
             padding-bottom: 5px;
@@ -56,55 +57,61 @@
             align-items: center;
         }
 
+        .buttons-group {
+            display: flex;
+            gap: 8px;
+        }
+
         .control-group {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .control-group label {
             display: block;
-            font-size: 0.75rem;
+            font-size: 0.73rem;
             font-weight: bold;
             color: #475569;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
+            font-style: italic;
         }
 
         .control-group input, .control-group textarea, .control-group select {
             width: 100%;
-            padding: 6px;
+            padding: 5px;
             border: 1px solid #cbd5e1;
             border-radius: 4px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
+            font-style: italic;
         }
 
         .control-group textarea {
             resize: vertical;
-            height: 50px;
-        }
-
-        .range-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .range-container input[type="range"] {
-            flex: 1;
+            height: 48px;
         }
 
         .btn {
             background-color: #2563eb;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             transition: background 0.2s;
+            font-style: normal;
         }
 
         .btn:hover {
             background-color: #1d4ed8;
+        }
+
+        .btn-img {
+            background-color: #059669;
+        }
+
+        .btn-img:hover {
+            background-color: #047857;
         }
 
         /* Contenedor de la Vista Previa */
@@ -136,7 +143,7 @@
             position: relative;
         }
 
-        /* República Argentina (Excluida del cambio de fuente general) */
+        /* República Argentina */
         .republica-title {
             font-family: 'Cinzel', serif !important;
             font-style: italic !important;
@@ -158,12 +165,12 @@
             width: 80px;
             height: 80px;
             object-fit: contain;
-            transition: width 0.1s;
         }
 
-        /* Clase dinámica para aplicar la fuente seleccionada al resto del texto */
+        /* Clase dinámica para aplicar la fuente seleccionada y cursiva */
         .dynamic-font-container {
             font-family: 'Great Vibes', cursive;
+            font-style: italic;
         }
 
         .univ-title {
@@ -171,45 +178,51 @@
             color: #222;
             margin-top: 10px;
             line-height: 1;
+            font-style: italic;
         }
 
         .facu-title {
             font-size: 2.2rem;
             color: #333;
             margin-top: -5px;
+            font-style: italic;
         }
 
         .body-text {
             text-align: justify;
-            font-size: 1.15rem;
+            font-size: 1.18rem;
             line-height: 1.6;
             color: #222;
             padding: 0 30px;
+            font-style: italic;
         }
 
         .body-text .line-1 {
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin-bottom: 5px;
+            font-style: italic;
         }
 
         .body-text .name-highlight {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             color: #111;
             margin: 5px 0;
             line-height: 1;
+            font-style: italic;
         }
 
         .date-location {
             display: flex;
             justify-content: flex-end;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             padding-right: 40px;
             margin-top: -10px;
+            font-style: italic;
         }
 
-        /* Firmas y Sellos (Excluidos de la fuente general variable) */
+        /* Firmas y Sellos */
         .footer-signatures {
             display: flex;
             justify-content: space-around;
@@ -259,20 +272,28 @@
     <div id="editor-panel" class="editor-panel">
         <div class="editor-container-grid">
             <h2>
-                <span>Editor del Diploma - Selector de Cursivas</span>
-                <button class="btn" id="btn-download">Descargar en PDF</button>
+                <span>Editor del Diploma - Selector de Cursivas Avanzado</span>
+                <div class="buttons-group">
+                    <button class="btn btn-img" id="btn-download-img">Descargar en Imagen (PNG)</button>
+                    <button class="btn" id="btn-download-pdf">Descargar en PDF</button>
+                </div>
             </h2>
             
-            <!-- Columna 1: Configuración general y Selector de Cursiva -->
+            <!-- Columna 1: Configuración general y Selector de Cursivas -->
             <div>
                 <div class="control-group">
-                    <label>Tipo de Letra Cursiva (Todo el texto):</label>
+                    <label>Tipografía Cursiva (Todo el texto):</label>
                     <select id="inp-font-family">
-                        <option value="'Great Vibes', cursive" selected>Great Vibes (Elegante Caligráfica)</option>
-                        <option value="'Times New Roman', Times, serif">Times New Roman (Cursiva Clásica)</option>
-                        <option value="'Pinyon Script', cursive">Pinyon Script (Fina y Artística)</option>
-                        <option value="'Alex Brush', cursive">Alex Brush (Fluida y Suave)</option>
-                        <option value="'Tangerine', cursive">Tangerine (Estilizada y Alta)</option>
+                        <option value="Great Vibes" selected>Great Vibes (Elegante Caligráfica)</option>
+                        <option value="Pinyon Script">Pinyon Script (Fina y Artística)</option>
+                        <option value="Alex Brush">Alex Brush (Fluida y Suave)</option>
+                        <option value="Allura">Allura (Sofisticada y Fina)</option>
+                        <option value="Italianno">Italianno (Cursiva Clásica Italiana)</option>
+                        <option value="Parisienne">Parisienne (Estilo Francés Ligero)</option>
+                        <option value="Tangerine">Tangerine (Estilizada, Alta y Fina)</option>
+                        <option value="Meddon">Meddon (Caligrafía Tradicional)</option>
+                        <option value="Monsieur La Doulaise">Monsieur La Doulaise (Cursiva Antigüa)</option>
+                        <option value="Times New Roman">Times New Roman (Cursiva Tradicional)</option>
                     </select>
                 </div>
                 <div class="control-group">
@@ -290,13 +311,13 @@
                 <div class="control-group">
                     <label>Logo UBA (Subir imagen y tamaño):</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <input type="file" id="inp-logo-file" accept="image/*" style="flex: 1;">
+                        <input type="file" id="inp-logo-file" accept="image/*" style="flex: 1; font-style: normal;">
                         <input type="range" id="inp-logo-size" min="40" max="150" value="80" style="width: 100px;">
                     </div>
                 </div>
                 <div class="control-group">
                     <label>Texto del Cuerpo del Diploma:</label>
-                    <textarea id="inp-body" style="height: 65px;">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</textarea>
+                    <textarea id="inp-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</textarea>
                 </div>
             </div>
 
@@ -305,7 +326,7 @@
                 <div class="control-group">
                     <label>Sello/Firma 1:</label>
                     <input type="text" id="inp-sig1-text" value="CARLOS REYES TORD&#10;SECRETARIO ACADÉMICO" style="margin-bottom:2px;">
-                    <input type="file" id="inp-sig1-file" accept="image/*">
+                    <input type="file" id="inp-sig1-file" accept="image/*" style="font-style: normal;">
                 </div>
             </div>
 
@@ -313,7 +334,7 @@
                 <div class="control-group">
                     <label>Sello/Firma 2:</label>
                     <input type="text" id="inp-sig2-text" value="RICARDO J. GELPÍ&#10;DECANO" style="margin-bottom:2px;">
-                    <input type="file" id="inp-sig2-file" accept="image/*">
+                    <input type="file" id="inp-sig2-file" accept="image/*" style="font-style: normal;">
                 </div>
             </div>
 
@@ -321,7 +342,7 @@
                 <div class="control-group">
                     <label>Sello/Firma 3:</label>
                     <input type="text" id="inp-sig3-text" value="ALBERTO E. BARBIERI&#10;RECTOR" style="margin-bottom:2px;">
-                    <input type="file" id="inp-sig3-file" accept="image/*">
+                    <input type="file" id="inp-sig3-file" accept="image/*" style="font-style: normal;">
                 </div>
             </div>
 
@@ -341,7 +362,7 @@
                 </div>
                 
                 <!-- Contenedor general que cambia de tipografía dinámicamente -->
-                <div class="dynamic-font-container" id="target-font-container">
+                <div class="dynamic-font-container" id="target-font-container" style="font-family: 'Great Vibes', cursive;">
                     <div class="univ-title">Universidad de Buenos Aires</div>
                     <div class="facu-title">Facultad de Medicina</div>
 
@@ -358,7 +379,7 @@
                 </div>
             </div>
 
-            <!-- Bloque de Firmas y Sellos Inferiores (Excluidos de la fuente general) -->
+            <!-- Bloque de Firmas y Sellos Inferiores -->
             <div class="footer-signatures">
                 
                 <!-- Sello/Firma 1 -->
@@ -395,12 +416,12 @@
 
     <!-- Script de Interactividad y Exportación -->
     <script>
-        // Lógica para cambiar la fuente dinámicamente con el selector
+        // Lógica corregida para cambiar la fuente dinámicamente en vivo
         const fontSelector = document.getElementById('inp-font-family');
         const fontContainer = document.getElementById('target-font-container');
         
         fontSelector.addEventListener('change', (e) => {
-            fontContainer.style.fontFamily = e.target.value;
+            fontContainer.style.fontFamily = `'${e.target.value}', cursive`;
         });
 
         const bindInput = (inputId, previewId, property = 'innerText') => {
@@ -449,7 +470,8 @@
             document.getElementById('prev-logo').style.height = e.target.value + 'px';
         });
 
-        document.getElementById('btn-download').addEventListener('click', () => {
+        // Descarga en PDF
+        document.getElementById('btn-download-pdf').addEventListener('click', () => {
             const element = document.getElementById('diploma-content');
             const options = {
                 margin:       0,
@@ -460,7 +482,18 @@
             };
             html2pdf().from(element).set(options).save();
         });
+
+        // Descarga en Imagen (PNG) usando html2canvas
+        document.getElementById('btn-download-img').addEventListener('click', () => {
+            const element = document.getElementById('diploma-content');
+            html2canvas(element, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'diploma-uba.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
     </script>
 </body>
-                        </html>
-                        
+    </html>
+        
