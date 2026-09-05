@@ -36,7 +36,7 @@ body {
 
 #editor-panel {
     width: 100%;
-    height: 250px;
+    height: 280px;
     background: #ffffff;
     border-bottom: 2px solid #cbd5e1;
     padding: 12px 20px;
@@ -268,7 +268,7 @@ body {
 }
 
 .sig-image-container {
-    height: 80px;
+    height: 70px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
@@ -276,6 +276,7 @@ body {
 }
 
 .sig-img {
+    max-height: 65px;
     max-width: 100%;
     object-fit: contain;
 }
@@ -303,7 +304,7 @@ body {
 @media (max-width: 900px) {
 
     #editor-panel {
-        height: 300px;
+        height: 350px;
     }
 
     .editor-container-grid {
@@ -378,7 +379,7 @@ body {
             </div>
 
 
-            <!-- NUEVO SELECTOR -->
+            <!-- SELECTOR DE TIPOGRAFÍA -->
 
             <div class="control-group">
 
@@ -495,23 +496,34 @@ body {
         <div>
 
             <div class="control-group">
-
-                <label>Firmas y Sellos (Textos):</label>
-
+                <label>Textos de Firmas:</label>
                 <input
                     type="text"
                     id="inp-sig1-text"
                     value="CARLOS REYES TORD&#10;SECRETARIO ACADÉMICO"
                     style="margin-bottom:2px;"
                 >
-
                 <input
                     type="text"
                     id="inp-sig2-text"
                     value="RICARDO J. GELPÍ&#10;DECANO"
                     style="margin-bottom:2px;"
                 >
+                <input
+                    type="text"
+                    id="inp-sig3-text"
+                    value="ALBERTO E. BARBIERI&#10;RECTOR"
+                    style="margin-bottom:2px;"
+                >
+            </div>
 
+            <div class="control-group">
+                <label>Imágenes de Firmas:</label>
+                <div style="display: flex; gap: 4px; margin-bottom: 4px;">
+                    <input type="file" id="inp-sig1-file" accept="image/*" style="font-size:0.75rem;" title="Firma 1">
+                    <input type="file" id="inp-sig2-file" accept="image/*" style="font-size:0.75rem;" title="Firma 2">
+                    <input type="file" id="inp-sig3-file" accept="image/*" style="font-size:0.75rem;" title="Firma 3">
+                </div>
             </div>
 
         </div>
@@ -758,6 +770,38 @@ bindInput(
     'prev-sig2-text',
     'innerHTML'
 );
+
+bindInput(
+    'inp-sig3-text',
+    'prev-sig3-text',
+    'innerHTML'
+);
+
+
+/* =========================
+   CARGA DE IMÁGENES DE FIRMAS
+========================= */
+
+const bindSignatureFile = (fileInputId, imgPreviewId) => {
+    const fileInput = document.getElementById(fileInputId);
+    const imgPreview = document.getElementById(imgPreviewId);
+
+    fileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            imgPreview.src = e.target.result;
+            imgPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    });
+};
+
+bindSignatureFile('inp-sig1-file', 'prev-sig1-img');
+bindSignatureFile('inp-sig2-file', 'prev-sig2-img');
+bindSignatureFile('inp-sig3-file', 'prev-sig3-img');
 
 
 /* =========================
