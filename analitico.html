@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificado de Estudios Final - UBA (Editable y Ajustable)</title>
+    <title>Certificado de Estudios Final - UBA (Control Total)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -32,25 +32,25 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 12px;
-            font-size: 13px;
+            gap: 10px;
+            font-size: 12px;
         }
         .control-item {
             display: flex;
             flex-direction: column;
             background: #34495e;
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 4px;
             border: 1px dashed #fff;
         }
         .control-item label {
             cursor: pointer;
             font-weight: bold;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
         .control-item input[type="range"] {
             cursor: pointer;
-            width: 110px;
+            width: 90px;
         }
         .control-item input[type="file"] {
             display: none;
@@ -83,31 +83,35 @@
             max-width: 900px;
             margin: 0 auto;
         }
+        /* Contenedor principal con posición relativa para contener el sello dentro del margen derecho */
         .certificado-container {
             background: #fff;
-            padding: 40px 100px 40px 50px;
+            padding: 40px 90px 40px 50px; /* Margen derecho seguro de 90px */
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border: 1px solid #ccc;
             position: relative;
+            overflow: hidden; /* Evita que cualquier elemento sobresalga de la hoja */
         }
         .logo-container {
             text-align: center;
             margin-bottom: 10px;
         }
         .logo-container img {
-            width: 120px; /* Tamaño inicial ajustable */
+            width: 120px;
             height: auto;
             object-fit: contain;
         }
+        /* Imagen lateral posicionada estrictamente dentro del margen derecho */
         .imagen-lateral {
             position: absolute;
-            top: 40px;
-            right: 15px;
+            top: 450px; /* Posición inicial ajustable a la altura de 3er año */
+            right: 12px;  /* Fijado milimétricamente dentro del margen derecho */
             width: 75px;
             text-align: center;
+            z-index: 10;
         }
         .imagen-lateral img {
-            width: 75px; /* Tamaño inicial ajustable */
+            width: 75px;
             height: auto;
         }
         .header {
@@ -175,17 +179,14 @@
         <div class="control-item">
             <label for="subirLogo">📁 Logo Superior</label>
             <input type="file" id="subirLogo" accept="image/*" onchange="cargarImagen(event, 'logoSuperior')">
-            <div style="margin-top:3px; font-size:11px;">
-                Tam: <input type="range" id="tamLogo" min="30" max="300" value="120" oninput="cambiarTamano('logoSuperior', this.value)">
-            </div>
+            <div>Ancho: <input type="range" min="30" max="300" value="120" oninput="cambiarEstilo('logoSuperior', 'width', this.value + 'px')"></div>
         </div>
         
         <div class="control-item">
-            <label for="subirSello">📁 Sello Lateral</label>
+            <label for="subirSello">📁 Sello Margen</label>
             <input type="file" id="subirSello" accept="image/*" onchange="cargarImagen(event, 'imagenLateralImg')">
-            <div style="margin-top:3px; font-size:11px;">
-                Tam: <input type="range" id="tamSello" min="30" max="250" value="75" oninput="cambiarTamano('imagenLateralImg', this.value)">
-            </div>
+            <div>Ancho: <input type="range" min="30" max="200" value="75" oninput="cambiarEstilo('imagenLateralImg', 'width', this.value + 'px')"></div>
+            <div style="margin-top:2px;">Altura: <input type="range" min="50" max="1200" value="450" oninput="cambiarEstilo('bloqueSelloLateral', 'top', this.value + 'px')"></div>
         </div>
     </div>
 
@@ -202,7 +203,7 @@
             <img id="logoSuperior" src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Escudo_de_la_Universidad_de_Buenos_Aires.svg" alt="Logo UBA">
         </div>
 
-        <div class="imagen-lateral">
+        <div class="imagen-lateral" id="bloqueSelloLateral">
             <img id="imagenLateralImg" src="https://i.imgur.com/7A26W6G.png" alt="Sello lateral" style="transform: rotate(90deg);">
         </div>
 
@@ -348,9 +349,9 @@
         }
     }
 
-    // Cambiar tamaño de la imagen mediante el control deslizante
-    function cambiarTamano(idElemento, valor) {
-        document.getElementById(idElemento).style.width = valor + 'px';
+    // Cambiar estilos de tamaño o posición en tiempo real
+    function cambiarEstilo(idElemento, propiedad, valor) {
+        document.getElementById(idElemento).style[propiedad] = valor;
     }
 
     // Exportar a PNG
