@@ -18,7 +18,6 @@
 
         body {
             font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
             background-color: #e2e8f0;
             display: flex;
             flex-direction: column;
@@ -35,7 +34,6 @@
             padding: 12px 20px;
             overflow-y: auto;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            font-style: normal;
             z-index: 10;
         }
 
@@ -72,7 +70,6 @@
             font-weight: bold;
             color: #475569;
             margin-bottom: 2px;
-            font-style: italic;
         }
 
         .control-group input, .control-group textarea {
@@ -81,7 +78,6 @@
             border: 1px solid #cbd5e1;
             border-radius: 4px;
             font-size: 0.82rem;
-            font-style: italic;
         }
 
         .control-group textarea {
@@ -99,7 +95,6 @@
             font-weight: bold;
             font-size: 0.8rem;
             transition: background 0.2s;
-            font-style: normal;
         }
 
         .btn:hover {
@@ -143,7 +138,7 @@
             position: relative;
         }
 
-        /* República Argentina (Más cerca del logo) */
+        /* República Argentina */
         .republica-title {
             font-family: 'Cinzel', serif !important;
             font-style: italic !important;
@@ -154,7 +149,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 25px; /* Reduce espacio entre texto y logo */
+            gap: 25px;
             padding: 0 40px;
         }
 
@@ -168,9 +163,9 @@
             object-fit: contain;
         }
 
-        /* Tipografía predeterminada para el cuerpo */
-        .monsieur-text {
-            font-family: 'Monsieur La Doulaise', cursive;
+        /* Forzamos la tipografía Monsieur La Doulaise en todo el bloque central */
+        .monsieur-text, .monsieur-text * {
+            font-family: 'Monsieur La Doulaise', cursive !important;
         }
 
         .univ-title {
@@ -178,14 +173,12 @@
             color: #222;
             margin-top: 5px;
             line-height: 1;
-            font-style: italic;
         }
 
         .facu-title {
             font-size: 2.8rem;
             color: #333;
             margin-top: -5px;
-            font-style: italic;
         }
 
         .body-text {
@@ -194,14 +187,12 @@
             line-height: 1.5;
             color: #222;
             padding: 0 30px;
-            font-style: italic;
         }
 
         .body-text .line-1 {
             text-align: center;
             font-size: 1.4rem;
             margin-bottom: 5px;
-            font-style: italic;
         }
 
         .body-text .name-highlight {
@@ -210,8 +201,7 @@
             color: #111;
             margin: 5px 0;
             line-height: 1;
-            font-weight: bold; /* Nombre del alumno en negrita */
-            font-style: italic;
+            font-weight: bold !important; /* Nombre del alumno en negrita */
         }
 
         .date-location {
@@ -220,7 +210,6 @@
             font-size: 1.4rem;
             padding-right: 40px;
             margin-top: -5px;
-            font-style: italic;
         }
 
         /* Firmas y Sellos */
@@ -280,7 +269,6 @@
                 </div>
             </h2>
             
-            <!-- Columna 1 -->
             <div>
                 <div class="control-group">
                     <label>Nombre del Graduado/a:</label>
@@ -292,12 +280,11 @@
                 </div>
             </div>
 
-            <!-- Columna 2 -->
             <div>
                 <div class="control-group">
                     <label>Logo UBA (Imagen y Tamaño):</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <input type="file" id="inp-logo-file" accept="image/*" style="flex: 1; font-style: normal;">
+                        <input type="file" id="inp-logo-file" accept="image/*" style="flex: 1;">
                         <input type="range" id="inp-logo-size" min="40" max="150" value="80" style="width: 90px;">
                     </div>
                 </div>
@@ -307,7 +294,6 @@
                 </div>
             </div>
 
-            <!-- Columna 3 -->
             <div>
                 <div class="control-group">
                     <label>Firmas y Sellos (Textos):</label>
@@ -331,7 +317,7 @@
                     <span>ARGENTINA</span>
                 </div>
                 
-                <!-- Contenido con fuente Monsieur La Doulaise -->
+                <!-- Contenedor con la clase que fuerza Monsieur La Doulaise a todo lo de adentro -->
                 <div class="monsieur-text">
                     <div class="univ-title">Universidad de Buenos Aires</div>
                     <div class="facu-title">Facultad de Medicina</div>
@@ -422,7 +408,6 @@
             document.getElementById('prev-logo').style.height = e.target.value + 'px';
         });
 
-        // Descarga en PDF asegurando la carga de fuentes
         document.getElementById('btn-download-pdf').addEventListener('click', async () => {
             await document.fonts.ready;
             const element = document.getElementById('diploma-content');
@@ -436,7 +421,6 @@
             html2pdf().from(element).set(options).save();
         });
 
-        // Descarga en Imagen (PNG) asegurando la carga de fuentes
         document.getElementById('btn-download-img').addEventListener('click', async () => {
             await document.fonts.ready;
             const element = document.getElementById('diploma-content');
@@ -449,5 +433,5 @@
         });
     </script>
 </body>
-    </html>
-    
+                            </html>
+                        
