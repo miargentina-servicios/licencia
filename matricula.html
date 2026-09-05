@@ -271,7 +271,26 @@
             <div class="row">
                 <div class="form-group">
                     <label for="institucion">Institución Educativa de Egreso:</label>
-                    <input type="text" id="institucion" required placeholder="Universidad o Instituto Superior formador">
+                    <select id="institucion" required>
+                        <option value="">Seleccione institución...</option>
+                        <option value="Universidad Nacional de La Plata - Facultad de Ciencias Médicas">Universidad Nacional de La Plata - Facultad de Ciencias Médicas</option>
+                        <option value="Universidad de Buenos Aires (UBA) - Facultad de Medicina">Universidad de Buenos Aires (UBA) - Facultad de Medicina</option>
+                        <option value="Universidad Nacional de Rosario (UNR) - Facultad de Ciencias Médicas">Universidad Nacional de Rosario (UNR) - Facultad de Ciencias Médicas</option>
+                        <option value="Universidad Nacional de Córdoba (UNC) - Facultad de Ciencias Médicas">Universidad Nacional de Córdoba (UNC) - Facultad de Ciencias Médicas</option>
+                        <option value="Universidad Nacional de Cuyo (UNCUYO) - Facultad de Ciencias Médicas">Universidad Nacional de Cuyo (UNCUYO) - Facultad de Ciencias Médicas</option>
+                        <option value="Universidad Nacional de Tucumán (UNT) - Facultad de Medicina">Universidad Nacional de Tucumán (UNT) - Facultad de Medicina</option>
+                        <option value="Universidad Nacional del Litoral (UNL) - Facultad de Ciencias Médicas">Universidad Nacional del Litoral (UNL) - Facultad de Ciencias Médicas</option>
+                        <option value="Universidad Austral - Facultad de Ciencias Biomédicas">Universidad Austral - Facultad de Ciencias Biomédicas</option>
+                        <option value="Universidad Católica Argentina (UCA) - Facultad de Ciencias Médicas">Universidad Católica Argentina (UCA) - Facultad de Ciencias Médicas</option>
+                        <option value="Universidad Favaloro - Facultad de Ciencias Médicas">Universidad Favaloro - Facultad de Ciencias Médicas</option>
+                        <option value="Instituto Universitario del Hospital Italiano - Departamento de Ciencias de la Salud">Instituto Universitario del Hospital Italiano - Departamento de Ciencias de la Salud</option>
+                        <option value="Fundación Barceló - Facultad de Medicina">Fundación Barceló - Facultad de Medicina</option>
+                        <option value="Universidad Abierta Interamericana (UAI) - Facultad de Medicina y Ciencias de la Salud">Universidad Abierta Interamericana (UAI) - Facultad de Medicina y Ciencias de la Salud</option>
+                        <option value="Universidad del Salvador (USAL) - Facultad de Medicina">Universidad del Salvador (USAL) - Facultad de Medicina</option>
+                        <option value="Universidad Maimónides - Escuela de Ciencias de la Salud">Universidad Maimónides - Escuela de Ciencias de la Salud</option>
+                        <option value="Instituto Universitario CEMIC - Instituto Universitario CEMIC">Instituto Universitario CEMIC - Instituto Universitario CEMIC</option>
+                        <option value="Otra institución / No figura en lista">Otra institución / No figura en lista</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="anio_egreso">Año de Egreso:</label>
@@ -339,7 +358,7 @@
         const telefono = document.getElementById('telefono').value.trim();
         const profesion = document.getElementById('profesion').value;
         const especialidad = document.getElementById('especialidad').value.trim() || "No aplica / Título de Grado";
-        const institucion = document.getElementById('institucion').value.trim();
+        const institucion = document.getElementById('institucion').value;
         const anio_egreso = document.getElementById('anio_egreso').value.trim();
         const jurisdiccion = document.getElementById('jurisdiccion').value;
         const nro_tramite_dni = document.getElementById('nro_tramite_dni').value.trim();
@@ -390,5 +409,4 @@
 </script>
 
 </body>
-    </html>
-                    
+</html>
