@@ -410,7 +410,7 @@
 
     <!-- Script de Interactividad y Exportación -->
     <script>
-        // Lógica actualizada para cambiar la fuente elemento por elemento en vivo
+        // Lógica para cambiar la fuente elemento por elemento en vivo
         const fontSelector = document.getElementById('inp-font-family');
         
         fontSelector.addEventListener('change', (e) => {
@@ -475,8 +475,9 @@
             document.getElementById('prev-logo').style.height = e.target.value + 'px';
         });
 
-        // Descarga en PDF
-        document.getElementById('btn-download-pdf').addEventListener('click', () => {
+        // Descarga en PDF asegurando la carga de fuentes
+        document.getElementById('btn-download-pdf').addEventListener('click', async () => {
+            await document.fonts.ready;
             const element = document.getElementById('diploma-content');
             const options = {
                 margin:       0,
@@ -488,8 +489,9 @@
             html2pdf().from(element).set(options).save();
         });
 
-        // Descarga en Imagen (PNG) usando html2canvas
-        document.getElementById('btn-download-img').addEventListener('click', () => {
+        // Descarga en Imagen (PNG) asegurando la carga de fuentes
+        document.getElementById('btn-download-img').addEventListener('click', async () => {
+            await document.fonts.ready;
             const element = document.getElementById('diploma-content');
             html2canvas(element, { scale: 2, useCORS: true, logging: false }).then(canvas => {
                 const link = document.createElement('a');
@@ -500,5 +502,5 @@
         });
     </script>
 </body>
-    </html>
-    
+                    </html>
+                        
