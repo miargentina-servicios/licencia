@@ -3,22 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificado de Estudios Final - Universidad de Buenos Aires</title>
+    <title>Certificado de Estudios Final - UBA (Editable)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: 'Times New Roman', Times, serif, Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #e6e6e6;
             margin: 0;
             padding: 20px;
             color: #000;
         }
-        .certificado-container {
-            max-width: 800px;
-            background: #fff;
+        .barra-herramientas {
+            max-width: 900px;
+            margin: 0 auto 15px auto;
+            background: #2c3e50;
+            padding: 10px 20px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .barra-herramientas button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .barra-herramientas button:hover {
+            background-color: #219653;
+        }
+        .certificado-wrapper {
+            position: relative;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 40px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        /* Margen derecho para la imagen lateral */
+        .certificado-container {
+            background: #fff;
+            padding: 40px 100px 40px 50px; /* Margen derecho amplio para el sello/firma lateral */
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border: 1px solid #ccc;
+            position: relative;
+        }
+        /* Contenedor del logo superior */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .logo-container img {
+            max-height: 70px;
+            cursor: pointer;
+        }
+        /* Contenedor de la imagen lateral derecha */
+        .imagen-lateral {
+            position: absolute;
+            top: 40px;
+            right: 15px;
+            width: 75px;
+            text-align: center;
+        }
+        .imagen-lateral img {
+            max-width: 75px;
+            height: auto;
+            cursor: pointer;
         }
         .header {
             text-align: center;
@@ -66,147 +121,226 @@
             background-color: #f2f2f2;
             text-align: center;
         }
-        .text-center {
-            text-align: center;
-        }
         .promedio {
             text-align: right;
             font-size: 12px;
             font-weight: bold;
             margin-bottom: 15px;
         }
+        /* Efecto visual al pasar el mouse por elementos editables */
+        [contenteditable="true"]:hover {
+            outline: 1px dashed #3498db;
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 <body>
 
-<div class="certificado-container">
-    <div class="header">
-        <h2>UNIVERSIDAD DE BUENOS AIRES</h2>
-        <h3>CERTIFICADO DE ESTUDIOS FINAL</h3>
+<div class="barra-herramientas">
+    <span><b>Modo Edición Activa:</b> Haz clic en cualquier texto de abajo para modificarlo.</span>
+    <div>
+        <button onclick="descargarPNG()">Descargar PNG</button>
+        <button onclick="descargarPDF()" style="background-color: #2980b9;">Descargar PDF</button>
     </div>
-
-    <div class="texto-principal">
-        Por el presente certifico que <b>AGÜERO, YOLANDA NATALIA</b>, DNI <b>27.640.034</b> matrícula de alumno/a <b>2344</b> ha aprobado en esta universidad las asignaturas correspondientes a la carrera de <b>INGENIERIA EN AGRONOMIA</b> aprobada por resolución ministerial N° 786/01 que a continuación se detallan obteniendo las siguientes calificaciones definitivas.
-    </div>
-
-    <div class="curso-titulo">PRIMER AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
-    <table>
-        <tr>
-            <th>ASIGNATURA</th>
-            <th>CALIFICACIÓN</th>
-            <th>TIPO</th>
-            <th>LIBRO</th>
-            <th>ACTA</th>
-            <th>FOLIO</th>
-            <th>FECHA</th>
-        </tr>
-        <tr><td>MATEMATICA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9012</td><td>786/01</td><td>60156</td><td>07/12/2005</td></tr>
-        <tr><td>QUIMICA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9015</td><td>786/01</td><td>60156</td><td>09/12/2005</td></tr>
-        <tr><td>INT. AL CONOC. DE LA SOC. Y ESTADO</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9020</td><td>786/01</td><td>60156</td><td>11/12/2005</td></tr>
-        <tr><td>BIOLOGIA</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9022</td><td>786/01</td><td>60156</td><td>13/12/2005</td></tr>
-        <tr><td>FISICA E INTROD. A LA BIOFISICA</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9023</td><td>786/01</td><td>60156</td><td>17/12/2005</td></tr>
-        <tr><td>INT. AL PENSAMIENTO CIENTIFICO</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9025</td><td>786/01</td><td>60156</td><td>23/12/2005</td></tr>
-    </table>
-    <div class="promedio">PROMEDIO: 7,50 (SIETE 50)</div>
-
-    <div class="curso-titulo">SEGUNDO AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
-    <table>
-        <tr>
-            <th>ASIGNATURA</th>
-            <th>CALIFICACIÓN</th>
-            <th>TIPO</th>
-            <th>LIBRO</th>
-            <th>ACTA</th>
-            <th>FOLIO</th>
-            <th>FECHA</th>
-        </tr>
-        <tr><td>INT. A LA QUIMICA AGRICOLA Y AMBIENT.</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9050</td><td>786/01</td><td>60156</td><td>07/12/2006</td></tr>
-        <tr><td>QUIMICA APLICADA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9051</td><td>786/01</td><td>60156</td><td>09/12/2006</td></tr>
-        <tr><td>FISICA APLICADA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9053</td><td>786/01</td><td>60156</td><td>11/12/2006</td></tr>
-        <tr><td>ESTADISTICA GRAL.</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9056</td><td>786/01</td><td>60156</td><td>13/12/2006</td></tr>
-        <tr><td>BOTANICA MORFOLOGICA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9057</td><td>786/01</td><td>60156</td><td>17/12/2006</td></tr>
-        <tr><td>TOPOGRAFIA AGRICOLA</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9059</td><td>786/01</td><td>60156</td><td>21/12/2006</td></tr>
-        <tr><td>BIOMOLECULAS Y BIOQUIMICA APLIC.</td><td>APROBADO 9/NUEVE</td><td>EXAMEN</td><td>9060</td><td>786/01</td><td>60156</td><td>22/12/2006</td></tr>
-        <tr><td>EDAFOLOGIA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9061</td><td>786/01</td><td>60156</td><td>23/12/2006</td></tr>
-        <tr><td>CLIMATOLOGIA Y AGROMETEOROLOGIA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9063</td><td>786/01</td><td>60156</td><td>27/12/2006</td></tr>
-        <tr><td>BOTANICA SISTEMATICA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9067</td><td>786/01</td><td>60156</td><td>29/12/2006</td></tr>
-        <tr><td>ECONOMIA POLITICA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>0070</td><td>786/01</td><td>60156</td><td>30/12/2006</td></tr>
-    </table>
-    <div class="promedio">PROMEDIO: 7,45 (SIETE 45)</div>
-
-    <div class="curso-titulo">TERCER AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
-    <table>
-        <tr>
-            <th>ASIGNATURA</th>
-            <th>CALIFICACIÓN</th>
-            <th>TIPO</th>
-            <th>LIBRO</th>
-            <th>ACTA</th>
-            <th>FOLIO</th>
-            <th>FECHA</th>
-        </tr>
-        <tr><td>GENETICA Y MEJORAMIENTO VEGETAL</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9067</td><td>786/01</td><td>60156</td><td>09/12/2007</td></tr>
-        <tr><td>FISIOLOG. DE LAS PLANTAS SUPERIORES</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9070</td><td>786/01</td><td>60156</td><td>16/12/2007</td></tr>
-        <tr><td>MICROBIOLOG. AGRICOLA Y AMBIENTAL</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9071</td><td>786/01</td><td>60156</td><td>11/12/2007</td></tr>
-        <tr><td>BASES BIOLOGICAS DE LA PROD. ANIMAL</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9072</td><td>786/01</td><td>60156</td><td>11/12/2007</td></tr>
-        <tr><td>ECONOMIA AGRICOLA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9074</td><td>786/01</td><td>60156</td><td>17/12/2007</td></tr>
-        <tr><td>FITOPATOLOGIA</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9076</td><td>786/01</td><td>60156</td><td>18/12/2007</td></tr>
-        <tr><td>ECOLOGIA</td><td>APROBADO 9/NUEVE</td><td>EXAMEN</td><td>9079</td><td>786/01</td><td>60156</td><td>20/12/2007</td></tr>
-        <tr><td>NUTRICION Y ALIMENTACION ANIMAL</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9080</td><td>786/01</td><td>60156</td><td>21/12/2007</td></tr>
-        <tr><td>MAQUINAS AGRICOLAS</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9081</td><td>786/01</td><td>60156</td><td>22/12/2007</td></tr>
-        <tr><td>ZOOLOGIA AGRICOLA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9083</td><td>786/01</td><td>60156</td><td>29/11/2007</td></tr>
-    </table>
-    <div class="promedio">PROMEDIO: 7,60 (SIETE 60)</div>
-
-    <div class="curso-titulo">CUARTO AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
-    <table>
-        <tr>
-            <th>ASIGNATURA</th>
-            <th>CALIFICACIÓN</th>
-            <th>TIPO</th>
-            <th>LIBRO</th>
-            <th>ACTA</th>
-            <th>FOLIO</th>
-            <th>FECHA</th>
-        </tr>
-        <tr><td>PRODUCCION VEGETAL</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9083</td><td>786/01</td><td>60156</td><td>09/12/2008</td></tr>
-        <tr><td>MALEZAS</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9085</td><td>786/01</td><td>60156</td><td>10/12/2008</td></tr>
-        <tr><td>SOCIOLOGIA Y EXTENSION AGRARIA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9086</td><td>786/01</td><td>60156</td><td>11/12/2008</td></tr>
-        <tr><td>FERTILIDAD DEL SUELO Y FERTILIZACION</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9087</td><td>786/01</td><td>60156</td><td>15/12/2008</td></tr>
-        <tr><td>MODELOS ESTADISTICOS</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9090</td><td>786/01</td><td>60156</td><td>17/12/2008</td></tr>
-        <tr><td>PROTECCION VEGETAL</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9091</td><td>786/01</td><td>60156</td><td>19/12/2008</td></tr>
-        <tr><td>MEJORAMIENTO GENETICO ANIMAL</td><td>APROBADO 9/NUEVE</td><td>EXAMEN</td><td>9092</td><td>786/01</td><td>60156</td><td>21/12/2008</td></tr>
-        <tr><td>HORTICULTURA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9094</td><td>786/01</td><td>60156</td><td>22/12/2008</td></tr>
-        <tr><td>FRUTICULTURA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9095</td><td>786/01</td><td>60156</td><td>23/12/2008</td></tr>
-        <tr><td>TELEDETECCION Y SIST. DE INF. GEOG.</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9097</td><td>786/01</td><td>60156</td><td>27/12/2008</td></tr>
-        <tr><td>PRODUCCION DE GRANOS</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9098</td><td>786/01</td><td>60156</td><td>28/12/2008</td></tr>
-        <tr><td>PRODUCCION FORESTAL</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9099</td><td>786/01</td><td>60156</td><td>29/12/2008</td></tr>
-        <tr><td>IMPACTO AMBIENT. EN AGROSISTEMAS</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>9100</td><td>786/01</td><td>60156</td><td>30/12/2008</td></tr>
-    </table>
-    <div class="promedio">PROMEDIO: 8,92 (SEIS 92)</div>
-
-    <div class="curso-titulo">QUINTO AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
-    <table>
-        <tr>
-            <th>ASIGNATURA</th>
-            <th>CALIFICACIÓN</th>
-            <th>TIPO</th>
-            <th>LIBRO</th>
-            <th>ACTA</th>
-            <th>FOLIO</th>
-            <th>FECHA</th>
-        </tr>
-        <tr><td>CONS. Y PLANIF. DEL USO DE LA TIERRA</td><td>APROBADO 9/NUEVE</td><td>EXAMEN</td><td>9098</td><td>786/01</td><td>60156</td><td>04/12/2009</td></tr>
-        <tr><td>PRODUC. Y UTILIZAC. DE FORRAJES</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>9099</td><td>786/01</td><td>60156</td><td>07/12/2009</td></tr>
-        <tr><td>PROD. DE CARNE BOVINA</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>7020</td><td>786/01</td><td>60156</td><td>11/12/2009</td></tr>
-        <tr><td>PRODUCCION LECHERA</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>7022</td><td>786/01</td><td>60156</td><td>14/12/2009</td></tr>
-        <tr><td>ADMINISTRACION RURAL</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>7023</td><td>786/01</td><td>60156</td><td>18/12/2009</td></tr>
-        <tr><td>MERCADOS AGROPECUARIOS</td><td>APROBADO 8/OCHO</td><td>EXAMEN</td><td>7025</td><td>786/01</td><td>60156</td><td>21/12/2009</td></tr>
-        <tr><td>SISTEMA DE RIEGO Y DRENAJE</td><td>APROBADO 7/SIETE</td><td>EXAMEN</td><td>7026</td><td>786/01</td><td>60156</td><td>22/12/2009</td></tr>
-    </table>
-    <div class="promedio">PROMEDIO: 7,85 (SIETE 85)</div>
 </div>
 
+<div class="certificado-wrapper">
+    <div class="certificado-container" id="captura-area">
+        
+        <div class="logo-container">
+            <img id="logoSuperior" src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Escudo_de_la_Universidad_de_Buenos_Aires.svg" alt="Logo UBA" title="Haz clic para cambiar URL del logo" onclick="cambiarLogo()">
+        </div>
+
+        <div class="imagen-lateral">
+            <img id="imagenLateral" src="https://i.imgur.com/7A26W6G.png" alt="Sello lateral" title="Haz clic para cambiar URL de la imagen lateral" onclick="cambiarImagenLateral()" style="transform: rotate(90deg);">
+        </div>
+
+        <div class="header">
+            <h2 contenteditable="true">UNIVERSIDAD DE BUENOS AIRES</h2>
+            <h3 contenteditable="true">CERTIFICADO DE ESTUDIOS FINAL</h3>
+        </div>
+
+        <div class="texto-principal" contenteditable="true">
+            Por el presente certifico que <b>AGÜERO, YOLANDA NATALIA</b>, DNI <b>27.640.034</b> matrícula de alumno/a <b>2344</b> ha aprobado en esta universidad las asignaturas correspondientes a la carrera de <b>INGENIERIA EN AGRONOMIA</b> aprobada por resolución ministerial N° 786/01 que a continuación se detallan obteniendo las siguientes calificaciones definitivas.
+        </div>
+
+        <div class="curso-titulo" contenteditable="true">PRIMER AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
+        <table>
+            <tr>
+                <th>ASIGNATURA</th>
+                <th>CALIFICACIÓN</th>
+                <th>TIPO</th>
+                <th>LIBRO</th>
+                <th>ACTA</th>
+                <th>FOLIO</th>
+                <th>FECHA</th>
+            </tr>
+            <tr><td contenteditable="true">MATEMATICA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9012</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">07/12/2005</td></tr>
+            <tr><td contenteditable="true">QUIMICA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9015</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">09/12/2005</td></tr>
+            <tr><td contenteditable="true">INT. AL CONOC. DE LA SOC. Y ESTADO</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9020</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">11/12/2005</td></tr>
+            <tr><td contenteditable="true">BIOLOGIA</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9022</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">13/12/2005</td></tr>
+            <tr><td contenteditable="true">FISICA E INTROD. A LA BIOFISICA</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9023</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">17/12/2005</td></tr>
+            <tr><td contenteditable="true">INT. AL PENSAMIENTO CIENTIFICO</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9025</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">23/12/2005</td></tr>
+        </table>
+        <div class="promedio" contenteditable="true">PROMEDIO: 7,50 (SIETE 50)</div>
+
+        <div class="curso-titulo" contenteditable="true">SEGUNDO AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
+        <table>
+            <tr>
+                <th>ASIGNATURA</th>
+                <th>CALIFICACIÓN</th>
+                <th>TIPO</th>
+                <th>LIBRO</th>
+                <th>ACTA</th>
+                <th>FOLIO</th>
+                <th>FECHA</th>
+            </tr>
+            <tr><td contenteditable="true">INT. A LA QUIMICA AGRICOLA Y AMBIENT.</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9050</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">07/12/2006</td></tr>
+            <tr><td contenteditable="true">QUIMICA APLICADA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9051</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">09/12/2006</td></tr>
+            <tr><td contenteditable="true">FISICA APLICADA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9053</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">11/12/2006</td></tr>
+            <tr><td contenteditable="true">ESTADISTICA GRAL.</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9056</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">13/12/2006</td></tr>
+            <tr><td contenteditable="true">BOTANICA MORFOLOGICA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9057</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">17/12/2006</td></tr>
+            <tr><td contenteditable="true">TOPOGRAFIA AGRICOLA</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9059</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">21/12/2006</td></tr>
+            <tr><td contenteditable="true">BIOMOLECULAS Y BIOQUIMICA APLIC.</td><td contenteditable="true">APROBADO 9/NUEVE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9060</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">22/12/2006</td></tr>
+            <tr><td contenteditable="true">EDAFOLOGIA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9061</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">23/12/2006</td></tr>
+            <tr><td contenteditable="true">CLIMATOLOGIA Y AGROMETEOROLOGIA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9063</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">27/12/2006</td></tr>
+            <tr><td contenteditable="true">BOTANICA SISTEMATICA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9067</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">29/12/2006</td></tr>
+            <tr><td contenteditable="true">ECONOMIA POLITICA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">0070</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">30/12/2006</td></tr>
+        </table>
+        <div class="promedio" contenteditable="true">PROMEDIO: 7,45 (SIETE 45)</div>
+
+        <div class="curso-titulo" contenteditable="true">TERCER AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
+        <table>
+            <tr>
+                <th>ASIGNATURA</th>
+                <th>CALIFICACIÓN</th>
+                <th>TIPO</th>
+                <th>LIBRO</th>
+                <th>ACTA</th>
+                <th>FOLIO</th>
+                <th>FECHA</th>
+            </tr>
+            <tr><td contenteditable="true">GENETICA Y MEJORAMIENTO VEGETAL</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9067</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">09/12/2007</td></tr>
+            <tr><td contenteditable="true">FISIOLOG. DE LAS PLANTAS SUPERIORES</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9070</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">16/12/2007</td></tr>
+            <tr><td contenteditable="true">MICROBIOLOG. AGRICOLA Y AMBIENTAL</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9071</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">11/12/2007</td></tr>
+            <tr><td contenteditable="true">BASES BIOLOGICAS DE LA PROD. ANIMAL</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9072</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">11/12/2007</td></tr>
+            <tr><td contenteditable="true">ECONOMIA AGRICOLA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9074</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">17/12/2007</td></tr>
+            <tr><td contenteditable="true">FITOPATOLOGIA</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9076</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">18/12/2007</td></tr>
+            <tr><td contenteditable="true">ECOLOGIA</td><td contenteditable="true">APROBADO 9/NUEVE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9079</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">20/12/2007</td></tr>
+            <tr><td contenteditable="true">NUTRICION Y ALIMENTACION ANIMAL</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9080</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">21/12/2007</td></tr>
+            <tr><td contenteditable="true">MAQUINAS AGRICOLAS</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9081</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">22/12/2007</td></tr>
+            <tr><td contenteditable="true">ZOOLOGIA AGRICOLA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9083</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">29/11/2007</td></tr>
+        </table>
+        <div class="promedio" contenteditable="true">PROMEDIO: 7,60 (SIETE 60)</div>
+
+        <div class="curso-titulo" contenteditable="true">CUARTO AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
+        <table>
+            <tr>
+                <th>ASIGNATURA</th>
+                <th>CALIFICACIÓN</th>
+                <th>TIPO</th>
+                <th>LIBRO</th>
+                <th>ACTA</th>
+                <th>FOLIO</th>
+                <th>FECHA</th>
+            </tr>
+            <tr><td contenteditable="true">PRODUCCION VEGETAL</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9083</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">09/12/2008</td></tr>
+            <tr><td contenteditable="true">MALEZAS</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9085</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">10/12/2008</td></tr>
+            <tr><td contenteditable="true">SOCIOLOGIA Y EXTENSION AGRARIA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9086</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">11/12/2008</td></tr>
+            <tr><td contenteditable="true">FERTILIDAD DEL SUELO Y FERTILIZACION</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9087</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">15/12/2008</td></tr>
+            <tr><td contenteditable="true">MODELOS ESTADISTICOS</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9090</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">17/12/2008</td></tr>
+            <tr><td contenteditable="true">PROTECCION VEGETAL</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9091</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">19/12/2008</td></tr>
+            <tr><td contenteditable="true">MEJORAMIENTO GENETICO ANIMAL</td><td contenteditable="true">APROBADO 9/NUEVE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9092</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">21/12/2008</td></tr>
+            <tr><td contenteditable="true">HORTICULTURA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9094</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">22/12/2008</td></tr>
+            <tr><td contenteditable="true">FRUTICULTURA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9095</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">23/12/2008</td></tr>
+            <tr><td contenteditable="true">TELEDETECCION Y SIST. DE INF. GEOG.</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9097</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">27/12/2008</td></tr>
+            <tr><td contenteditable="true">PRODUCCION DE GRANOS</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9098</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">28/12/2008</td></tr>
+            <tr><td contenteditable="true">PRODUCCION FORESTAL</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9099</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">29/12/2008</td></tr>
+            <tr><td contenteditable="true">IMPACTO AMBIENT. EN AGROSISTEMAS</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9100</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">30/12/2008</td></tr>
+        </table>
+        <div class="promedio" contenteditable="true">PROMEDIO: 8,92 (SEIS 92)</div>
+
+        <div class="curso-titulo" contenteditable="true">QUINTO AÑO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CURSO: aprobado</div>
+        <table>
+            <tr>
+                <th>ASIGNATURA</th>
+                <th>CALIFICACIÓN</th>
+                <th>TIPO</th>
+                <th>LIBRO</th>
+                <th>ACTA</th>
+                <th>FOLIO</th>
+                <th>FECHA</th>
+            </tr>
+            <tr><td contenteditable="true">CONS. Y PLANIF. DEL USO DE LA TIERRA</td><td contenteditable="true">APROBADO 9/NUEVE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9098</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">04/12/2009</td></tr>
+            <tr><td contenteditable="true">PRODUC. Y UTILIZAC. DE FORRAJES</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">9099</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">07/12/2009</td></tr>
+            <tr><td contenteditable="true">PROD. DE CARNE BOVINA</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7020</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">11/12/2009</td></tr>
+            <tr><td contenteditable="true">PRODUCCION LECHERA</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7022</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">14/12/2009</td></tr>
+            <tr><td contenteditable="true">ADMINISTRACION RURAL</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7023</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">18/12/2009</td></tr>
+            <tr><td contenteditable="true">MERCADOS AGROPECUARIOS</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7025</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">21/12/2009</td></tr>
+            <tr><td contenteditable="true">SISTEMA DE RIEGO Y DRENAJE</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7026</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">22/12/2009</td></tr>
+        </table>
+        <div class="promedio" contenteditable="true">PROMEDIO: 7,85 (SIETE 85)</div>
+
+    </div>
+</div>
+
+<script>
+    // Funciones para cambiar los enlaces de las imágenes de forma interactiva
+    function cambiarLogo() {
+        let nuevaURL = prompt("Ingresa la URL de la imagen para el logo superior:", document.getElementById('logoSuperior').src);
+        if (nuevaURL) {
+            document.getElementById('logoSuperior').src = nuevaURL;
+        }
+    }
+
+    function cambiarImagenLateral() {
+        let nuevaURL = prompt("Ingresa la URL de la imagen/sello lateral:", document.getElementById('imagenLateral').src);
+        if (nuevaURL) {
+            document.getElementById('imagenLateral').src = nuevaURL;
+        }
+    }
+
+    // Funciones de exportación
+    function descargarPNG() {
+        const elemento = document.getElementById('captura-area');
+        html2canvas(elemento, { scale: 2, useCORS: true }).then(canvas => {
+            const enlace = document.createElement('a');
+            enlace.download = 'certificado_analitico.png';
+            enlace.href = canvas.toDataURL('image/png');
+            enlace.click();
+        });
+    }
+
+    function descargarPDF() {
+        const elemento = document.getElementById('captura-area');
+        html2canvas(elemento, { scale: 2, useCORS: true }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            
+            const imgWidth = pageWidth;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('certificado_analitico.pdf');
+        });
+    }
+</script>
+
 </body>
-</html>                                                                                                                  </html>
-  
+</html>
