@@ -1,437 +1,1012 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador y Editor de Diploma - UBA</title>
-    <!-- Fuentes de Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:ital,wght@1,500;1,700&family=Monsieur+La+Doulaise&family=Times+New+Roman:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
-    <!-- Librerías para exportar a PDF e Imagen -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body {
-            font-family: 'Times New Roman', Times, serif;
-            background-color: #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
+<title>Generador y Editor de Diploma - UBA</title>
 
-        /* Panel de Control / Editor Superior */
-        #editor-panel {
-            width: 100%;
-            height: 220px;
-            background: #ffffff;
-            border-bottom: 2px solid #cbd5e1;
-            padding: 12px 20px;
-            overflow-y: auto;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            z-index: 10;
-        }
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:ital,wght@1,500;1,700&family=Great+Vibes&family=Allura&family=Alex+Brush&family=Parisienne&family=Pinyon+Script&family=Mrs+Saint+Delafield&family=Italianno&family=Sacramento&family=Qwigley&family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
 
-        .editor-container-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
+<!-- Librerías -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-        .editor-panel h2 {
-            font-size: 1.05rem;
-            color: #1e293b;
-            margin-bottom: 8px;
-            grid-column: span 3;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+<style>
 
-        .buttons-group {
-            display: flex;
-            gap: 8px;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        .control-group {
-            margin-bottom: 4px;
-        }
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
 
-        .control-group label {
-            display: block;
-            font-size: 0.73rem;
-            font-weight: bold;
-            color: #475569;
-            margin-bottom: 2px;
-        }
+/* =========================
+   PANEL EDITOR
+========================= */
 
-        .control-group input, .control-group textarea {
-            width: 100%;
-            padding: 5px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            font-size: 0.82rem;
-        }
+#editor-panel {
+    width: 100%;
+    height: 250px;
+    background: #ffffff;
+    border-bottom: 2px solid #cbd5e1;
+    padding: 12px 20px;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    z-index: 10;
+}
 
-        .control-group textarea {
-            resize: vertical;
-            height: 48px;
-        }
+.editor-container-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
 
-        .btn {
-            background-color: #2563eb;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.8rem;
-            transition: background 0.2s;
-        }
+.editor-panel h2 {
+    font-size: 1.05rem;
+    color: #1e293b;
+    margin-bottom: 8px;
+    grid-column: span 3;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .btn:hover {
-            background-color: #1d4ed8;
-        }
+.buttons-group {
+    display: flex;
+    gap: 8px;
+}
 
-        .btn-img {
-            background-color: #059669;
-        }
+.control-group {
+    margin-bottom: 6px;
+}
 
-        .btn-img:hover {
-            background-color: #047857;
-        }
+.control-group label {
+    display: block;
+    font-size: 0.73rem;
+    font-weight: bold;
+    color: #475569;
+    margin-bottom: 3px;
+}
 
-        /* Contenedor de la Vista Previa */
-        #preview-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            overflow: auto;
-        }
+.control-group input,
+.control-group textarea,
+.control-group select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    background: white;
+}
 
-        .diploma-sheet {
-            width: 1122px;
-            height: 794px;
-            background: #ffffff;
-            padding: 50px 70px;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex-shrink: 0;
-        }
+.control-group textarea {
+    resize: vertical;
+    height: 48px;
+}
 
-        /* Estilos Internos del Diploma */
-        .header-top {
-            text-align: center;
-            position: relative;
-        }
+.btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+}
 
-        /* República Argentina */
-        .republica-title {
-            font-family: 'Cinzel', serif !important;
-            font-style: italic !important;
-            font-size: 2.3rem;
-            letter-spacing: 2px;
-            font-weight: 700;
-            color: #111;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            padding: 0 40px;
-        }
+.btn:hover {
+    background-color: #1d4ed8;
+}
 
-        .republica-title span {
-            font-style: italic !important;
-        }
+.btn-img {
+    background-color: #059669;
+}
 
-        .logo-uba {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-        }
+.btn-img:hover {
+    background-color: #047857;
+}
 
-        /* Forzamos la tipografía Monsieur La Doulaise en todo el bloque central */
-        .monsieur-text, .monsieur-text * {
-            font-family: 'Monsieur La Doulaise', cursive !important;
-        }
+/* Selector de tipografía */
 
-        .univ-title {
-            font-size: 4rem;
-            color: #222;
-            margin-top: 5px;
-            line-height: 1;
-        }
+.font-preview {
+    margin-top: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    font-size: 18px;
+}
 
-        .facu-title {
-            font-size: 2.8rem;
-            color: #333;
-            margin-top: -5px;
-        }
+/* =========================
+   VISTA PREVIA
+========================= */
 
-        .body-text {
-            text-align: justify;
-            font-size: 1.5rem;
-            line-height: 1.5;
-            color: #222;
-            padding: 0 30px;
-        }
+#preview-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    overflow: auto;
+}
 
-        .body-text .line-1 {
-            text-align: center;
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-        }
+.diploma-sheet {
+    width: 1122px;
+    height: 794px;
+    background: #ffffff;
+    padding: 50px 70px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
 
-        .body-text .name-highlight {
-            text-align: center;
-            font-size: 3.2rem;
-            color: #111;
-            margin: 5px 0;
-            line-height: 1;
-            font-weight: bold !important; /* Nombre del alumno en negrita */
-        }
+/* =========================
+   ENCABEZADO
+========================= */
 
-        .date-location {
-            display: flex;
-            justify-content: flex-end;
-            font-size: 1.4rem;
-            padding-right: 40px;
-            margin-top: -5px;
-        }
+.header-top {
+    text-align: center;
+    position: relative;
+}
 
-        /* Firmas y Sellos */
-        .footer-signatures {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            padding-bottom: 10px;
-        }
+.republica-title {
+    font-family: 'Cinzel', serif !important;
+    font-style: italic !important;
+    font-size: 2.3rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    padding: 0 40px;
+}
 
-        .sig-box {
-            text-align: center;
-            width: 28%;
-            position: relative;
-        }
+.republica-title span {
+    font-style: italic !important;
+}
 
-        .sig-image-container {
-            height: 80px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            margin-bottom: 5px;
-        }
+.logo-uba {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
 
-        .sig-img {
-            max-width: 100%;
-            object-fit: contain;
-        }
+/* =========================
+   TIPOGRAFÍA DINÁMICA
+========================= */
 
-        .sig-line {
-            border-top: 1px solid #333;
-            width: 80%;
-            margin: 0 auto 5px auto;
-        }
+.dynamic-font,
+.dynamic-font * {
+    font-family: 'Monsieur La Doulaise', cursive !important;
+}
 
-        .sig-text {
-            font-family: 'Times New Roman', Times, serif !important;
-            font-style: italic !important;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            color: #333;
-            line-height: 1.2;
-        }
-    </style>
+/* Universidad */
+
+.univ-title {
+    font-size: 4rem;
+    color: #222;
+    margin-top: 5px;
+    line-height: 1;
+}
+
+/* Facultad */
+
+.facu-title {
+    font-size: 2.8rem;
+    color: #333;
+    margin-top: -5px;
+}
+
+/* Cuerpo */
+
+.body-text {
+    text-align: justify;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: #222;
+    padding: 0 30px;
+}
+
+.body-text .line-1 {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+}
+
+.body-text .name-highlight {
+    text-align: center;
+    font-size: 3.2rem;
+    color: #111;
+    margin: 5px 0;
+    line-height: 1;
+    font-weight: bold !important;
+}
+
+.date-location {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1.4rem;
+    padding-right: 40px;
+    margin-top: -5px;
+}
+
+/* =========================
+   FIRMAS
+========================= */
+
+.footer-signatures {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding-bottom: 10px;
+}
+
+.sig-box {
+    text-align: center;
+    width: 28%;
+    position: relative;
+}
+
+.sig-image-container {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 5px;
+}
+
+.sig-img {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.sig-line {
+    border-top: 1px solid #333;
+    width: 80%;
+    margin: 0 auto 5px auto;
+}
+
+.sig-text {
+    font-family: 'Times New Roman', Times, serif !important;
+    font-style: italic !important;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #333;
+    line-height: 1.2;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    #editor-panel {
+        height: 300px;
+    }
+
+    .editor-container-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .editor-panel h2 {
+        grid-column: span 1;
+    }
+
+}
+
+</style>
 </head>
+
 <body>
 
-    <!-- Panel de Edición Superior -->
-    <div id="editor-panel" class="editor-panel">
-        <div class="editor-container-grid">
-            <h2>
-                <span>Editor del Diploma - UBA</span>
-                <div class="buttons-group">
-                    <button class="btn btn-img" id="btn-download-img">Descargar en Imagen (PNG)</button>
-                    <button class="btn" id="btn-download-pdf">Descargar en PDF</button>
-                </div>
-            </h2>
-            
-            <div>
-                <div class="control-group">
-                    <label>Nombre del Graduado/a:</label>
-                    <input type="text" id="inp-name" value="Julieta Belen Altamirano">
-                </div>
-                <div class="control-group">
-                    <label>Lugar y Fecha:</label>
-                    <input type="text" id="inp-date" value="Buenos Aires, 18 de agosto de 2021">
-                </div>
+<!-- =========================
+     PANEL DE EDICIÓN
+========================= -->
+
+<div id="editor-panel" class="editor-panel">
+
+    <div class="editor-container-grid">
+
+        <h2>
+
+            <span>Editor del Diploma - UBA</span>
+
+            <div class="buttons-group">
+
+                <button class="btn btn-img" id="btn-download-img">
+                    Descargar en Imagen (PNG)
+                </button>
+
+                <button class="btn" id="btn-download-pdf">
+                    Descargar en PDF
+                </button>
+
             </div>
 
-            <div>
-                <div class="control-group">
-                    <label>Logo UBA (Imagen y Tamaño):</label>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <input type="file" id="inp-logo-file" accept="image/*" style="flex: 1;">
-                        <input type="range" id="inp-logo-size" min="40" max="150" value="80" style="width: 90px;">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label>Texto del Cuerpo:</label>
-                    <textarea id="inp-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</textarea>
-                </div>
+        </h2>
+
+
+        <!-- COLUMNA 1 -->
+
+        <div>
+
+            <div class="control-group">
+
+                <label>Nombre del Graduado/a:</label>
+
+                <input
+                    type="text"
+                    id="inp-name"
+                    value="Julieta Belen Altamirano"
+                >
+
             </div>
 
-            <div>
-                <div class="control-group">
-                    <label>Firmas y Sellos (Textos):</label>
-                    <input type="text" id="inp-sig1-text" value="CARLOS REYES TORD&#10;SECRETARIO ACADÉMICO" style="margin-bottom:2px;">
-                    <input type="text" id="inp-sig2-text" value="RICARDO J. GELPÍ&#10;DECANO" style="margin-bottom:2px;">
+
+            <div class="control-group">
+
+                <label>Lugar y Fecha:</label>
+
+                <input
+                    type="text"
+                    id="inp-date"
+                    value="Buenos Aires, 18 de agosto de 2021"
+                >
+
+            </div>
+
+
+            <!-- NUEVO SELECTOR -->
+
+            <div class="control-group">
+
+                <label>Tipografía del Diploma:</label>
+
+                <select id="font-selector">
+
+                    <option value="'Monsieur La Doulaise', cursive">
+                        Monsieur La Doulaise
+                    </option>
+
+                    <option value="'Great Vibes', cursive">
+                        Great Vibes
+                    </option>
+
+                    <option value="'Allura', cursive">
+                        Allura
+                    </option>
+
+                    <option value="'Alex Brush', cursive">
+                        Alex Brush
+                    </option>
+
+                    <option value="'Parisienne', cursive">
+                        Parisienne
+                    </option>
+
+                    <option value="'Pinyon Script', cursive">
+                        Pinyon Script
+                    </option>
+
+                    <option value="'Mrs Saint Delafield', cursive">
+                        Mrs Saint Delafield
+                    </option>
+
+                    <option value="'Italianno', cursive">
+                        Italianno
+                    </option>
+
+                    <option value="'Sacramento', cursive">
+                        Sacramento
+                    </option>
+
+                    <option value="'Qwigley', cursive">
+                        Qwigley
+                    </option>
+
+                </select>
+
+
+                <div
+                    id="font-preview"
+                    class="font-preview"
+                    style="font-family:'Monsieur La Doulaise', cursive;"
+                >
+                    Universidad de Buenos Aires
                 </div>
+
             </div>
 
         </div>
-    </div>
 
-    <!-- Vista Previa del Diploma -->
-    <div id="preview-container">
-        <div class="diploma-sheet" id="diploma-content">
-            
-            <!-- Encabezado -->
-            <div class="header-top">
-                <div class="republica-title">
-                    <span>REPÚBLICA</span>
-                    <img id="prev-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Escudo_de_la_Universidad_de_Buenos_Aires.svg/1200px-Escudo_de_la_Universidad_de_Buenos_Aires.svg.png" class="logo-uba" alt="Logo UBA">
-                    <span>ARGENTINA</span>
+
+        <!-- COLUMNA 2 -->
+
+        <div>
+
+            <div class="control-group">
+
+                <label>Logo UBA (Imagen y Tamaño):</label>
+
+                <div
+                    style="
+                    display:flex;
+                    gap:10px;
+                    align-items:center;
+                    "
+                >
+
+                    <input
+                        type="file"
+                        id="inp-logo-file"
+                        accept="image/*"
+                        style="flex:1;"
+                    >
+
+                    <input
+                        type="range"
+                        id="inp-logo-size"
+                        min="40"
+                        max="150"
+                        value="80"
+                        style="width:90px;"
+                    >
+
                 </div>
-                
-                <!-- Contenedor con la clase que fuerza Monsieur La Doulaise a todo lo de adentro -->
-                <div class="monsieur-text">
-                    <div class="univ-title">Universidad de Buenos Aires</div>
-                    <div class="facu-title">Facultad de Medicina</div>
 
-                    <div class="body-text" style="margin-top: 10px;">
-                        <div class="line-1">El Rector de la Universidad y el Decano de la Facultad</div>
-                        <div class="name-highlight" id="prev-name">Julieta Belen Altamirano</div>
-                        <div id="prev-body">natural de la Provincia de Buenos Aires, quien ha cumplido el 1 de octubre de 2020 con la totalidad de las obligaciones académicas establecidas en el plan de estudios; por lo tanto, en virtud de las normas vigentes, se le expide el presente diploma de Enfermera Universitaria..</div>
-                    </div>
-
-                    <div class="date-location" id="prev-date" style="margin-top: 15px;">
-                        Buenos Aires, 18 de agosto de 2021
-                    </div>
-                </div>
             </div>
 
-            <!-- Bloque de Firmas y Sellos Inferiores -->
-            <div class="footer-signatures">
-                <div class="sig-box">
-                    <div class="sig-image-container">
-                        <img id="prev-sig1-img" class="sig-img" src="" style="display:none;">
-                    </div>
-                    <div class="sig-line"></div>
-                    <div class="sig-text" id="prev-sig1-text">CARLOS REYES TORD<br>SECRETARIO ACADÉMICO</div>
-                </div>
 
-                <div class="sig-box">
-                    <div class="sig-image-container">
-                        <img id="prev-sig2-img" class="sig-img" src="" style="display:none;">
-                    </div>
-                    <div class="sig-line"></div>
-                    <div class="sig-text" id="prev-sig2-text">RICARDO J. GELPÍ<br>DECANO</div>
-                </div>
+            <div class="control-group">
 
-                <div class="sig-box">
-                    <div class="sig-image-container">
-                        <img id="prev-sig3-img" class="sig-img" src="" style="display:none;">
-                    </div>
-                    <div class="sig-line"></div>
-                    <div class="sig-text" id="prev-sig3-text">ALBERTO E. BARBIERI<br>RECTOR</div>
-                </div>
+                <label>Texto del Cuerpo:</label>
+
+                <textarea id="inp-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</textarea>
+
             </div>
 
         </div>
+
+
+        <!-- COLUMNA 3 -->
+
+        <div>
+
+            <div class="control-group">
+
+                <label>Firmas y Sellos (Textos):</label>
+
+                <input
+                    type="text"
+                    id="inp-sig1-text"
+                    value="CARLOS REYES TORD&#10;SECRETARIO ACADÉMICO"
+                    style="margin-bottom:2px;"
+                >
+
+                <input
+                    type="text"
+                    id="inp-sig2-text"
+                    value="RICARDO J. GELPÍ&#10;DECANO"
+                    style="margin-bottom:2px;"
+                >
+
+            </div>
+
+        </div>
+
     </div>
 
-    <!-- Script de Interactividad y Exportación -->
-    <script>
-        const bindInput = (inputId, previewId, property = 'innerText') => {
-            const input = document.getElementById(inputId);
-            const preview = document.getElementById(previewId);
-            input.addEventListener('input', () => {
-                if(property === 'innerHTML') {
-                    preview.innerHTML = input.value.replace(/\n/g, '<br>');
-                } else {
-                    preview.innerText = input.value;
-                }
+</div>
+
+
+<!-- =========================
+     DIPLOMA
+========================= -->
+
+<div id="preview-container">
+
+    <div
+        class="diploma-sheet"
+        id="diploma-content"
+    >
+
+        <!-- ENCABEZADO -->
+
+        <div class="header-top">
+
+            <div class="republica-title">
+
+                <span>REPÚBLICA</span>
+
+                <img
+                    id="prev-logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Escudo_de_la_Universidad_de_Buenos_Aires.svg/1200px-Escudo_de_la_Universidad_de_Buenos_Aires.svg.png"
+                    class="logo-uba"
+                    alt="Logo UBA"
+                >
+
+                <span>ARGENTINA</span>
+
+            </div>
+
+
+            <!-- BLOQUE DE TIPOGRAFÍA DINÁMICA -->
+
+            <div class="dynamic-font" id="dynamic-font-block">
+
+                <div class="univ-title">
+                    Universidad de Buenos Aires
+                </div>
+
+                <div class="facu-title">
+                    Facultad de Medicina
+                </div>
+
+
+                <div
+                    class="body-text"
+                    style="margin-top:10px;"
+                >
+
+                    <div class="line-1">
+                        El Rector de la Universidad y el Decano de la Facultad
+                    </div>
+
+
+                    <div
+                        class="name-highlight"
+                        id="prev-name"
+                    >
+                        Julieta Belen Altamirano
+                    </div>
+
+
+                    <div id="prev-body">
+
+                        natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="date-location"
+                    id="prev-date"
+                    style="margin-top:15px;"
+                >
+                    Buenos Aires, 18 de agosto de 2021
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FIRMAS -->
+
+        <div class="footer-signatures">
+
+            <div class="sig-box">
+
+                <div class="sig-image-container">
+
+                    <img
+                        id="prev-sig1-img"
+                        class="sig-img"
+                        src=""
+                        style="display:none;"
+                    >
+
+                </div>
+
+                <div class="sig-line"></div>
+
+                <div
+                    class="sig-text"
+                    id="prev-sig1-text"
+                >
+                    CARLOS REYES TORD<br>
+                    SECRETARIO ACADÉMICO
+                </div>
+
+            </div>
+
+
+            <div class="sig-box">
+
+                <div class="sig-image-container">
+
+                    <img
+                        id="prev-sig2-img"
+                        class="sig-img"
+                        src=""
+                        style="display:none;"
+                    >
+
+                </div>
+
+                <div class="sig-line"></div>
+
+                <div
+                    class="sig-text"
+                    id="prev-sig2-text"
+                >
+                    RICARDO J. GELPÍ<br>
+                    DECANO
+                </div>
+
+            </div>
+
+
+            <div class="sig-box">
+
+                <div class="sig-image-container">
+
+                    <img
+                        id="prev-sig3-img"
+                        class="sig-img"
+                        src=""
+                        style="display:none;"
+                    >
+
+                </div>
+
+                <div class="sig-line"></div>
+
+                <div
+                    class="sig-text"
+                    id="prev-sig3-text"
+                >
+                    ALBERTO E. BARBIERI<br>
+                    RECTOR
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   ACTUALIZAR CAMPOS
+========================= */
+
+const bindInput = (
+    inputId,
+    previewId,
+    property = 'innerText'
+) => {
+
+    const input =
+        document.getElementById(inputId);
+
+    const preview =
+        document.getElementById(previewId);
+
+    input.addEventListener('input', () => {
+
+        if (property === 'innerHTML') {
+
+            preview.innerHTML =
+                input.value.replace(/\n/g, '<br>');
+
+        } else {
+
+            preview.innerText =
+                input.value;
+
+        }
+
+    });
+
+};
+
+
+/* Campos */
+
+bindInput(
+    'inp-name',
+    'prev-name'
+);
+
+bindInput(
+    'inp-body',
+    'prev-body'
+);
+
+bindInput(
+    'inp-date',
+    'prev-date'
+);
+
+bindInput(
+    'inp-sig1-text',
+    'prev-sig1-text',
+    'innerHTML'
+);
+
+bindInput(
+    'inp-sig2-text',
+    'prev-sig2-text',
+    'innerHTML'
+);
+
+
+/* =========================
+   CAMBIO DE TIPOGRAFÍA
+========================= */
+
+const fontSelector =
+    document.getElementById('font-selector');
+
+const dynamicBlock =
+    document.getElementById('dynamic-font-block');
+
+const fontPreview =
+    document.getElementById('font-preview');
+
+
+fontSelector.addEventListener(
+    'change',
+    function () {
+
+        const selectedFont =
+            this.value;
+
+        /*
+         * Cambia la tipografía
+         * inmediatamente en el diploma
+         */
+
+        dynamicBlock.style.fontFamily =
+            selectedFont;
+
+        /*
+         * También fuerza la fuente
+         * en todos los elementos internos
+         */
+
+        dynamicBlock
+            .querySelectorAll('*')
+            .forEach(element => {
+
+                element.style.fontFamily =
+                    selectedFont;
+
             });
-        };
 
-        bindInput('inp-name', 'prev-name');
-        bindInput('inp-body', 'prev-body');
-        bindInput('inp-date', 'prev-date');
-        bindInput('inp-sig1-text', 'prev-sig1-text', 'innerHTML');
-        bindInput('inp-sig2-text', 'prev-sig2-text', 'innerHTML');
 
-        const handleImageUpload = (fileInputId, imgPreviewId) => {
-            const fileInput = document.getElementById(fileInputId);
-            const imgPreview = document.getElementById(imgPreviewId);
+        /*
+         * Actualiza la muestra
+         */
 
-            fileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        imgPreview.src = event.target.result;
-                        imgPreview.style.display = 'block';
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
-        };
+        fontPreview.style.fontFamily =
+            selectedFont;
 
-        handleImageUpload('inp-logo-file', 'prev-logo');
+    }
+);
 
-        document.getElementById('inp-logo-size').addEventListener('input', (e) => {
-            document.getElementById('prev-logo').style.width = e.target.value + 'px';
-            document.getElementById('prev-logo').style.height = e.target.value + 'px';
-        });
 
-        document.getElementById('btn-download-pdf').addEventListener('click', async () => {
-            await document.fonts.ready;
-            const element = document.getElementById('diploma-content');
-            const options = {
-                margin:       0,
-                filename:     'diploma-uba.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF:        { unit: 'px', format: [1122, 794], orientation: 'landscape' }
+/* =========================
+   LOGO
+========================= */
+
+const logoFile =
+    document.getElementById('inp-logo-file');
+
+const logoPreview =
+    document.getElementById('prev-logo');
+
+
+logoFile.addEventListener(
+    'change',
+    function (event) {
+
+        const file =
+            event.target.files[0];
+
+        if (!file) return;
+
+        const reader =
+            new FileReader();
+
+        reader.onload =
+            function (event) {
+
+                logoPreview.src =
+                    event.target.result;
+
             };
-            html2pdf().from(element).set(options).save();
-        });
 
-        document.getElementById('btn-download-img').addEventListener('click', async () => {
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+/* =========================
+   TAMAÑO DEL LOGO
+========================= */
+
+document
+    .getElementById('inp-logo-size')
+    .addEventListener(
+        'input',
+        function (event) {
+
+            const size =
+                event.target.value + 'px';
+
+            logoPreview.style.width =
+                size;
+
+            logoPreview.style.height =
+                size;
+
+        }
+    );
+
+
+/* =========================
+   EXPORTAR PDF
+========================= */
+
+document
+    .getElementById('btn-download-pdf')
+    .addEventListener(
+        'click',
+        async function () {
+
             await document.fonts.ready;
-            const element = document.getElementById('diploma-content');
-            html2canvas(element, { scale: 2, useCORS: true, logging: false }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'diploma-uba.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        });
-    </script>
+
+            const element =
+                document.getElementById(
+                    'diploma-content'
+                );
+
+            const options = {
+
+                margin: 0,
+
+                filename:
+                    'diploma-uba.pdf',
+
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+
+                html2canvas: {
+
+                    scale: 2,
+
+                    useCORS: true,
+
+                    letterRendering: true
+
+                },
+
+                jsPDF: {
+
+                    unit: 'px',
+
+                    format: [
+                        1122,
+                        794
+                    ],
+
+                    orientation:
+                        'landscape'
+
+                }
+
+            };
+
+            html2pdf()
+                .from(element)
+                .set(options)
+                .save();
+
+        }
+    );
+
+
+/* =========================
+   EXPORTAR PNG
+========================= */
+
+document
+    .getElementById('btn-download-img')
+    .addEventListener(
+        'click',
+        async function () {
+
+            await document.fonts.ready;
+
+            const element =
+                document.getElementById(
+                    'diploma-content'
+                );
+
+            html2canvas(
+                element,
+                {
+
+                    scale: 2,
+
+                    useCORS: true,
+
+                    logging: false
+
+                }
+            ).then(
+                canvas => {
+
+                    const link =
+                        document.createElement('a');
+
+                    link.download =
+                        'diploma-uba.png';
+
+                    link.href =
+                        canvas.toDataURL(
+                            'image/png'
+                        );
+
+                    link.click();
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================
+   CARGAR FUENTES
+========================= */
+
+document.fonts.ready.then(() => {
+
+    /*
+     * Asegura que la fuente inicial
+     * esté cargada antes de exportar.
+     */
+
+    dynamicBlock.style.fontFamily =
+        fontSelector.value;
+
+});
+
+</script>
+
 </body>
-                            </html>
-                        
+</html>
