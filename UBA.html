@@ -36,7 +36,7 @@ body {
 
 #editor-panel {
     width: 100%;
-    height: 280px;
+    height: 300px;
     background: #ffffff;
     border-bottom: 2px solid #cbd5e1;
     padding: 12px 20px;
@@ -305,12 +305,16 @@ body {
     line-height: 1.2;
 }
 
-/* Sello institucional */
+/* Sello institucional flotante */
 .seal-container {
+    position: absolute;
+    bottom: 85px; /* Ubicado arriba de las firmas */
+    left: 200px;  /* Posición inicial ajustable con barra */
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 15px;
+    z-index: 5;
 }
 
 .seal-img {
@@ -327,7 +331,7 @@ body {
 @media (max-width: 900px) {
 
     #editor-panel {
-        height: 350px;
+        height: 380px;
     }
 
     .editor-container-grid {
@@ -549,12 +553,17 @@ body {
                 </div>
             </div>
 
-            <!-- SECCIÓN NUEVA: SELLO INSTITUCIONAL -->
+            <!-- SECCIÓN SELLO INSTITUCIONAL CON POSICIÓN Y TAMAÑO -->
             <div class="control-group">
-                <label>Sello Institucional (Imagen y Tamaño):</label>
-                <div style="display: flex; gap: 10px; align-items: center;">
+                <label>Sello (Imagen, Posición X y Tamaño):</label>
+                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 4px;">
                     <input type="file" id="inp-seal-file" accept="image/*" style="flex:1; font-size:0.75rem;">
-                    <input type="range" id="inp-seal-size" min="50" max="150" value="90" style="width:90px;">
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center; font-size: 0.7rem; color: #475569;">
+                    <span>Posición:</span>
+                    <input type="range" id="inp-seal-pos" min="50" max="1000" value="200" style="flex:1;" title="Mover Izquierda/Derecha">
+                    <span>Tamaño:</span>
+                    <input type="range" id="inp-seal-size" min="40" max="180" value="90" style="width:70px;" title="Tamaño del Sello">
                 </div>
             </div>
 
@@ -734,8 +743,8 @@ body {
 
             </div>
 
-            <!-- CONTENEDOR VISUAL DEL SELLO -->
-            <div class="seal-container">
+            <!-- CONTENEDOR VISUAL DEL SELLO (FLOTANTE) -->
+            <div class="seal-container" id="seal-container-box">
                 <img
                     id="prev-seal"
                     class="seal-img"
@@ -872,18 +881,8 @@ fontSelector.addEventListener(
         const selectedFont =
             this.value;
 
-        /*
-         * Cambia la tipografía
-         * inmediatamente en el diploma
-         */
-
         dynamicBlock.style.fontFamily =
             selectedFont;
-
-        /*
-         * También fuerza la fuente
-         * en todos los elementos internos
-         */
 
         dynamicBlock
             .querySelectorAll('*')
@@ -893,11 +892,6 @@ fontSelector.addEventListener(
                     selectedFont;
 
             });
-
-
-        /*
-         * Actualiza la muestra
-         */
 
         fontPreview.style.fontFamily =
             selectedFont;
@@ -927,7 +921,7 @@ logoFile.addEventListener(
         if (!file) return;
 
         const reader =
-            new FileReader();
+new FileReader();
 
         reader.onload =
             function (event) {
@@ -972,6 +966,7 @@ document
 
 const sealFile = document.getElementById('inp-seal-file');
 const sealPreview = document.getElementById('prev-seal');
+const sealContainerBox = document.getElementById('seal-container-box');
 
 sealFile.addEventListener('change', function (event) {
     const file = event.target.files[0];
@@ -985,10 +980,17 @@ sealFile.addEventListener('change', function (event) {
     reader.readAsDataURL(file);
 });
 
+/* Control de Tamaño del Sello */
 document.getElementById('inp-seal-size').addEventListener('input', function (event) {
     const size = event.target.value + 'px';
     sealPreview.style.width = size;
     sealPreview.style.height = size;
+});
+
+/* Control de Posición Horizontal (Izquierda a Derecha) del Sello */
+document.getElementById('inp-seal-pos').addEventListener('input', function (event) {
+    const posX = event.target.value + 'px';
+    sealContainerBox.style.left = posX;
 });
 
 
@@ -1078,6 +1080,7 @@ document
 
                     scale: 2,
 
+                    useCOS: true, // Corregido a useCORS abajo
                     useCORS: true,
 
                     logging: false
@@ -1111,11 +1114,6 @@ document
 ========================= */
 
 document.fonts.ready.then(() => {
-
-    /*
-     * Asegura que la fuente inicial
-     * esté cargada antes de exportar.
-     */
 
     dynamicBlock.style.fontFamily =
         fontSelector.value;
