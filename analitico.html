@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificado de Estudios Final - UBA (Editable)</title>
+    <title>Certificado de Estudios Final - UBA (Editable y Ajustable)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -18,51 +18,87 @@
             max-width: 900px;
             margin: 0 auto 15px auto;
             background: #2c3e50;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 6px;
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
             color: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            gap: 15px;
+        }
+        .grupo-controles {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+        }
+        .control-item {
+            display: flex;
+            flex-direction: column;
+            background: #34495e;
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px dashed #fff;
+        }
+        .control-item label {
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        .control-item input[type="range"] {
+            cursor: pointer;
+            width: 110px;
+        }
+        .control-item input[type="file"] {
+            display: none;
+        }
+        .grupo-botones {
+            display: flex;
+            gap: 8px;
         }
         .barra-herramientas button {
             background-color: #27ae60;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
-            margin-left: 10px;
+            font-size: 13px;
         }
         .barra-herramientas button:hover {
             background-color: #219653;
+        }
+        .btn-pdf {
+            background-color: #2980b9 !important;
+        }
+        .btn-pdf:hover {
+            background-color: #1f618d !important;
         }
         .certificado-wrapper {
             position: relative;
             max-width: 900px;
             margin: 0 auto;
         }
-        /* Margen derecho para la imagen lateral */
         .certificado-container {
             background: #fff;
-            padding: 40px 100px 40px 50px; /* Margen derecho amplio para el sello/firma lateral */
+            padding: 40px 100px 40px 50px;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border: 1px solid #ccc;
             position: relative;
         }
-        /* Contenedor del logo superior */
         .logo-container {
             text-align: center;
             margin-bottom: 10px;
         }
         .logo-container img {
-            max-height: 70px;
-            cursor: pointer;
+            width: 120px; /* Tamaño inicial ajustable */
+            height: auto;
+            object-fit: contain;
         }
-        /* Contenedor de la imagen lateral derecha */
         .imagen-lateral {
             position: absolute;
             top: 40px;
@@ -71,9 +107,8 @@
             text-align: center;
         }
         .imagen-lateral img {
-            max-width: 75px;
+            width: 75px; /* Tamaño inicial ajustable */
             height: auto;
-            cursor: pointer;
         }
         .header {
             text-align: center;
@@ -127,7 +162,6 @@
             font-weight: bold;
             margin-bottom: 15px;
         }
-        /* Efecto visual al pasar el mouse por elementos editables */
         [contenteditable="true"]:hover {
             outline: 1px dashed #3498db;
             background-color: #f9f9f9;
@@ -137,10 +171,27 @@
 <body>
 
 <div class="barra-herramientas">
-    <span><b>Modo Edición Activa:</b> Haz clic en cualquier texto de abajo para modificarlo.</span>
-    <div>
+    <div class="grupo-controles">
+        <div class="control-item">
+            <label for="subirLogo">📁 Logo Superior</label>
+            <input type="file" id="subirLogo" accept="image/*" onchange="cargarImagen(event, 'logoSuperior')">
+            <div style="margin-top:3px; font-size:11px;">
+                Tam: <input type="range" id="tamLogo" min="30" max="300" value="120" oninput="cambiarTamano('logoSuperior', this.value)">
+            </div>
+        </div>
+        
+        <div class="control-item">
+            <label for="subirSello">📁 Sello Lateral</label>
+            <input type="file" id="subirSello" accept="image/*" onchange="cargarImagen(event, 'imagenLateralImg')">
+            <div style="margin-top:3px; font-size:11px;">
+                Tam: <input type="range" id="tamSello" min="30" max="250" value="75" oninput="cambiarTamano('imagenLateralImg', this.value)">
+            </div>
+        </div>
+    </div>
+
+    <div class="grupo-botones">
         <button onclick="descargarPNG()">Descargar PNG</button>
-        <button onclick="descargarPDF()" style="background-color: #2980b9;">Descargar PDF</button>
+        <button class="btn-pdf" onclick="descargarPDF()">Descargar PDF</button>
     </div>
 </div>
 
@@ -148,11 +199,11 @@
     <div class="certificado-container" id="captura-area">
         
         <div class="logo-container">
-            <img id="logoSuperior" src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Escudo_de_la_Universidad_de_Buenos_Aires.svg" alt="Logo UBA" title="Haz clic para cambiar URL del logo" onclick="cambiarLogo()">
+            <img id="logoSuperior" src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Escudo_de_la_Universidad_de_Buenos_Aires.svg" alt="Logo UBA">
         </div>
 
         <div class="imagen-lateral">
-            <img id="imagenLateral" src="https://i.imgur.com/7A26W6G.png" alt="Sello lateral" title="Haz clic para cambiar URL de la imagen lateral" onclick="cambiarImagenLateral()" style="transform: rotate(90deg);">
+            <img id="imagenLateralImg" src="https://i.imgur.com/7A26W6G.png" alt="Sello lateral" style="transform: rotate(90deg);">
         </div>
 
         <div class="header">
@@ -285,22 +336,24 @@
 </div>
 
 <script>
-    // Funciones para cambiar los enlaces de las imágenes de forma interactiva
-    function cambiarLogo() {
-        let nuevaURL = prompt("Ingresa la URL de la imagen para el logo superior:", document.getElementById('logoSuperior').src);
-        if (nuevaURL) {
-            document.getElementById('logoSuperior').src = nuevaURL;
+    // Cargar imagen local desde el dispositivo
+    function cargarImagen(event, idElemento) {
+        const archivo = event.target.files[0];
+        if (archivo) {
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                document.getElementById(idElemento).src = e.target.result;
+            }
+            lector.readAsDataURL(archivo);
         }
     }
 
-    function cambiarImagenLateral() {
-        let nuevaURL = prompt("Ingresa la URL de la imagen/sello lateral:", document.getElementById('imagenLateral').src);
-        if (nuevaURL) {
-            document.getElementById('imagenLateral').src = nuevaURL;
-        }
+    // Cambiar tamaño de la imagen mediante el control deslizante
+    function cambiarTamano(idElemento, valor) {
+        document.getElementById(idElemento).style.width = valor + 'px';
     }
 
-    // Funciones de exportación
+    // Exportar a PNG
     function descargarPNG() {
         const elemento = document.getElementById('captura-area');
         html2canvas(elemento, { scale: 2, useCORS: true }).then(canvas => {
@@ -311,6 +364,7 @@
         });
     }
 
+    // Exportar a PDF
     function descargarPDF() {
         const elemento = document.getElementById('captura-area');
         html2canvas(elemento, { scale: 2, useCORS: true }).then(canvas => {
