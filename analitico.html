@@ -78,6 +78,13 @@
         .btn-pdf:hover {
             background-color: #1f618d !important;
         }
+        .btn-girar {
+            background-color: #e67e22 !important;
+            margin-top: 4px;
+        }
+        .btn-girar:hover {
+            background-color: #d35400 !important;
+        }
         .certificado-wrapper {
             position: relative;
             max-width: 900px;
@@ -111,6 +118,7 @@
         .imagen-lateral img {
             width: 75px;
             height: auto;
+            transition: transform 0.3s ease;
         }
         .header {
             text-align: center;
@@ -186,6 +194,7 @@
             <div>Ancho: <input type="range" min="30" max="200" value="75" oninput="cambiarEstilo('imagenLateralImg', 'width', this.value + 'px')"></div>
             <div style="margin-top:2px;">Altura (Top): <input type="range" min="50" max="1200" value="450" oninput="cambiarEstilo('bloqueSelloLateral', 'top', this.value + 'px')"></div>
             <div style="margin-top:2px;">Margen Der.: <input type="range" min="-20" max="100" value="12" oninput="cambiarEstilo('bloqueSelloLateral', 'right', this.value + 'px')"></div>
+            <button class="btn-girar" onclick="girarImagenLateral()">🔄 Girar 90°</button>
         </div>
     </div>
 
@@ -328,7 +337,7 @@
             <tr><td contenteditable="true">PRODUCCION LECHERA</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7022</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">14/12/2009</td></tr>
             <tr><td contenteditable="true">ADMINISTRACION RURAL</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7023</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">18/12/2009</td></tr>
             <tr><td contenteditable="true">MERCADOS AGROPECUARIOS</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7025</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">21/12/2009</td></tr>
-            <tr><td contenteditable="true">SISTEMA DE RIEGO Y DRENAJE</td><td contenteditable="true5">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7022</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">22/12/2009</td></tr>
+            <tr><td contenteditable="true">SISTEMA DE RIEGO Y DRENAJE</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7022</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">22/12/2009</td></tr>
         </table>
         <div class="promedio" contenteditable="true">PROMEDIO: 7,85 (SIETE 85)</div>
 
@@ -336,6 +345,8 @@
 </div>
 
 <script>
+    let anguloActual = 90; // Inicia con los 90° que ya tenía por defecto
+
     function cargarImagen(event, idElemento) {
         const archivo = event.target.files[0];
         if (archivo) {
@@ -349,6 +360,11 @@
 
     function cambiarEstilo(idElemento, propiedad, valor) {
         document.getElementById(idElemento).style[propiedad] = valor;
+    }
+
+    function girarImagenLateral() {
+        anguloActual = (anguloActual + 90) % 360;
+        document.getElementById('imagenLateralImg').style.transform = `rotate(${anguloActual}deg)`;
     }
 
     function descargarPNG() {
