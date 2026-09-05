@@ -83,14 +83,13 @@
             max-width: 900px;
             margin: 0 auto;
         }
-        /* Contenedor principal con posición relativa para contener el sello dentro del margen derecho */
         .certificado-container {
             background: #fff;
-            padding: 40px 90px 40px 50px; /* Margen derecho seguro de 90px */
+            padding: 40px 90px 40px 50px;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border: 1px solid #ccc;
             position: relative;
-            overflow: hidden; /* Evita que cualquier elemento sobresalga de la hoja */
+            overflow: hidden;
         }
         .logo-container {
             text-align: center;
@@ -101,11 +100,10 @@
             height: auto;
             object-fit: contain;
         }
-        /* Imagen lateral posicionada estrictamente dentro del margen derecho */
         .imagen-lateral {
             position: absolute;
-            top: 450px; /* Posición inicial ajustable a la altura de 3er año */
-            right: 12px;  /* Fijado milimétricamente dentro del margen derecho */
+            top: 450px; 
+            right: 12px;  /* Controlado dinámicamente */
             width: 75px;
             text-align: center;
             z-index: 10;
@@ -186,7 +184,8 @@
             <label for="subirSello">📁 Sello Margen</label>
             <input type="file" id="subirSello" accept="image/*" onchange="cargarImagen(event, 'imagenLateralImg')">
             <div>Ancho: <input type="range" min="30" max="200" value="75" oninput="cambiarEstilo('imagenLateralImg', 'width', this.value + 'px')"></div>
-            <div style="margin-top:2px;">Altura: <input type="range" min="50" max="1200" value="450" oninput="cambiarEstilo('bloqueSelloLateral', 'top', this.value + 'px')"></div>
+            <div style="margin-top:2px;">Altura (Top): <input type="range" min="50" max="1200" value="450" oninput="cambiarEstilo('bloqueSelloLateral', 'top', this.value + 'px')"></div>
+            <div style="margin-top:2px;">Margen Der.: <input type="range" min="-20" max="100" value="12" oninput="cambiarEstilo('bloqueSelloLateral', 'right', this.value + 'px')"></div>
         </div>
     </div>
 
@@ -329,7 +328,7 @@
             <tr><td contenteditable="true">PRODUCCION LECHERA</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7022</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">14/12/2009</td></tr>
             <tr><td contenteditable="true">ADMINISTRACION RURAL</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7023</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">18/12/2009</td></tr>
             <tr><td contenteditable="true">MERCADOS AGROPECUARIOS</td><td contenteditable="true">APROBADO 8/OCHO</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7025</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">21/12/2009</td></tr>
-            <tr><td contenteditable="true">SISTEMA DE RIEGO Y DRENAJE</td><td contenteditable="true">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7026</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">22/12/2009</td></tr>
+            <tr><td contenteditable="true">SISTEMA DE RIEGO Y DRENAJE</td><td contenteditable="true5">APROBADO 7/SIETE</td><td contenteditable="true">EXAMEN</td><td contenteditable="true">7022</td><td contenteditable="true">786/01</td><td contenteditable="true">60156</td><td contenteditable="true">22/12/2009</td></tr>
         </table>
         <div class="promedio" contenteditable="true">PROMEDIO: 7,85 (SIETE 85)</div>
 
@@ -337,7 +336,6 @@
 </div>
 
 <script>
-    // Cargar imagen local desde el dispositivo
     function cargarImagen(event, idElemento) {
         const archivo = event.target.files[0];
         if (archivo) {
@@ -349,12 +347,10 @@
         }
     }
 
-    // Cambiar estilos de tamaño o posición en tiempo real
     function cambiarEstilo(idElemento, propiedad, valor) {
         document.getElementById(idElemento).style[propiedad] = valor;
     }
 
-    // Exportar a PNG
     function descargarPNG() {
         const elemento = document.getElementById('captura-area');
         html2canvas(elemento, { scale: 2, useCORS: true }).then(canvas => {
@@ -365,7 +361,6 @@
         });
     }
 
-    // Exportar a PDF
     function descargarPDF() {
         const elemento = document.getElementById('captura-area');
         html2canvas(elemento, { scale: 2, useCORS: true }).then(canvas => {
