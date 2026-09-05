@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador y Editor de Diploma - UBA</title>
     <!-- Fuentes de Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Cinzel:ital,wght@1,500;1,700&family=Great+Vibes&family=Italianno&family=Meddon&family=Monsieur+La+Doulaise&family=Pinyon+Script&family=Tangerine:ital,wght@1,400;1,700&family=Times+New+Roman:ital,wght@1,400;1,700&family=Parisienne&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:ital,wght@1,500;1,700&family=Monsieur+La+Doulaise&family=Times+New+Roman:ital,wght@1,400;1,700&display=swap" rel="stylesheet">
     <!-- Librerías para exportar a PDF e Imagen -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -29,7 +29,7 @@
         /* Panel de Control / Editor Superior */
         #editor-panel {
             width: 100%;
-            height: 270px;
+            height: 220px;
             background: #ffffff;
             border-bottom: 2px solid #cbd5e1;
             padding: 12px 20px;
@@ -41,7 +41,7 @@
 
         .editor-container-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
 
@@ -49,7 +49,7 @@
             font-size: 1.05rem;
             color: #1e293b;
             margin-bottom: 8px;
-            grid-column: span 4;
+            grid-column: span 3;
             border-bottom: 1px solid #e2e8f0;
             padding-bottom: 5px;
             display: flex;
@@ -75,7 +75,7 @@
             font-style: italic;
         }
 
-        .control-group input, .control-group textarea, .control-group select {
+        .control-group input, .control-group textarea {
             width: 100%;
             padding: 5px;
             border: 1px solid #cbd5e1;
@@ -143,17 +143,18 @@
             position: relative;
         }
 
-        /* República Argentina */
+        /* República Argentina (Más cerca del logo) */
         .republica-title {
             font-family: 'Cinzel', serif !important;
             font-style: italic !important;
             font-size: 2.3rem;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             font-weight: 700;
             color: #111;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            gap: 25px; /* Reduce espacio entre texto y logo */
             padding: 0 40px;
         }
 
@@ -167,16 +168,21 @@
             object-fit: contain;
         }
 
+        /* Tipografía predeterminada para el cuerpo */
+        .monsieur-text {
+            font-family: 'Monsieur La Doulaise', cursive;
+        }
+
         .univ-title {
-            font-size: 3.2rem;
+            font-size: 4rem;
             color: #222;
-            margin-top: 10px;
+            margin-top: 5px;
             line-height: 1;
             font-style: italic;
         }
 
         .facu-title {
-            font-size: 2.2rem;
+            font-size: 2.8rem;
             color: #333;
             margin-top: -5px;
             font-style: italic;
@@ -184,8 +190,8 @@
 
         .body-text {
             text-align: justify;
-            font-size: 1.18rem;
-            line-height: 1.6;
+            font-size: 1.5rem;
+            line-height: 1.5;
             color: #222;
             padding: 0 30px;
             font-style: italic;
@@ -193,26 +199,27 @@
 
         .body-text .line-1 {
             text-align: center;
-            font-size: 1.15rem;
+            font-size: 1.4rem;
             margin-bottom: 5px;
             font-style: italic;
         }
 
         .body-text .name-highlight {
             text-align: center;
-            font-size: 2.6rem;
+            font-size: 3.2rem;
             color: #111;
             margin: 5px 0;
             line-height: 1;
+            font-weight: bold; /* Nombre del alumno en negrita */
             font-style: italic;
         }
 
         .date-location {
             display: flex;
             justify-content: flex-end;
-            font-size: 1.15rem;
+            font-size: 1.4rem;
             padding-right: 40px;
-            margin-top: -10px;
+            margin-top: -5px;
             font-style: italic;
         }
 
@@ -266,30 +273,15 @@
     <div id="editor-panel" class="editor-panel">
         <div class="editor-container-grid">
             <h2>
-                <span>Editor del Diploma - Selector de Cursivas Avanzado</span>
+                <span>Editor del Diploma - UBA</span>
                 <div class="buttons-group">
                     <button class="btn btn-img" id="btn-download-img">Descargar en Imagen (PNG)</button>
                     <button class="btn" id="btn-download-pdf">Descargar en PDF</button>
                 </div>
             </h2>
             
-            <!-- Columna 1: Configuración general y Selector de Cursivas -->
+            <!-- Columna 1 -->
             <div>
-                <div class="control-group">
-                    <label>Tipografía Cursiva (Todo el texto):</label>
-                    <select id="inp-font-family">
-                        <option value="Great Vibes" selected>Great Vibes (Elegante Caligráfica)</option>
-                        <option value="Pinyon Script">Pinyon Script (Fina y Artística)</option>
-                        <option value="Alex Brush">Alex Brush (Fluida y Suave)</option>
-                        <option value="Allura">Allura (Sofisticada y Fina)</option>
-                        <option value="Italianno">Italianno (Cursiva Clásica Italiana)</option>
-                        <option value="Parisienne">Parisienne (Estilo Francés Ligero)</option>
-                        <option value="Tangerine">Tangerine (Estilizada, Alta y Fina)</option>
-                        <option value="Meddon">Meddon (Caligrafía Tradicional)</option>
-                        <option value="Monsieur La Doulaise">Monsieur La Doulaise (Cursiva Antigüa)</option>
-                        <option value="Times New Roman">Times New Roman (Cursiva Tradicional)</option>
-                    </select>
-                </div>
                 <div class="control-group">
                     <label>Nombre del Graduado/a:</label>
                     <input type="text" id="inp-name" value="Julieta Belen Altamirano">
@@ -300,43 +292,27 @@
                 </div>
             </div>
 
-            <!-- Columna 2: Texto del Cuerpo y Logo -->
-            <div style="grid-column: span 2;">
+            <!-- Columna 2 -->
+            <div>
                 <div class="control-group">
-                    <label>Logo UBA (Subir imagen y tamaño):</label>
+                    <label>Logo UBA (Imagen y Tamaño):</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <input type="file" id="inp-logo-file" accept="image/*" style="flex: 1; font-style: normal;">
-                        <input type="range" id="inp-logo-size" min="40" max="150" value="80" style="width: 100px;">
+                        <input type="range" id="inp-logo-size" min="40" max="150" value="80" style="width: 90px;">
                     </div>
                 </div>
                 <div class="control-group">
-                    <label>Texto del Cuerpo del Diploma:</label>
+                    <label>Texto del Cuerpo:</label>
                     <textarea id="inp-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</textarea>
                 </div>
             </div>
 
-            <!-- Columna 3: Sellos y Firmas (1, 2 y 3) -->
+            <!-- Columna 3 -->
             <div>
                 <div class="control-group">
-                    <label>Sello/Firma 1:</label>
+                    <label>Firmas y Sellos (Textos):</label>
                     <input type="text" id="inp-sig1-text" value="CARLOS REYES TORD&#10;SECRETARIO ACADÉMICO" style="margin-bottom:2px;">
-                    <input type="file" id="inp-sig1-file" accept="image/*" style="font-style: normal;">
-                </div>
-            </div>
-
-            <div>
-                <div class="control-group">
-                    <label>Sello/Firma 2:</label>
                     <input type="text" id="inp-sig2-text" value="RICARDO J. GELPÍ&#10;DECANO" style="margin-bottom:2px;">
-                    <input type="file" id="inp-sig2-file" accept="image/*" style="font-style: normal;">
-                </div>
-            </div>
-
-            <div style="grid-column: span 2;">
-                <div class="control-group">
-                    <label>Sello/Firma 3:</label>
-                    <input type="text" id="inp-sig3-text" value="ALBERTO E. BARBIERI&#10;RECTOR" style="margin-bottom:2px;">
-                    <input type="file" id="inp-sig3-file" accept="image/*" style="font-style: normal;">
                 </div>
             </div>
 
@@ -355,19 +331,18 @@
                     <span>ARGENTINA</span>
                 </div>
                 
-                <!-- Contenedor general -->
-                <div id="target-font-container">
-                    <div class="univ-title changeable-font">Universidad de Buenos Aires</div>
-                    <div class="facu-title changeable-font">Facultad de Medicina</div>
+                <!-- Contenido con fuente Monsieur La Doulaise -->
+                <div class="monsieur-text">
+                    <div class="univ-title">Universidad de Buenos Aires</div>
+                    <div class="facu-title">Facultad de Medicina</div>
 
-                    <!-- Cuerpo del texto -->
-                    <div class="body-text" style="margin-top: 15px;">
-                        <div class="line-1 changeable-font">El Rector de la Universidad y el Decano de la Facultad</div>
-                        <div class="name-highlight changeable-font" id="prev-name">Julieta Belen Altamirano</div>
-                        <div class="changeable-font" id="prev-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</div>
+                    <div class="body-text" style="margin-top: 10px;">
+                        <div class="line-1">El Rector de la Universidad y el Decano de la Facultad</div>
+                        <div class="name-highlight" id="prev-name">Julieta Belen Altamirano</div>
+                        <div id="prev-body">natural de la Provincia de Buenos Aires, el 1 de octubre de 2020 ha cumplido la totalidad de las obligaciones académicas establecidas en el plan de estudios. Por lo tanto, de acuerdo con las normas vigentes en esta Universidad, le confieren el presente diploma de Enfermera Universitaria.</div>
                     </div>
 
-                    <div class="date-location changeable-font" id="prev-date" style="margin-top: 20px;">
+                    <div class="date-location" id="prev-date" style="margin-top: 15px;">
                         Buenos Aires, 18 de agosto de 2021
                     </div>
                 </div>
@@ -375,8 +350,6 @@
 
             <!-- Bloque de Firmas y Sellos Inferiores -->
             <div class="footer-signatures">
-                
-                <!-- Sello/Firma 1 -->
                 <div class="sig-box">
                     <div class="sig-image-container">
                         <img id="prev-sig1-img" class="sig-img" src="" style="display:none;">
@@ -385,7 +358,6 @@
                     <div class="sig-text" id="prev-sig1-text">CARLOS REYES TORD<br>SECRETARIO ACADÉMICO</div>
                 </div>
 
-                <!-- Sello/Firma 2 -->
                 <div class="sig-box">
                     <div class="sig-image-container">
                         <img id="prev-sig2-img" class="sig-img" src="" style="display:none;">
@@ -394,7 +366,6 @@
                     <div class="sig-text" id="prev-sig2-text">RICARDO J. GELPÍ<br>DECANO</div>
                 </div>
 
-                <!-- Sello/Firma 3 -->
                 <div class="sig-box">
                     <div class="sig-image-container">
                         <img id="prev-sig3-img" class="sig-img" src="" style="display:none;">
@@ -402,7 +373,6 @@
                     <div class="sig-line"></div>
                     <div class="sig-text" id="prev-sig3-text">ALBERTO E. BARBIERI<br>RECTOR</div>
                 </div>
-
             </div>
 
         </div>
@@ -410,25 +380,6 @@
 
     <!-- Script de Interactividad y Exportación -->
     <script>
-        // Lógica para cambiar la fuente elemento por elemento en vivo
-        const fontSelector = document.getElementById('inp-font-family');
-        
-        fontSelector.addEventListener('change', (e) => {
-            const fontName = e.target.value;
-            const elements = document.querySelectorAll('.changeable-font');
-            elements.forEach(el => {
-                el.style.fontFamily = `'${fontName}', cursive`;
-            });
-        });
-
-        // Aplicar fuente inicial al cargar
-        window.addEventListener('DOMContentLoaded', () => {
-            const initialFont = fontSelector.value;
-            document.querySelectorAll('.changeable-font').forEach(el => {
-                el.style.fontFamily = `'${initialFont}', cursive`;
-            });
-        });
-
         const bindInput = (inputId, previewId, property = 'innerText') => {
             const input = document.getElementById(inputId);
             const preview = document.getElementById(previewId);
@@ -446,7 +397,6 @@
         bindInput('inp-date', 'prev-date');
         bindInput('inp-sig1-text', 'prev-sig1-text', 'innerHTML');
         bindInput('inp-sig2-text', 'prev-sig2-text', 'innerHTML');
-        bindInput('inp-sig3-text', 'prev-sig3-text', 'innerHTML');
 
         const handleImageUpload = (fileInputId, imgPreviewId) => {
             const fileInput = document.getElementById(fileInputId);
@@ -466,9 +416,6 @@
         };
 
         handleImageUpload('inp-logo-file', 'prev-logo');
-        handleImageUpload('inp-sig1-file', 'prev-sig1-img');
-        handleImageUpload('inp-sig2-file', 'prev-sig2-img');
-        handleImageUpload('inp-sig3-file', 'prev-sig3-img');
 
         document.getElementById('inp-logo-size').addEventListener('input', (e) => {
             document.getElementById('prev-logo').style.width = e.target.value + 'px';
@@ -502,5 +449,5 @@
         });
     </script>
 </body>
-                            </html>
+    </html>
                         
