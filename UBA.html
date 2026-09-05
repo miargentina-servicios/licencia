@@ -308,8 +308,8 @@ body {
 /* Sello institucional flotante */
 .seal-container {
     position: absolute;
-    bottom: 85px; /* Ubicado arriba de las firmas */
-    left: 200px;  /* Posición inicial ajustable con barra */
+    bottom: 85px;
+    left: 200px;
     transform: translateX(-50%);
     display: flex;
     justify-content: center;
@@ -322,6 +322,7 @@ body {
     height: 90px;
     object-fit: contain;
     opacity: 0.85;
+    transition: transform 0.2s ease;
 }
 
 /* =========================
@@ -553,17 +554,18 @@ body {
                 </div>
             </div>
 
-            <!-- SECCIÓN SELLO INSTITUCIONAL CON POSICIÓN Y TAMAÑO -->
+            <!-- SECCIÓN SELLO INSTITUCIONAL CON POSICIÓN, TAMAÑO Y GIRO -->
             <div class="control-group">
-                <label>Sello (Imagen, Posición X y Tamaño):</label>
+                <label>Sello (Imagen, Posición, Tamaño y Giro):</label>
                 <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 4px;">
                     <input type="file" id="inp-seal-file" accept="image/*" style="flex:1; font-size:0.75rem;">
+                    <button type="button" id="btn-rotate-seal" class="btn" style="padding: 4px 8px; font-size: 0.75rem; background-color: #475569;" title="Girar 90°">🔄 Girar 90°</button>
                 </div>
-                <div style="display: flex; gap: 10px; align-items: center; font-size: 0.7rem; color: #475569;">
-                    <span>Posición:</span>
+                <div style="display: flex; gap: 8px; align-items: center; font-size: 0.7rem; color: #475569;">
+                    <span>Pos:</span>
                     <input type="range" id="inp-seal-pos" min="50" max="1000" value="200" style="flex:1;" title="Mover Izquierda/Derecha">
-                    <span>Tamaño:</span>
-                    <input type="range" id="inp-seal-size" min="40" max="180" value="90" style="width:70px;" title="Tamaño del Sello">
+                    <span>Tam:</span>
+                    <input type="range" id="inp-seal-size" min="40" max="180" value="90" style="width:60px;" title="Tamaño del Sello">
                 </div>
             </div>
 
@@ -961,12 +963,15 @@ document
 
 
 /* =========================
-   SELLO INSTITUCIONAL
+   SELLO INSTITUCIONAL (CARGA, TAMAÑO, POSICIÓN Y GIRO)
 ========================= */
 
 const sealFile = document.getElementById('inp-seal-file');
 const sealPreview = document.getElementById('prev-seal');
 const sealContainerBox = document.getElementById('seal-container-box');
+const btnRotateSeal = document.getElementById('btn-rotate-seal');
+
+let sealRotation = 0; // Variable para acumular los grados de giro
 
 sealFile.addEventListener('change', function (event) {
     const file = event.target.files[0];
@@ -991,6 +996,13 @@ document.getElementById('inp-seal-size').addEventListener('input', function (eve
 document.getElementById('inp-seal-pos').addEventListener('input', function (event) {
     const posX = event.target.value + 'px';
     sealContainerBox.style.left = posX;
+});
+
+/* Control de Rotación 90° del Sello */
+btnRotateSeal.addEventListener('click', function () {
+    sealRotation = (sealRotation + 90) % 360;
+    sealPreview.style.transform = `rotate(${sealRotation}deg)`;
+    btnRotateSeal.innerText = `🔄 Girar 90° (${sealRotation}°)`;
 });
 
 
@@ -1080,7 +1092,6 @@ document
 
                     scale: 2,
 
-                    useCOS: true, // Corregido a useCORS abajo
                     useCORS: true,
 
                     logging: false
