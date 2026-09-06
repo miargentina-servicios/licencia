@@ -315,12 +315,11 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 5;
-    width: auto;
-    height: auto;
 }
 
 .seal-img {
-    display: block;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
     opacity: 0.85;
     transition: transform 0.2s ease;
@@ -555,32 +554,31 @@ body {
                 </div>
             </div>
 
-            <!-- SECCIÓN SELLOS INSTITUCIONALES CON POSICIÓN, TAMAÑO Y GIRO -->
+            <!-- SECCIÓN SELLO 1 -->
             <div class="control-group">
-                <label>Sello 1 (Posición, Tamaño y Giro):</label>
-                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 4px;">
+                <label>Sello 1 (Archivo, X, Y, Tam, Giro):</label>
+                <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 2px;">
                     <input type="file" id="inp-seal1-file" accept="image/*" style="flex:1; font-size:0.75rem;">
-                    <button type="button" id="btn-rotate-seal1" class="btn" style="padding: 4px 8px; font-size: 0.75rem; background-color: #475569;" title="Girar 90°">🔄 Girar 90°</button>
+                    <button type="button" id="btn-rotate-seal1" class="btn" style="padding: 2px 6px; font-size: 0.7rem; background-color: #475569;" title="Girar Sello 1">🔄</button>
                 </div>
-                <div style="display: flex; gap: 8px; align-items: center; font-size: 0.7rem; color: #475569;">
-                    <span>Pos:</span>
-                    <input type="range" id="inp-seal1-pos" min="50" max="1000" value="200" style="flex:1;" title="Mover Izquierda/Derecha">
-                    <span>Tam:</span>
-                    <input type="range" id="inp-seal1-size" min="40" max="300" value="90" style="width:60px;" title="Tamaño del Sello 1">
+                <div style="display: flex; gap: 4px; align-items: center; font-size: 0.7rem; color: #475569;">
+                    <span>X:</span><input type="range" id="inp-seal1-pos" min="50" max="1000" value="200" style="flex:1;" title="Posición Horizontal">
+                    <span>Y:</span><input type="range" id="inp-seal1-y" min="50" max="250" value="85" style="flex:1;" title="Altura Vertical">
+                    <span>Tam:</span><input type="range" id="inp-seal1-size" min="40" max="300" value="90" style="width:45px;" title="Tamaño">
                 </div>
             </div>
 
+            <!-- SECCIÓN SELLO 2 -->
             <div class="control-group">
-                <label>Sello 2 (Posición, Tamaño y Giro):</label>
-                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 4px;">
+                <label>Sello 2 (Archivo, X, Y, Tam, Giro):</label>
+                <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 2px;">
                     <input type="file" id="inp-seal2-file" accept="image/*" style="flex:1; font-size:0.75rem;">
-                    <button type="button" id="btn-rotate-seal2" class="btn" style="padding: 4px 8px; font-size: 0.75rem; background-color: #475569;" title="Girar 90°">🔄 Girar 90°</button>
+                    <button type="button" id="btn-rotate-seal2" class="btn" style="padding: 2px 6px; font-size: 0.7rem; background-color: #475569;" title="Girar Sello 2">🔄</button>
                 </div>
-                <div style="display: flex; gap: 8px; align-items: center; font-size: 0.7rem; color: #475569;">
-                    <span>Pos:</span>
-                    <input type="range" id="inp-seal2-pos" min="50" max="1000" value="280" style="flex:1;" title="Mover Izquierda/Derecha">
-                    <span>Tam:</span>
-                    <input type="range" id="inp-seal2-size" min="40" max="300" value="90" style="width:60px;" title="Tamaño del Sello 2">
+                <div style="display: flex; gap: 4px; align-items: center; font-size: 0.7rem; color: #475569;">
+                    <span>X:</span><input type="range" id="inp-seal2-pos" min="50" max="1000" value="280" style="flex:1;" title="Posición Horizontal">
+                    <span>Y:</span><input type="range" id="inp-seal2-y" min="50" max="250" value="85" style="flex:1;" title="Altura Vertical">
+                    <span>Tam:</span><input type="range" id="inp-seal2-size" min="40" max="300" value="90" style="width:45px;" title="Tamaño">
                 </div>
             </div>
 
@@ -675,7 +673,7 @@ body {
         </div>
 
 
-        <!-- FIRMAS Y SELLO -->
+        <!-- FIRMAS Y SELLOS -->
 
         <div class="footer-section">
 
@@ -760,24 +758,24 @@ body {
 
             </div>
 
-            <!-- CONTENEDORES VISUALES DE LOS SELLOS (FLOTANTES) -->
+            <!-- CONTENEDORES VISUALES DE LOS SELLOS (FLOTANTES SEPARADOS) -->
             <div class="seal-container" id="seal1-container-box">
                 <img
-                    id="prev-seal1-img"
+                    id="prev-seal1"
                     class="seal-img"
                     src=""
                     style="display:none; width: 90px; height: 90px;"
-                    alt="Sello Institucional 1"
+                    alt="Sello 1"
                 >
             </div>
 
             <div class="seal-container" id="seal2-container-box" style="left: 280px;">
                 <img
-                    id="prev-seal2-img"
+                    id="prev-seal2"
                     class="seal-img"
                     src=""
                     style="display:none; width: 90px; height: 90px;"
-                    alt="Sello Institucional 2"
+                    alt="Sello 2"
                 >
             </div>
 
@@ -987,12 +985,12 @@ const size =
 
 
 /* =========================
-   SELLOS INSTITUCIONALES (CARGA, TAMAÑO, POSICIÓN Y GIRO)
+   SELLOS INSTITUCIONALES INDEPENDIENTES
 ========================= */
 
 // Sello 1
 const seal1File = document.getElementById('inp-seal1-file');
-const seal1Preview = document.getElementById('prev-seal1-img');
+const seal1Preview = document.getElementById('prev-seal1');
 const seal1ContainerBox = document.getElementById('seal1-container-box');
 const btnRotateSeal1 = document.getElementById('btn-rotate-seal1');
 let seal1Rotation = 0;
@@ -1015,20 +1013,22 @@ document.getElementById('inp-seal1-size').addEventListener('input', function (ev
 });
 
 document.getElementById('inp-seal1-pos').addEventListener('input', function (event) {
-    const posX = event.target.value + 'px';
-    seal1ContainerBox.style.left = posX;
+    seal1ContainerBox.style.left = event.target.value + 'px';
+});
+
+document.getElementById('inp-seal1-y').addEventListener('input', function (event) {
+    seal1ContainerBox.style.bottom = event.target.value + 'px';
 });
 
 btnRotateSeal1.addEventListener('click', function () {
     seal1Rotation = (seal1Rotation + 90) % 360;
     seal1Preview.style.transform = `rotate(${seal1Rotation}deg)`;
-    btnRotateSeal1.innerText = `🔄 Girar 90° (${seal1Rotation}°)`;
 });
 
 
 // Sello 2
 const seal2File = document.getElementById('inp-seal2-file');
-const seal2Preview = document.getElementById('prev-seal2-img');
+const seal2Preview = document.getElementById('prev-seal2');
 const seal2ContainerBox = document.getElementById('seal2-container-box');
 const btnRotateSeal2 = document.getElementById('btn-rotate-seal2');
 let seal2Rotation = 0;
@@ -1051,14 +1051,16 @@ document.getElementById('inp-seal2-size').addEventListener('input', function (ev
 });
 
 document.getElementById('inp-seal2-pos').addEventListener('input', function (event) {
-    const posX = event.target.value + 'px';
-    seal2ContainerBox.style.left = posX;
+    seal2ContainerBox.style.left = event.target.value + 'px';
+});
+
+document.getElementById('inp-seal2-y').addEventListener('input', function (event) {
+    seal2ContainerBox.style.bottom = event.target.value + 'px';
 });
 
 btnRotateSeal2.addEventListener('click', function () {
     seal2Rotation = (seal2Rotation + 90) % 360;
     seal2Preview.style.transform = `rotate(${seal2Rotation}deg)`;
-    btnRotateSeal2.innerText = `🔄 Girar 90° (${seal2Rotation}°)`;
 });
 
 
