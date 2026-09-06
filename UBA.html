@@ -189,6 +189,7 @@ body {
     width: 80px;
     height: 80px;
     object-fit: contain;
+    display: block;
 }
 
 /* =========================
@@ -251,7 +252,7 @@ body {
 }
 
 /* =========================
-   FIRMAS Y SELLO
+   FIRMAS Y SELLOS
 ========================= */
 
 .footer-section {
@@ -284,9 +285,12 @@ body {
 }
 
 .sig-img {
-    max-height: 100px;
+    max-height: 70px;
     max-width: 100%;
+    width: auto;
+    height: auto;
     object-fit: contain;
+    display: block;
 }
 
 .sig-line {
@@ -305,7 +309,7 @@ body {
     line-height: 1.2;
 }
 
-/* Sellos institucionales flotantes */
+/* Sellos institucionales flotantes corregidos contra estiramiento */
 .seal-container {
     position: absolute;
     bottom: 85px;
@@ -315,13 +319,18 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 5;
+    /* Evita contenedores elásticos colapsados */
+    flex-shrink: 0; 
 }
 
 .seal-img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 90px;
+    height: 90px;
+    max-width: none;
+    max-height: none;
     object-fit: contain;
     opacity: 0.85;
+    display: block;
     transition: transform 0.2s ease;
 }
 
@@ -971,15 +980,9 @@ document
     .addEventListener(
         'input',
         function (event) {
-const size =
-                event.target.value + 'px';
-
-            logoPreview.style.width =
-                size;
-
-            logoPreview.style.height =
-                size;
-
+            const size = event.target.value + 'px';
+            logoPreview.style.width = size;
+            logoPreview.style.height = size;
         }
     );
 
@@ -1095,7 +1098,7 @@ document
 
                 html2canvas: {
 
-scale: 2,
+                    scale: 2,
 
                     useCORS: true,
 
