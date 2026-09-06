@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {
-            font-family: 'Times New Roman', Times, serif, Arial, sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #e6e6e6;
             margin: 0;
             padding: 20px;
@@ -91,13 +91,15 @@
             margin: 0 auto;
         }
         .certificado-container {
+            font-family: 'Times New Roman', Times, serif;
             background: #fff;
             padding: 40px 90px 40px 50px;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border: 1px solid #ccc;
             position: relative;
             overflow: hidden;
-            width: 900px; /* Ancho fijo recomendado para exportación limpia */
+            width: 900px;
+            min-width: 900px;
             box-sizing: border-box;
         }
         .logo-container {
@@ -315,7 +317,8 @@
         html2canvas(elemento, { 
             scale: 2, 
             useCORS: true,
-            windowWidth: 900 // Fuerza el ancho exacto para evitar recortes laterales
+            width: 900,
+            windowWidth: 900
         }).then(canvas => {
             const enlace = document.createElement('a');
             enlace.download = 'certificado_analitico.png';
@@ -329,7 +332,8 @@
         html2canvas(elemento, { 
             scale: 2, 
             useCORS: true,
-            windowWidth: 900 // Fuerza el ancho exacto para evitar recortes laterales
+            width: 900,
+            windowWidth: 900
         }).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
             const { jsPDF } = window.jspdf;
@@ -347,7 +351,7 @@
             pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
             heightLeft -= pageHeight;
 
-            while (heightLeft >= 0) {
+            while (heightLeft > 0) {
                 position = heightLeft - imgHeight;
                 pdf.addPage();
                 pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
@@ -360,5 +364,5 @@
 </script>
 
 </body>
-            </html>
-                
+                </html>
+    
