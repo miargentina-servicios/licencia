@@ -763,7 +763,7 @@ body {
             <!-- CONTENEDORES VISUALES DE LOS SELLOS (FLOTANTES) -->
             <div class="seal-container" id="seal1-container-box">
                 <img
-                    id="prev-seal1"
+                    id="prev-seal1-img"
                     class="seal-img"
                     src=""
                     style="display:none; width: 90px; height: 90px;"
@@ -773,7 +773,7 @@ body {
 
             <div class="seal-container" id="seal2-container-box" style="left: 280px;">
                 <img
-                    id="prev-seal2"
+                    id="prev-seal2-img"
                     class="seal-img"
                     src=""
                     style="display:none; width: 90px; height: 90px;"
@@ -791,31 +791,6 @@ body {
 <script>
 
 /* =========================
-   ACTUALIZAR CAMPOS
-========================= */
-
-const bindInput = (
-    inputId,
-    previewId,
-    property = 'innerText'
-) => {
-
-    const input =
-        document.getElementById(inputId);
-
-    const preview =
-        document.getElementById(previewId);
-
-    input.addEventListener('input', () => {
-
-        if (property === 'innerHTML') {
-
-            preview.innerHTML =
-                input.value.replace(/\n/g, '<br>');
-
-        } else {
-
-           /* =========================
    ACTUALIZAR CAMPOS
 ========================= */
 
@@ -1017,7 +992,7 @@ const size =
 
 // Sello 1
 const seal1File = document.getElementById('inp-seal1-file');
-const seal1Preview = document.getElementById('prev-seal1');
+const seal1Preview = document.getElementById('prev-seal1-img');
 const seal1ContainerBox = document.getElementById('seal1-container-box');
 const btnRotateSeal1 = document.getElementById('btn-rotate-seal1');
 let seal1Rotation = 0;
@@ -1053,7 +1028,7 @@ btnRotateSeal1.addEventListener('click', function () {
 
 // Sello 2
 const seal2File = document.getElementById('inp-seal2-file');
-const seal2Preview = document.getElementById('prev-seal2');
+const seal2Preview = document.getElementById('prev-seal2-img');
 const seal2ContainerBox = document.getElementById('seal2-container-box');
 const btnRotateSeal2 = document.getElementById('btn-rotate-seal2');
 let seal2Rotation = 0;
