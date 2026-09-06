@@ -189,7 +189,6 @@ body {
     width: 80px;
     height: 80px;
     object-fit: contain;
-    display: block;
 }
 
 /* =========================
@@ -290,7 +289,6 @@ body {
     width: auto;
     height: auto;
     object-fit: contain;
-    display: block;
 }
 
 .sig-line {
@@ -309,7 +307,7 @@ body {
     line-height: 1.2;
 }
 
-/* Sellos institucionales flotantes corregidos contra estiramiento */
+/* Contenedores de sellos anti-estiramiento */
 .seal-container {
     position: absolute;
     bottom: 85px;
@@ -319,18 +317,14 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 5;
-    /* Evita contenedores elásticos colapsados */
-    flex-shrink: 0; 
 }
 
 .seal-img {
     width: 90px;
-    height: 90px;
-    max-width: none;
-    max-height: none;
+    height: auto;
+    max-height: 120px;
     object-fit: contain;
     opacity: 0.85;
-    display: block;
     transition: transform 0.2s ease;
 }
 
@@ -773,7 +767,7 @@ body {
                     id="prev-seal1"
                     class="seal-img"
                     src=""
-                    style="display:none; width: 90px; height: 90px;"
+                    style="display:none; width: 90px;"
                     alt="Sello 1"
                 >
             </div>
@@ -783,7 +777,7 @@ body {
                     id="prev-seal2"
                     class="seal-img"
                     src=""
-                    style="display:none; width: 90px; height: 90px;"
+                    style="display:none; width: 90px;"
                     alt="Sello 2"
                 >
             </div>
@@ -1012,7 +1006,6 @@ seal1File.addEventListener('change', function (event) {
 document.getElementById('inp-seal1-size').addEventListener('input', function (event) {
     const size = event.target.value + 'px';
     seal1Preview.style.width = size;
-    seal1Preview.style.height = size;
 });
 
 document.getElementById('inp-seal1-pos').addEventListener('input', function (event) {
@@ -1050,7 +1043,6 @@ seal2File.addEventListener('change', function (event) {
 document.getElementById('inp-seal2-size').addEventListener('input', function (event) {
     const size = event.target.value + 'px';
     seal2Preview.style.width = size;
-    seal2Preview.style.height = size;
 });
 
 document.getElementById('inp-seal2-pos').addEventListener('input', function (event) {
