@@ -188,7 +188,10 @@ body {
 .logo-uba {
     width: 80px;
     height: 80px;
-    object-fit: contain;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline-block;
 }
 
 /* =========================
@@ -284,11 +287,11 @@ body {
 }
 
 .sig-img {
-    max-height: 70px;
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+    width: 140px;
+    height: 70px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom center;
 }
 
 .sig-line {
@@ -307,7 +310,7 @@ body {
     line-height: 1.2;
 }
 
-/* Contenedores de sellos anti-estiramiento */
+/* Sellos institucionales con fondo anti-estiramiento */
 .seal-container {
     position: absolute;
     bottom: 85px;
@@ -321,9 +324,10 @@ body {
 
 .seal-img {
     width: 90px;
-    height: auto;
-    max-height: 120px;
-    object-fit: contain;
+    height: 90px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     opacity: 0.85;
     transition: transform 0.2s ease;
 }
@@ -611,12 +615,11 @@ body {
 
                 <span>REPÚBLICA</span>
 
-                <img
+                <div
                     id="prev-logo"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Escudo_de_la_Universidad_de_Buenos_Aires.svg/1200px-Escudo_de_la_Universidad_de_Buenos_Aires.svg.png"
                     class="logo-uba"
-                    alt="Logo UBA"
-                >
+                    style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Escudo_de_la_Universidad_de_Buenos_Aires.svg/1200px-Escudo_de_la_Universidad_de_Buenos_Aires.svg.png');"
+                ></div>
 
                 <span>ARGENTINA</span>
 
@@ -685,14 +688,7 @@ body {
                 <div class="sig-box">
 
                     <div class="sig-image-container">
-
-                        <img
-                            id="prev-sig1-img"
-                            class="sig-img"
-                            src=""
-                            style="display:none;"
-                        >
-
+                        <div id="prev-sig1-img" class="sig-img" style="display:none;"></div>
                     </div>
 
                     <div class="sig-line"></div>
@@ -711,14 +707,7 @@ body {
                 <div class="sig-box">
 
                     <div class="sig-image-container">
-
-                        <img
-                            id="prev-sig2-img"
-                            class="sig-img"
-                            src=""
-                            style="display:none;"
-                        >
-
+                        <div id="prev-sig2-img" class="sig-img" style="display:none;"></div>
                     </div>
 
                     <div class="sig-line"></div>
@@ -737,14 +726,7 @@ body {
                 <div class="sig-box">
 
                     <div class="sig-image-container">
-
-                        <img
-                            id="prev-sig3-img"
-                            class="sig-img"
-                            src=""
-                            style="display:none;"
-                        >
-
+                        <div id="prev-sig3-img" class="sig-img" style="display:none;"></div>
                     </div>
 
                     <div class="sig-line"></div>
@@ -761,25 +743,13 @@ body {
 
             </div>
 
-            <!-- CONTENEDORES VISUALES DE LOS SELLOS (FLOTANTES SEPARADOS) -->
+            <!-- CONTENEDORES VISUALES DE LOS SELLOS -->
             <div class="seal-container" id="seal1-container-box">
-                <img
-                    id="prev-seal1"
-                    class="seal-img"
-                    src=""
-                    style="display:none; width: 90px;"
-                    alt="Sello 1"
-                >
+                <div id="prev-seal1" class="seal-img" style="display:none;"></div>
             </div>
 
             <div class="seal-container" id="seal2-container-box" style="left: 280px;">
-                <img
-                    id="prev-seal2"
-                    class="seal-img"
-                    src=""
-                    style="display:none; width: 90px;"
-                    alt="Sello 2"
-                >
+                <div id="prev-seal2" class="seal-img" style="display:none;"></div>
             </div>
 
         </div>
@@ -801,74 +771,34 @@ const bindInput = (
     property = 'innerText'
 ) => {
 
-    const input =
-        document.getElementById(inputId);
-
-    const preview =
-        document.getElementById(previewId);
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
 
     input.addEventListener('input', () => {
-
         if (property === 'innerHTML') {
-
-            preview.innerHTML =
-                input.value.replace(/\n/g, '<br>');
-
+            preview.innerHTML = input.value.replace(/\n/g, '<br>');
         } else {
-
-            preview.innerText =
-                input.value;
-
+            preview.innerText = input.value;
         }
-
     });
 
 };
 
-
-/* Campos */
-
-bindInput(
-    'inp-name',
-    'prev-name'
-);
-
-bindInput(
-    'inp-body',
-    'prev-body'
-);
-
-bindInput(
-    'inp-date',
-    'prev-date'
-);
-
-bindInput(
-    'inp-sig1-text',
-    'prev-sig1-text',
-    'innerHTML'
-);
-
-bindInput(
-    'inp-sig2-text',
-    'prev-sig2-text',
-    'innerHTML'
-);
-
-bindInput(
-    'inp-sig3-text',
-    'prev-sig3-text',
-    'innerHTML'
-);
+bindInput('inp-name', 'prev-name');
+bindInput('inp-body', 'prev-body');
+bindInput('inp-date', 'prev-date');
+bindInput('inp-sig1-text', 'prev-sig1-text', 'innerHTML');
+bindInput('inp-sig2-text', 'prev-sig2-text', 'innerHTML');
+bindInput('inp-sig3-text', 'prev-sig3-text', 'innerHTML');
 
 
 /* =========================
    CARGA DE IMÁGENES DE FIRMAS
 ========================= */
 
-const bindSignatureFile = (fileInputId, imgPreviewId) => {
+const bindSignatureFile = (fileInputId, divPreviewId) => {
     const fileInput = document.getElementById(fileInputId);
-    const imgPreview = document.getElementById(imgPreviewId);
+    const divPreview = document.getElementById(divPreviewId);
 
     fileInput.addEventListener('change', function (event) {
         const file = event.target.files[0];
@@ -876,8 +806,8 @@ const bindSignatureFile = (fileInputId, imgPreviewId) => {
 
         const reader = new FileReader();
         reader.onload = function (e) {
-            imgPreview.src = e.target.result;
-            imgPreview.style.display = 'block';
+            divPreview.style.backgroundImage = `url('${e.target.result}')`;
+            divPreview.style.display = 'block';
         };
         reader.readAsDataURL(file);
     });
@@ -892,93 +822,48 @@ bindSignatureFile('inp-sig3-file', 'prev-sig3-img');
    CAMBIO DE TIPOGRAFÍA
 ========================= */
 
-const fontSelector =
-    document.getElementById('font-selector');
+const fontSelector = document.getElementById('font-selector');
+const dynamicBlock = document.getElementById('dynamic-font-block');
+const fontPreview = document.getElementById('font-preview');
 
-const dynamicBlock =
-    document.getElementById('dynamic-font-block');
-
-const fontPreview =
-    document.getElementById('font-preview');
-
-
-fontSelector.addEventListener(
-    'change',
-    function () {
-
-        const selectedFont =
-            this.value;
-
-        dynamicBlock.style.fontFamily =
-            selectedFont;
-
-        dynamicBlock
-            .querySelectorAll('*')
-            .forEach(element => {
-
-                element.style.fontFamily =
-                    selectedFont;
-
-            });
-
-        fontPreview.style.fontFamily =
-            selectedFont;
-
-    }
-);
+fontSelector.addEventListener('change', function () {
+    const selectedFont = this.value;
+    dynamicBlock.style.fontFamily = selectedFont;
+    dynamicBlock.querySelectorAll('*').forEach(element => {
+        element.style.fontFamily = selectedFont;
+    });
+    fontPreview.style.fontFamily = selectedFont;
+});
 
 
 /* =========================
    LOGO
 ========================= */
 
-const logoFile =
-    document.getElementById('inp-logo-file');
+const logoFile = document.getElementById('inp-logo-file');
+const logoPreview = document.getElementById('prev-logo');
 
-const logoPreview =
-    document.getElementById('prev-logo');
+logoFile.addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
 
-
-logoFile.addEventListener(
-    'change',
-    function (event) {
-
-        const file =
-            event.target.files[0];
-
-        if (!file) return;
-
-        const reader =
-new FileReader();
-
-        reader.onload =
-            function (event) {
-
-                logoPreview.src =
-                    event.target.result;
-
-            };
-
-        reader.readAsDataURL(file);
-
-    }
-);
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        logoPreview.style.backgroundImage = `url('${event.target.result}')`;
+    };
+    reader.readAsDataURL(file);
+});
 
 
 /* =========================
    TAMAÑO DEL LOGO
 ========================= */
 
-document
-    .getElementById('inp-logo-size')
-    .addEventListener(
-        'input',
-        function (event) {
-            const size = event.target.value + 'px';
-            logoPreview.style.width = size;
-            logoPreview.style.height = size;
-        }
-    );
+document.getElementById('inp-logo-size').addEventListener('input', function (event) {
+    const size = event.target.value + 'px';
+    logoPreview.style.width = size;
+    logoPreview.style.height = size;
+});
 
 
 /* =========================
@@ -997,7 +882,7 @@ seal1File.addEventListener('change', function (event) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = function (e) {
-        seal1Preview.src = e.target.result;
+        seal1Preview.style.backgroundImage = `url('${e.target.result}')`;
         seal1Preview.style.display = 'block';
     };
     reader.readAsDataURL(file);
@@ -1006,6 +891,7 @@ seal1File.addEventListener('change', function (event) {
 document.getElementById('inp-seal1-size').addEventListener('input', function (event) {
     const size = event.target.value + 'px';
     seal1Preview.style.width = size;
+    seal1Preview.style.height = size;
 });
 
 document.getElementById('inp-seal1-pos').addEventListener('input', function (event) {
@@ -1034,7 +920,7 @@ seal2File.addEventListener('change', function (event) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = function (e) {
-        seal2Preview.src = e.target.result;
+        seal2Preview.style.backgroundImage = `url('${e.target.result}')`;
         seal2Preview.style.display = 'block';
     };
     reader.readAsDataURL(file);
@@ -1043,6 +929,7 @@ seal2File.addEventListener('change', function (event) {
 document.getElementById('inp-seal2-size').addEventListener('input', function (event) {
     const size = event.target.value + 'px';
     seal2Preview.style.width = size;
+    seal2Preview.style.height = size;
 });
 
 document.getElementById('inp-seal2-pos').addEventListener('input', function (event) {
@@ -1063,114 +950,34 @@ btnRotateSeal2.addEventListener('click', function () {
    EXPORTAR PDF
 ========================= */
 
-document
-    .getElementById('btn-download-pdf')
-    .addEventListener(
-        'click',
-        async function () {
-
-            await document.fonts.ready;
-
-            const element =
-                document.getElementById(
-                    'diploma-content'
-                );
-
-            const options = {
-
-                margin: 0,
-
-                filename:
-                    'diploma-uba.pdf',
-
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-
-                html2canvas: {
-
-                    scale: 2,
-
-                    useCORS: true,
-
-                    letterRendering: true
-
-                },
-
-                jsPDF: {
-
-                    unit: 'px',
-
-                    format: [
-                        1122,
-                        794
-                    ],
-
-                    orientation:
-                        'landscape'
-
-                }
-
-            };
-
-            html2pdf()
-                .from(element)
-                .set(options)
-                .save();
-
-        }
-    );
+document.getElementById('btn-download-pdf').addEventListener('click', async function () {
+    await document.fonts.ready;
+    const element = document.getElementById('diploma-content');
+    const options = {
+        margin: 0,
+        filename: 'diploma-uba.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+        jsPDF: { unit: 'px', format: [1122, 794], orientation: 'landscape' }
+    };
+    html2pdf().from(element).set(options).save();
+});
 
 
 /* =========================
    EXPORTAR PNG
 ========================= */
-document
-    .getElementById('btn-download-img')
-    .addEventListener(
-        'click',
-        async function () {
 
-            await document.fonts.ready;
-
-            const element =
-                document.getElementById(
-                    'diploma-content'
-                );
-
-            html2canvas(
-                element,
-                {
-
-                    scale: 2,
-
-                    useCORS: true,
-
-                    logging: false
-
-                }
-            ).then(
-                canvas => {
-
-                    const link =
-                        document.createElement('a');
-
-                    link.download =
-                        'diploma-uba.png';
-
-                    link.href =
-                        canvas.toDataURL(
-                            'image/png'
-                        );
-
-                    link.click();
-
-                }
-            );
-
-        }
-    );
+document.getElementById('btn-download-img').addEventListener('click', async function () {
+    await document.fonts.ready;
+    const element = document.getElementById('diploma-content');
+    html2canvas(element, { scale: 2, useCORS: true, logging: false }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'diploma-uba.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+});
 
 
 /* =========================
@@ -1178,10 +985,7 @@ document
 ========================= */
 
 document.fonts.ready.then(() => {
-
-    dynamicBlock.style.fontFamily =
-        fontSelector.value;
-
+    dynamicBlock.style.fontFamily = fontSelector.value;
 });
 
 </script>
