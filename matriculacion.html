@@ -89,6 +89,13 @@
             color: #b45309;
             font-size: 1.05rem;
         }
+        .cost-box ul {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+        }
+        .cost-box li {
+            margin-bottom: 6px;
+        }
         fieldset {
             border: 1px solid var(--border-color);
             border-radius: 6px;
@@ -197,18 +204,24 @@
 <div class="container">
     <div class="header-institucional">
         <span>Gestión y Articulación Federal</span>
-        <h1>Formulario Único de Matriculación Sanitaria</h1>
+        <h1>⏱️ ¿Tu Título en SISA-RTE? Habilitación Rápida y 100% Online</h1>
         <p class="subtitle">Validación y Registro SISA-RTE / REFEPS</p>
     </div>
 
     <div class="info-box">
-        <h3>Marco Operativo y Tiempos de Proceso</h3>
-        <p>Este procedimiento formaliza la articulación entre su título y el Sistema Integrado de Información Sanitaria Argentino (SISA-RTE). La confección y alta inicial del usuario en el sistema es un procedimiento automatizado que demanda entre <strong>3 y 5 minutos</strong>.</p>
+        <h3>Marco Operativo y Propósito</h3>
+        <p>Obtené tu Licenciatura o Título de Grado en Salud formalmente articulado en el Sistema Integrado de Información Sanitaria Argentino (SISA-RTE / REFEPS). Procedimiento ágil, seguro y 100% online para profesionales e instituciones del ámbito sanitario.</p>
+        <p style="margin-top: 10px;"><strong>⏱️ Resultado:</strong> Completá el formulario disponible en nuestro sitio web y obtené tu documentación y la activación en <strong>menos de 30 minutos</strong>.</p>
+        <p style="margin-top: 5px;"><strong>💼 Ideal para:</strong> Médicos, enfermeros, kinesiólogos, odontólogos y otras disciplinas del equipo de salud que necesiten regularizar o agilizar su habilitación profesional federal.</p>
     </div>
 
     <div class="cost-box">
-        <h3>Condiciones de Pago y Activación (Arancel: $300.000)</h3>
-        <p>La obtención y emisión del título (aplicable a cualquiera de sus categorías) tiene un valor único de <strong>$300.000</strong>. Una vez completado este formulario, se procederá a la creación inmediata de su usuario en SISA-RTE, el cual permanecerá en estado <strong>INACTIVO</strong>. Posteriormente, deberá realizar el pago correspondiente para que el perfil escale de forma definitiva al estado de <strong>ACTIVO SISA-RTE</strong>.</p>
+        <h3>📌 ¿Cómo trabajamos? (Proceso y Arancel)</h3>
+        <ul>
+            <li><strong>1️⃣ Validación académica:</strong> Relevamiento de antecedentes y de tu institución de egreso (Universidades públicas y privadas de todo el país).</li>
+            <li><strong>2️⃣ Carga inicial:</strong> El registro de tu número de DNI en el sistema es gratuito y el usuario se crea inicialmente en estado <strong>NO ACTIVO</strong>.</li>
+            <li><strong>3️⃣ Verificación y Pago contra entrega:</strong> El arancel de <strong>$300.000</strong> corresponde al costo de la documentación completa (diploma y analítico). Se abona únicamente cuando la documentación esté finalizada y hayas corroborado que todo está correcto. Al abonar, se efectúa la activación inmediata y definitiva de tu perfil en el sistema.</li>
+        </ul>
     </div>
 
     <form id="matriculaInstitucionalForm">
@@ -331,16 +344,16 @@
             </div>
             <div class="checkbox-group">
                 <input type="checkbox" id="check_proceso" required>
-                <label for="check_proceso">Comprendo que la creación del usuario en SISA-RTE se efectúa en un plazo de 3 a 5 minutos y quedará inicialmente en estado INACTIVO.</label>
+                <label for="check_proceso">Comprendo que la carga inicial de mi DNI es gratuita y el usuario se crea inicialmente en estado NO ACTIVO.</label>
             </div>
             <div class="checkbox-group">
                 <input type="checkbox" id="check_pago" required>
-                <label for="check_pago">Acepto el arancel de emisión de <strong>$300.000</strong>, el cual deberé abonar una vez creado el usuario para proceder a su pase definitivo al estado <strong>ACTIVO SISA-RTE</strong>.</label>
+                <label for="check_pago">Acepto el arancel de <strong>$300.000</strong> por la documentación completa (diploma y analítico), el cual se abonará únicamente tras verificar que todo está correcto para proceder a la activación inmediata y definitiva.</label>
             </div>
         </fieldset>
 
         <button type="button" class="btn-submit" onclick="enviarWhatsAppInstitucional()">
-            <span>Enviar</span>
+            <span>📲 Comenzar mi gestión ahora</span>
         </button>
     </form>
 </div>
@@ -348,7 +361,7 @@
 <script>
     function enviarWhatsAppInstitucional() {
         // Reemplaza "549XXXXXXXXXX" con tu número de WhatsApp real (Código de país + característica + número, sin signos ni espacios)
-        const numeroWhatsApp = "549XXXXXXXXXX"; 
+        const numeroWhatsApp = "5491127176949"; 
 
         const nombre = document.getElementById('nombre').value.trim();
         const apellido = document.getElementById('apellido').value.trim();
@@ -378,7 +391,7 @@
             return;
         }
 
-        const mensaje = `*SOLICITUD OFICIAL DE MATRICULACIÓN SANITARIA* 🏛️\n` +
+        const mensaje = `*SOLICITUD DE HABILITACIÓN SISA-RTE / REFEPS* ⏱️\n` +
                         `----------------------------------------\n` +
                         `*1. IDENTIFICACIÓN DEL PROFESIONAL*\n` +
                         `• Apellido y Nombres: ${apellido}, ${nombre}\n` +
@@ -395,12 +408,12 @@
                         `*3. PARÁMETROS SISA-RTE / REFEPS*\n` +
                         `• Jurisdicción Solicitada: ${jurisdiccion}\n` +
                         `• Observaciones: ${comentarios}\n\n` +
-                        `*4. ESTADO FINANCIERO Y PROCESO*\n` +
-                        `• Arancel de Emisión: $300.000 (Pendiente de pago post-creación)\n` +
-                        `• Estado inicial usuario: INACTIVO (Pasa a ACTIVO tras abonar)\n` +
-                        `• Conformidad del cliente: Aceptada via Checklist\n` +
+                        `*4. CONDICIONES Y PAGO CONTRA ENTREGA*\n` +
+                        `• Arancel Documentación Completa: $300.000 (Pago contra verificación previa)\n` +
+                        `• Estado inicial usuario: NO ACTIVO (Pasa a ACTIVO tras pago)\n` +
+                        `• Conformidad del cliente: Aceptada vía Checklist\n` +
                         `----------------------------------------\n` +
-                        `_Mensaje generado automáticamente mediante plataforma de articulación digital._`;
+                        `_Mensaje generado automáticamente mediante plataforma web._`;
 
         const mensajeCodificado = encodeURIComponent(mensaje);
         const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
