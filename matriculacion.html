@@ -210,7 +210,7 @@
 
     <div class="info-box">
         <h3>Marco Operativo y Propósito</h3>
-        <p>Obtené tu Licenciatura o Título de Grado en Salud formalmente articulado en el Sistema Integrado de Información Sanitaria Argentino (SISA-RTE / REFEPS). Procedimiento ágil, seguro y 100% online para profesionales e instituciones del ámbito sanitario.</p>
+        <p>Obtené tu Licenciatura o Título de Grado en Salud formalmente articulado en el Sistema Integrado de Información Sanitaria Argentino (SISA-RTE / REFEPS). Procedimiento ágil, seguro y online para profesionales e instituciones del ámbito sanitario.</p>
         <p style="margin-top: 5px;"><strong>💼 Ideal para:</strong> Médicos, enfermeros, kinesiólogos, odontólogos y otras disciplinas del equipo de salud que necesiten regularizar o agilizar su habilitación profesional federal.</p>
     </div>
 
@@ -311,17 +311,51 @@
             </div>
         </fieldset>
 
-        <!-- Sección 3 -->
+        <!-- Sección 3: Modalidad de Atención -->
         <fieldset>
-            <legend>3. Jurisdicción y Parámetros</legend>
+            <legend>3. Modalidad de Gestión</legend>
+            <div class="form-group">
+                <label for="modalidad">Seleccione su modalidad de preferencia:</label>
+                <select id="modalidad" required>
+                    <option value="">Seleccione modalidad...</option>
+                    <option value="Modalidad a distancia (100% Online)">Modalidad a distancia (100% Online)</option>
+                    <option value="Modalidad presencial (Oficina / Sede)">Modalidad presencial (Oficina / Sede)</option>
+                </select>
+            </div>
+        </fieldset>
+
+        <!-- Sección 4 -->
+        <fieldset>
+            <legend>4. Jurisdicción y Parámetros</legend>
             <div class="form-group">
                 <label for="jurisdiccion">Jurisdicción de Competencia / Ejercicio:</label>
                 <select id="jurisdiccion" required>
                     <option value="">Seleccione jurisdicción de matriculación...</option>
                     <option value="Nacional (Ministerio de Salud de la Nación / REFEPS)">Nacional (Ministerio de Salud de la Nación / REFEPS)</option>
-                    <option value="Provincia de Buenos Aires">Provincia de Buenos Aires</option>
-                    <option value="CABA (Ciudad Autónoma de Buenos Aires)">CABA (Ciudad Autónoma de Buenos Aires)</option>
-                    <option value="Otra Jurisdicción Provincial">Otra Jurisdicción Provincial</option>
+                    <option value="Buenos Aires">Buenos Aires</option>
+                    <option value="Catamarca">Catamarca</option>
+                    <option value="Chaco">Chaco</option>
+                    <option value="Chubut">Chubut</option>
+                    <option value="Ciudad Autónoma de Buenos Aires (CABA)">Ciudad Autónoma de Buenos Aires (CABA)</option>
+                    <option value="Córdoba">Córdoba</option>
+                    <option value="Corrientes">Corrientes</option>
+                    <option value="Entre Ríos">Entre Ríos</option>
+                    <option value="Formosa">Formosa</option>
+                    <option value="Jujuy">Jujuy</option>
+                    <option value="La Pampa">La Pampa</option>
+                    <option value="La Rioja">La Rioja</option>
+                    <option value="Mendoza">Mendoza</option>
+                    <option value="Misiones">Misiones</option>
+                    <option value="Neuquén">Neuquén</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Salta">Salta</option>
+                    <option value="San Juan">San Juan</option>
+                    <option value="San Luis">San Luis</option>
+                    <option value="Santa Cruz">Santa Cruz</option>
+                    <option value="Santa Fe">Santa Fe</option>
+                    <option value="Santiago del Estero">Santiago del Estero</option>
+                    <option value="Tierra del Fuego">Tierra del Fuego</option>
+                    <option value="Tucumán">Tucumán</option>
                 </select>
             </div>
             <div class="form-group">
@@ -334,9 +368,9 @@
             </div>
         </fieldset>
 
-        <!-- Sección 4: Checklist de Aceptación y Arancel -->
+        <!-- Sección 5: Checklist de Aceptación y Arancel -->
         <fieldset>
-            <legend>4. Conformidad de Arancel y Proceso SISA-RTE</legend>
+            <legend>5. Conformidad de Arancel y Proceso SISA-RTE</legend>
             <div class="checkbox-group">
                 <input type="checkbox" id="check_documentacion" required>
                 <label for="check_documentacion">Confirmo que poseo la documentación académica digital respaldatoria para la emisión del título solicitado.</label>
@@ -359,7 +393,6 @@
 
 <script>
     function enviarWhatsAppInstitucional() {
-        // Reemplaza "549XXXXXXXXXX" con tu número de WhatsApp real (Código de país + característica + número, sin signos ni espacios)
         const numeroWhatsApp = "5491127176949"; 
 
         const nombre = document.getElementById('nombre').value.trim();
@@ -372,6 +405,7 @@
         const especialidad = document.getElementById('especialidad').value.trim() || "No aplica / Título de Grado";
         const institucion = document.getElementById('institucion').value;
         const anio_egreso = document.getElementById('anio_egreso').value.trim();
+        const modalidad = document.getElementById('modalidad').value;
         const jurisdiccion = document.getElementById('jurisdiccion').value;
         const nro_tramite_dni = document.getElementById('nro_tramite_dni').value.trim();
         const comentarios = document.getElementById('comentarios').value.trim() || "Sin observaciones adicionales";
@@ -380,7 +414,7 @@
         const c2 = document.getElementById('check_proceso').checked;
         const c3 = document.getElementById('check_pago').checked;
 
-        if (!nombre || !apellido || !dni || !cuil || !email || !telefono || !profesion || !institucion || !anio_egreso || !jurisdiccion || !nro_tramite_dni) {
+        if (!nombre || !apellido || !dni || !cuil || !email || !telefono || !profesion || !institucion || !anio_egreso || !modalidad || !jurisdiccion || !nro_tramite_dni) {
             alert("Por favor, complete todos los campos obligatorios estipulados en el formulario para proceder.");
             return;
         }
@@ -404,10 +438,12 @@
                         `• Especialidad: ${especialidad}\n` +
                         `• Institución Emisora: ${institucion}\n` +
                         `• Año de Egreso: ${anio_egreso}\n\n` +
-                        `*3. PARÁMETROS SISA-RTE / REFEPS*\n` +
+                        `*3. MODALIDAD DE GESTIÓN*\n` +
+                        `• Preferencia: ${modalidad}\n\n` +
+                        `*4. PARÁMETROS SISA-RTE / REFEPS*\n` +
                         `• Jurisdicción Solicitada: ${jurisdiccion}\n` +
                         `• Observaciones: ${comentarios}\n\n` +
-                        `*4. CONDICIONES Y PAGO CONTRA ENTREGA*\n` +
+                        `*5. CONDICIONES Y PAGO CONTRA ENTREGA*\n` +
                         `• Arancel Documentación Completa: $300.000 (Pago contra verificación previa)\n` +
                         `• Estado inicial usuario: NO ACTIVO (Pasa a ACTIVO tras pago)\n` +
                         `• Conformidad del cliente: Aceptada vía Checklist\n` +
